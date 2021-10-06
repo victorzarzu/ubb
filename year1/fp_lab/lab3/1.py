@@ -74,7 +74,6 @@ def functionality():
       operation1(int_list)
     elif op == 2:
       operation2(int_list)
-    print()
 
 
 def ui():
