@@ -16,22 +16,23 @@ def operation1(int_list):
   return: - 
   """
 
+  lists = []
   max_len = 0
   for i in range(0, len(int_list)):
-    j = i + 1
-    while j < len(int_list) and int_list[j] > int_list[j - 1] :
-      j += 1
-    max_len = max(max_len, j - i)
-
-  for i in range(0, len(int_list)):
-    current = [int_list[i]]
+    curr = [int_list[i]]
     j = i + 1
     while j < len(int_list) and int_list[j] > int_list[j - 1]:
-      current.append(int_list[j])
+      curr.append(int_list[j])
       j += 1
-    if j - i == max_len:
-      print(current)
 
+    max_len = max(max_len, j - i)
+    
+    if len(curr) >= max_len:
+      lists.append(curr)
+
+  for l in lists:
+    if len(l) == max_len:
+      print(l)
 
 def operation2(int_list):
   """
@@ -39,22 +40,24 @@ def operation2(int_list):
   params: a list of integers
   return: -
   """
+
+  lists = []
   max_len = 0
   for i in range(0, len(int_list)):
-    j = i + 1
-    while j < len(int_list) and int_list[j] == int_list[j - 1] :
-      j += 1
-    max_len = max(max_len, j - i)
-
-  for i in range(0, len(int_list)):
-    current = [int_list[i]]
+    curr = [int_list[i]]
     j = i + 1
     while j < len(int_list) and int_list[j] == int_list[j - 1]:
-      current.append(int_list[j])
+      curr.append(int_list[j])
       j += 1
-    if j - i == max_len:
-      print(current)
 
+    max_len = max(max_len, j - i)
+    
+    if len(curr) >= max_len:
+      lists.append(curr)
+
+  for l in lists:
+    if len(l) == max_len:
+      print(l)
 
 def functionality():
   """
@@ -71,6 +74,8 @@ def functionality():
       operation1(int_list)
     elif op == 2:
       operation2(int_list)
+    print()
+
 
 def ui():
 
