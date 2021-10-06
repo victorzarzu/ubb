@@ -32,7 +32,7 @@ def operation1(int_list):
 
   for l in lists:
     if len(l) == max_len:
-      print(l)
+      print(l, end = ' ')
 
 def operation2(int_list):
   """
@@ -57,7 +57,7 @@ def operation2(int_list):
 
   for l in lists:
     if len(l) == max_len:
-      print(l)
+      print(l, end = ' ')
 
 def functionality():
   """
@@ -74,7 +74,7 @@ def functionality():
       operation1(int_list)
     elif op == 2:
       operation2(int_list)
-
+    print()
 
 def ui():
 
