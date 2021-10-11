@@ -36,7 +36,7 @@ segment code use32 class=code
         idiv bx
         
 		mov di, ax
-		;call num_to_string
+		call num_to_string
         
         ;mov eax, SYS_write
         ;mov edi, STDOUT
@@ -49,47 +49,47 @@ segment code use32 class=code
         push    dword 0      
         call    [exit]       
 		
+num_to_string:
+
+    mov si, 0
+    cmp di, 0
+	jge not_negative
+	mov si, 1
+	neg di
+	not_negative:
+	
+	mov cx, 1
 	num_to_string:
+		mov ax, di
+		cwd
+		mov bx, 10
+		div bx
+		mov di, ax
+		add dx, '0'
+		push dx
+		inc cx
+		cmp di, 0
+		jne num_to_string
+		
+	
+	mov byte [str_num], '+'
+	cmp si, 0
+	je not_neg 
+	mov byte [str_num], '-'
+	not_neg:
+	
+	mov si, 1
+	mov edx, str_num
+	inc edx
+	
+	popping:
+		pop ax
+		mov byte [edx], al
+		inc edx
+		inc si
+		cmp si, cx
+		jne popping
+		
+	mov byte [edx], 0
 
-        mov si, 0
-        cmp di, 0
-        jge not_negative
-        mov si, 1
-        neg di
-        not_negative:
-        
-        mov cx, 1
-        num_to_string:
-            mov ax, di
-            cwd
-            mov bx, 10
-            div bx
-            mov di, ax
-            add dx, '0'
-            push dx
-            inc cx
-            cmp di, 0
-            jne num_to_string
-            
-        
-        mov byte [str_num], '+'
-        cmp si, 0
-        je not_neg 
-        mov byte [str_num], '-'
-        not_neg:
-        
-        mov si, 1
-        mov edx, str_num
-        inc edx
-        
-        popping:
-            pop ax
-            mov byte [edx], al
-            inc edx
-            inc si
-            cmp si, cx
-            jne popping
-            
-        mov byte [edx], 0
-
-		ret
+	ret
