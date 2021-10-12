@@ -13,24 +13,6 @@ def read_list():
   return int_list
 
 
-def get_max_len_operation1(int_list):
-  """
-  It computes and returns the length of the longest ascending subsequence
-  params: int_list - a list of integers
-  return: integer
-  """
-
-  max_len = 0
-  for i in range(len(int_list)):
-    j = i + 1
-    while j < len(int_list) and int_list[j] > int_list[j - 1]:
-      j += 1
-    
-    max_len = max(max_len, j - i)
-
-  return max_len
-
-
 def add_list_to_list_of_list(lists, int_list):
   """
   It appends a list to a list of lists
@@ -40,22 +22,21 @@ def add_list_to_list_of_list(lists, int_list):
   lists.append(int_list)
 
 
-def get_longest_lists1(max_len, int_list):
+def operation1_comparer(x, y):
   """
-  It returns a list of the longest ascending lists in int_list
-  params: max_len - integer; int_list - list of integers
-  return: a list of lists of integers
+  Returns if x is smaller than y
+  params: x, y - integers
+  return: True if x < y, False otherwise
   """
+  return x > y
 
-  lists = []
-  for i in range(0, len(int_list)):
-    j = i + 1
-    while j < len(int_list) and int_list[j] > int_list[j - 1]: j += 1
-    if j - i == max_len:
-      add_list_to_list_of_list(lists, int_list[i:j])           
-
-  return lists
-
+def operation2_comparer(x, y):
+  """
+  Returns if x and y are equal 
+  params: x, y - integers
+  return: True if x = y, False otherwise
+  """
+  return x == y
 
 def print_list_of_lists(lists):
   """
@@ -67,62 +48,66 @@ def print_list_of_lists(lists):
   for l in lists:
     print(l, end = ' ')
 
-def operation1(int_list):
-  """
-  Computes and prints the longest ascending subsequences of the argument
-  params: a list of integers
-  return: - 
-  """
+def get_max_len_test():
+  assert get_max_len([1, 2, 3, 6, 0, 6], operation1_comparer) == 4
+  assert get_max_len([0, 0, -1, 2, 1, 0, 5], operation1_comparer) == 2
+  assert get_max_len([-2, 0, 3, 2, 1, 0, 5], operation1_comparer) == 3
+  assert get_max_len([1, 1, 1, 1], operation1_comparer) == 1
+  assert get_max_len([6, 6, 5, 1, 1, 6, 7, 7], operation2_comparer) == 2
+  assert get_max_len([1, 1, 1, 2, 2, 5, 5], operation2_comparer) == 3
+  assert get_max_len([0, 1, 0, 1, 0, 1], operation2_comparer) == 1
 
-  max_len = get_max_len_operation1(int_list) 
-  lists = get_longest_lists1(max_len, int_list)
-  print_list_of_lists(lists)
+def get_longest_lists_test():
+  assert get_longest_lists([1, 2, 3, 6, 0, 6], operation1_comparer) == [[1, 2, 3, 6]]
+  assert get_longest_lists([0, 0, -1, 2, 1, 0, 5], operation1_comparer) == [[0, -1], [0, 5]]
+  assert get_longest_lists([-2, 0, 3, 2, 1, 0, 5], operation1_comparer) == [[-2, 0, 3]]
+  assert get_longest_lists([1, 1, 1, 1], operation1_comparer) == [[1], [1], [1], [1]]
+  assert get_longest_lists([6, 6, 5, 1, 1, 6, 7, 7], operation2_comparer) == [[6, 6], [1, 1], [7, 7]]
+  assert get_longest_lists([1, 1, 1, 2, 2, 5, 5], operation2_comparer) == [[1, 1, 1]]
+  assert get_longest_lists([0, 1, 0, 1, 0, 1], operation2_comparer) == [[0], [1], [0], [1], [0], [1]]
 
-
-def get_max_len_operation2(int_list):
+def get_max_len(int_list, comparer):
   """
-  It computes and returns the length of the longest constant subsequence
-  params: int_list - a list of integers
+  It computes and returns the length of the longest subsequence that satisfies the comparer
+  params: int_list - a list of integers; comparer - a function
   return: integer
   """
 
   max_len = 0
   for i in range(len(int_list)):
     j = i + 1
-    while j < len(int_list) and int_list[j] == int_list[j - 1]:
+    while j < len(int_list) and comparer(int_list[j], int_list[j - 1]):
       j += 1
     
     max_len = max(max_len, j - i)
 
   return max_len
 
-def get_longest_lists2(max_len, int_list):
+def get_longest_lists(max_len, int_list, comparer):
   """
-  It returns a list of the longest constant lists in int_list
-  params: max_len - integer; int_list - list of integers
+  It returns a list of the longest ascending lists in int_list
+  params: max_len - integer; int_list - list of integers; comparer - a function
   return: a list of lists of integers
   """
 
   lists = []
   for i in range(0, len(int_list)):
     j = i + 1
-    while j < len(int_list) and int_list[j] == int_list[j - 1]: j += 1
+    while j < len(int_list) and comparer(int_list[j], int_list[j - 1]): j += 1
     if j - i == max_len:
       add_list_to_list_of_list(lists, int_list[i:j])           
 
   return lists
 
-def operation2(int_list):
+def operation(int_list, comparer):
   """
-  Computes and prints the longest subsequences of the argument that has equal elements
-  params: a list of integers
-  return: -
+  Computes and prints the longest subsequences that satisfies the comparer 
+  params: int_list - a list of integers, comparer - a function
+  return: - 
   """
-
-  max_len = get_max_len_operation2(int_list)
-  lists = get_longest_lists2(max_len, int_list)
+  max_len = get_max_len(int_list, comparer)
+  lists = get_longest_lists(max_len, int_list, comparer)
   print_list_of_lists(lists)
-
 
 def read_and_operation(op):
     """
@@ -130,7 +115,6 @@ def read_and_operation(op):
     params: op - interger
     return: -
     """
-
 
     if op == 0: exit() 
     if op != 1 and op != 2:
@@ -143,9 +127,9 @@ def read_and_operation(op):
       return
 
     if op == 1:
-      operation1(int_list)
+      operation(int_list, operation1_comparer)
     elif op == 2:
-      operation2(int_list)
+      operation(int_list, operation2_comparer)
     else:
       print("Invalid command")
     print()
@@ -177,5 +161,7 @@ def ui():
   print("Operation 2 => the longest subsequence that has equal elements") 
 
   functionality()
+
+get_max_len_test()
 
 ui()
