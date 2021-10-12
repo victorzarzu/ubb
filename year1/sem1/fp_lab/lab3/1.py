@@ -58,13 +58,13 @@ def get_max_len_test():
   assert get_max_len([0, 1, 0, 1, 0, 1], operation2_comparer) == 1
 
 def get_longest_lists_test():
-  assert get_longest_lists([1, 2, 3, 6, 0, 6], operation1_comparer) == [[1, 2, 3, 6]]
-  assert get_longest_lists([0, 0, -1, 2, 1, 0, 5], operation1_comparer) == [[0, -1], [0, 5]]
-  assert get_longest_lists([-2, 0, 3, 2, 1, 0, 5], operation1_comparer) == [[-2, 0, 3]]
-  assert get_longest_lists([1, 1, 1, 1], operation1_comparer) == [[1], [1], [1], [1]]
-  assert get_longest_lists([6, 6, 5, 1, 1, 6, 7, 7], operation2_comparer) == [[6, 6], [1, 1], [7, 7]]
-  assert get_longest_lists([1, 1, 1, 2, 2, 5, 5], operation2_comparer) == [[1, 1, 1]]
-  assert get_longest_lists([0, 1, 0, 1, 0, 1], operation2_comparer) == [[0], [1], [0], [1], [0], [1]]
+  assert get_longest_lists(get_max_len([1, 2, 3, 6, 0, 6], operation1_comparer), [1, 2, 3, 6, 0, 6], operation1_comparer) == [[1, 2, 3, 6]]
+  assert get_longest_lists(get_max_len([0, 0, -1, 2, 1, 0, 5], operation1_comparer), [0, 0, -1, 2, 1, 0, 5], operation1_comparer) == [[-1, 2], [0, 5]]
+  assert get_longest_lists(get_max_len([-2, 0, 3, 2, 1, 0, 5], operation1_comparer), [-2, 0, 3, 2, 1, 0, 5], operation1_comparer) == [[-2, 0, 3]]
+  assert get_longest_lists(get_max_len([1, 1, 1, 1], operation1_comparer), [1, 1, 1, 1], operation1_comparer) == [[1], [1], [1], [1]]
+  assert get_longest_lists(get_max_len([6, 6, 5, 1, 1, 6, 7, 7], operation2_comparer), [6, 6, 5, 1, 1, 6, 7, 7], operation2_comparer) == [[6, 6], [1, 1], [7, 7]]
+  assert get_longest_lists(get_max_len([1, 1, 1, 2, 2, 5, 5], operation2_comparer), [1, 1, 1, 2, 2, 5, 5], operation2_comparer) == [[1, 1, 1]]
+  assert get_longest_lists(get_max_len([0, 1, 0, 1, 0, 1], operation2_comparer), [0, 1, 0, 1, 0, 1], operation2_comparer) == [[0], [1], [0], [1], [0], [1]]
 
 def get_max_len(int_list, comparer):
   """
@@ -163,5 +163,6 @@ def ui():
   functionality()
 
 get_max_len_test()
+get_longest_lists_test()
 
 ui()
