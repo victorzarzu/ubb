@@ -1,10 +1,3 @@
-from add import ui_add_score
-from modify import ui_modify_score
-from order import ui_print_score
-from filter import ui_filter_score
-from order import ui_order_score
-
-
 import participants
 import comparators
 from computes import compute_average
@@ -237,44 +230,3 @@ svg_minimum_score_by_interval_test()
 create_participant_id_if_multiple_test()
 svg_participant_ids_if_multiple_test()
 create_string_ids_test()
-
-def ui():
-  par_l = []
-  max_scores = 10
-  while True:
-    cmd = input().rstrip().lstrip()
-    if cmd == "exit":
-      break
-    if cmd == "1":
-      try:
-        ui_add_score(par_l, max_scores)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "2":
-      try:
-        ui_modify_score(par_l, max_scores)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "3":
-      try:
-        ui_print_score(par_l)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "4":
-      try:
-        ui_operate_score(par_l)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "5":
-      try:
-        ui_filter_score(par_l)
-      except Exception as ex:
-        print(ex)
-    else:
-      print("invalid command!")
-
-def main():
-  ui()
-
-
-main()

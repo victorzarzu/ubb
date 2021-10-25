@@ -1,4 +1,4 @@
-import comparares
+import comparators
 from computes import compute_average
 
 def create_participant(id_number, score_l, score_avg):

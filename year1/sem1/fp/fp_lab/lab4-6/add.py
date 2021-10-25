@@ -18,8 +18,9 @@ def add_score(par_l, score_l, max_scores):
 def insert_score(par_l, score_l, id_number, max_scores):
   """
   function that adds a list of scores from scor_l into a list into par_l coresponding to the id_number-th participant
-  params: par_l - a list of participant items; score_l - a list  of floats; id_number - an integer; max_scores - an integer
+  params: par_l - a list of participant items; score_l - a list  of floats; id_number - a string; max_scores - an integer
   """
+  id_number = convert_id_number(id_number)
   validate_participant_id_number(par_l, id_number)
   score_l = convert_score_list(score_l)
   max_scores_add = get_free_space_by_participant_id(par_l, id_number, max_scores)
@@ -55,12 +56,7 @@ def ui_add_score(par_l, max_scores):
     score_l = input("scores: ")
     add_score(par_l, score_l, max_scores)
   elif cmd == "insert":
-    try:
-      id_number = convert_id_number(input("id: ")) 
-    except Exception as ex:
-      print(ex)
-      return
-
+    id_number = input("id: ") 
     score_l = input("scores: ")
     insert_score(par_l, score_l, id_number, max_scores)
   else:

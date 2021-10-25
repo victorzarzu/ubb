@@ -67,26 +67,14 @@ def ui_modify_score(par_l, max_scores):
   cmd = input().lstrip().rstrip()
   if cmd == "del_id":
     id_number = input("id: ")
-    try:
-      delete_participant_score(par_l, id_number)
-    except Exception as ex:
-      print(ex)
-      return
+    delete_participant_score(par_l, id_number)
   elif cmd == "del_int_id":
     id_interval = input("id interval: ")
-    try:
-      delete_participant_interval_score(par_l, id_interval)
-    except Exception as ex:
-      print(ex)
-      return
+    delete_participant_interval_score(par_l, id_interval)
   elif cmd == "replace_id":
     id_number = input("id: ")
     score_l = input("scores: ")
-    try:
-      replace_participant_score(par_l, id_number, score_l, max_scores)
-    except Exception as ex:
-      print(ex)
-      return
+    replace_participant_score(par_l, id_number, score_l, max_scores)
   else:
     print("invalid command!")
 

@@ -18,8 +18,7 @@ def validate_score_list_by_values(score_l):
           "scores must be between 1 and 10!", if the values are not between 1 and 10
   """
   for x in score_l:
-    if x < 1 or x > 10:
-      raise Exception("scores must be between 1 and 10!")
+    validate_score(x)
 
 def validate_participant_id_number(par_l, id_number):
   """
@@ -64,10 +63,18 @@ def validate_score(score):
   params: score - a float number
   return: -, if the score is a valid one
   raises: Exception with text
-          "a score must be between 1 and 10!", if the score is not valid
+          "scores must be between 1 and 10!", if the score is not valid
   """
   if score < 1 or score > 10:
-    raise Exception("a score must be between 1 and 10!")
+    raise Exception("scores must be between 1 and 10!")
+
+def validate_score_print(score):
+  """
+  function that verifies if the score is smaller or equal than 10
+  params: score - a float number
+  return: True if the score is smaller or equal than 10 
+  """
+  return score <= 10 
 
 def validate_sort_mode(sort_mode):
   """
@@ -161,7 +168,7 @@ def validate_score_test():
     validate_score(0.999999)
     assert False
   except Exception as ex:
-    assert str(ex) == "a score must be between 1 and 10!"
+    assert str(ex) == "scores must be between 1 and 10!"
 
 def validate_sort_mode_test():
   validate_sort_mode("asc")
