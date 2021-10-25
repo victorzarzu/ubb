@@ -14,5 +14,3 @@ def ui_modify_score(par_l, max_scores):
     s_modify.svg_replace_participant_score(par_l, id_number, score_l, max_scores)
   else:
     print("invalid command!")
-
-
