@@ -60,7 +60,9 @@ def convert_score(score):
     raise Exception("invalid score!")
 
 def convert_score_list_test():
-  convert_score_list("1 5 6 7 9.6 1")
+  score_l = "1 5 6 7 9.6 1"
+  score_l = convert_score_list(score_l)
+  assert score_l == [1, 5, 6, 7, 9.6, 1]
 
   try:
     convert_score_list("5.7 1 * 9")

@@ -86,6 +86,18 @@ def get_free_space_by_participant_id(par_l, id_number, max_scores):
   score_l = get_participant_score(participant)
   return max_scores - len(score_l)
 
+def insert_score_by_participant_id(par_l, id_number, score_l):
+  """
+  function that adds the scores in the score_l into the score list coresponding to the id_number-th participant
+  params: par_l - a list of participant items; id_number - integer; score_l - a list of floats
+  return: -
+  """
+  participant = get_participant_by_id(par_l, id_number)
+  participant_score = get_participant_score(participant)
+  participant_score.extend(score_l)
+  participant = create_participant(id_number, participant_score, compute_average(participant_score))
+  change_participant_by_id(par_l, id_number, participant)
+
 def create_pariticipant_test():
   participant = create_participant(4, [8.9], 8.9)
   assert participant == {'id': 4, 'score': [8.9], 'score_avg': 8.9}
@@ -163,6 +175,18 @@ def get_free_space_by_participant_id_test():
   add_participant_in_list(par_l, create_participant(len(par_l), [1, 2, 3, 4, 5, 999], compute_average([1, 2, 3, 4, 5, 999])))
   add_participant_in_list(par_l, create_participant(len(par_l), [1], 1))
 
+def insert_score_by_participant_id_test():
+  par_l = []
+  add_participant_in_list(par_l, create_participant(len(par_l), [5, 5, 5, 5, 7], compute_average([5, 5, 5, 5, 5, 7])))
+  add_participant_in_list(par_l, create_participant(len(par_l), [9, 9.9, 9.423, 5, 1, 9], compute_average([9, 9.9, 9.423, 5, 1, 9])))
+  add_participant_in_list(par_l, create_participant(len(par_l), [1, 2, 3, 4, 5, 999], compute_average([1, 2, 3, 4, 5, 999])))
+  add_participant_in_list(par_l, create_participant(len(par_l), [1], 1))
+
+
+  insert_score_by_participant_id(par_l, 0, [5, 9.1, 6.7])
+  participant = get_participant_by_id(par_l, 0)
+  assert get_participant_score(participant) == [5, 5, 5, 5, 7, 5, 9.1, 6.7]
+
 
 create_pariticipant_test()
 get_participant_id_test()
@@ -172,3 +196,4 @@ get_participant_by_id_test()
 add_participant_in_list_test()
 participant_to_str_test()
 get_free_space_by_participant_id_test()
+insert_score_by_participant_id_test()

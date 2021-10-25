@@ -1,4 +1,4 @@
-from add import ui_add_score
+from presentation.ui_add import ui_add_score
 from modify import ui_modify_score
 #from print import ui_print_score
 from filter import ui_filter_score
