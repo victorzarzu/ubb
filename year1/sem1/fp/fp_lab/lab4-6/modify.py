@@ -1,7 +1,7 @@
 from conversions import convert_id_number, convert_id_interval, convert_score_list
-from validations import validate_participant_id_number, validate_participant_id_interval, validate_score_list
+from validation.validations import validate_participant_id_number, validate_participant_id_interval, validate_score_list
 from computes import compute_average
-import participants
+import domain.participants as participants
 
 
 def delete_participant_score_by_id(par_l, id_number):

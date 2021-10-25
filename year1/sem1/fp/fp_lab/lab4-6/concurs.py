@@ -4,10 +4,10 @@ from modify import ui_modify_score
 from filter import ui_filter_score
 from operate import ui_operate_score
 
-import participants
+import domain.participants as participants
 import comparators
 import conversions
-import validations
+import validation.validations as validations
 from computes import compute_average
 
 def sort_participants_by_key_and_sort_mode(participants_stats, sort_key, sort_mode):

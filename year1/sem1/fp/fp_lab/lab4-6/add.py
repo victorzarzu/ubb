@@ -1,6 +1,6 @@
 from conversions import convert_score_list, convert_id_number
-from validations import validate_score_list, validate_participant_id_number, validate_score_list
-import participants
+from validation.validations import validate_score_list, validate_participant_id_number, validate_score_list
+import domain.participants as participants
 from computes import compute_average
 
 def add_score(par_l, score_l, max_scores):
