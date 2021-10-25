@@ -1,7 +1,7 @@
 import domain.participants as participants
-import comparators
-from computes import compute_average
-from conversions import convert_id_interval
+import infrastructure.comparators as comparators
+from infrastructure.computes import compute_average
+from infrastructure.conversions import convert_id_interval
 from validation.validations import validate_participant_id_interval
 
 def add_element_in_list(score_l, score):

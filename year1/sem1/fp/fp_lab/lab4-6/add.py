@@ -1,9 +1,9 @@
-from conversions import convert_score_list, convert_id_number
+from infrastructure.conversions import convert_score_list, convert_id_number
 from validation.validations import validate_score_list, validate_participant_id_number, validate_score_list
 import domain.participants as participants
-from computes import compute_average
+from infrastructure.computes import compute_average
 
-def add_score(par_l, score_l, max_scores):
+def svg_add_score(par_l, score_l, max_scores):
   """
   function that adds participant into par_l
   params: par_l - a list of participant items; score_l - a list of floats
@@ -23,20 +23,9 @@ def insert_score(par_l, score_l, id_number, max_scores):
   id_number = convert_id_number(id_number)
   validate_participant_id_number(par_l, id_number)
   score_l = convert_score_list(score_l)
-  max_scores_add = get_free_space_by_participant_id(par_l, id_number, max_scores)
+  max_scores_add = participants.get_free_space_by_participant_id(par_l, id_number, max_scores)
   validate_score_list(score_l, max_scores_add, max_scores)
   insert_score_by_participant_id(par_l, id_number, score_l)
-  
-
-def get_free_space_by_participant_id(par_l, id_number, max_scores):
-  """
-  function that returns the number of scores that can be inserted for the id_number-th participant
-  params: par_l - a list of participant items; id_number - an integer; max_scores - an integer
-  return: an integer representig the number of scores that can be inserted for the id_number-th participant
-  """
-  participant = participants.get_participant_by_id(par_l, id_number)
-  score_l = participants.get_participant_score(participant)
-  return max_scores - len(score_l)
 
 def insert_score_by_participant_id(par_l, id_number, score_l):
   """
@@ -54,7 +43,7 @@ def ui_add_score(par_l, max_scores):
   cmd = input().rstrip().lstrip()
   if cmd == "add":
     score_l = input("scores: ")
-    add_score(par_l, score_l, max_scores)
+    svg_add_score(par_l, score_l, max_scores)
   elif cmd == "insert":
     id_number = input("id: ") 
     score_l = input("scores: ")
@@ -90,33 +79,22 @@ def add_participant_list_test():
 
 def add_score_test():
   par_l = []
-  add_score(par_l, "9.8 1 5 1.4", 10)
+  svg_add_score(par_l, "9.8 1 5 1.4", 10)
   assert len(par_l) == 1
 
-  add_score(par_l, "9 1 8 10", 10)
+  svg_add_score(par_l, "9 1 8 10", 10)
 
   try:
-    add_score(par_l, "1 1 1 1 1 1 11 1 1 1 11 1 1 ", 10)
+    svg_add_score(par_l, "1 1 1 1 1 1 11 1 1 1 11 1 1 ", 10)
     assert False
   except Exception as ex:
     assert str(ex) == "too many scores trying to be added -> the maximum scores to be stored for a participant is 10!"
 
   try:
-    add_score(par_l, "9.6 1 1 / 6 7", 10)
+    svg_add_score(par_l, "9.6 1 1 / 6 7", 10)
     assert False
   except Exception as ex:
     assert str(ex) == "invalid numbers!"
- 
-
-def get_free_space_by_participant_id_test():
-  par_l = []
-  participants.add_participant_in_list(par_l, participants.create_participant(len(par_l), [5, 5, 5, 5, 7], compute_average([5, 5, 5, 5, 7])))
-  participants.add_participant_in_list(par_l, participants.create_participant(len(par_l), [9, 9.9, 9.423, 5, 1, 9], compute_average([9, 9.9, 9.423, 5, 1, 9])))
-  participants.add_participant_in_list(par_l, participants.create_participant(len(par_l), [1, 2, 3, 4, 5, 999], compute_average([1, 2, 3, 4, 5, 999])))
-  participants.add_participant_in_list(par_l, participants.create_participant(len(par_l), [1], 1))
-
-  free_space = get_free_space_by_participant_id(par_l, 1, 10)
-  assert free_space == 4
 
 def insert_score_by_participant_id_test():
   par_l = []
@@ -132,10 +110,10 @@ def insert_score_by_participant_id_test():
 
 def insert_score_test():
   par_l = []
-  add_score(par_l, "6 6 6 2 4 1", 10)
-  add_score(par_l, "6", 10)
-  add_score(par_l, "10 1.7 9.4", 10)
-  add_score(par_l, "9 9 2", 10)
+  svg_add_score(par_l, "6 6 6 2 4 1", 10)
+  svg_add_score(par_l, "6", 10)
+  svg_add_score(par_l, "10 1.7 9.4", 10)
+  svg_add_score(par_l, "9 9 2", 10)
 
   insert_score(par_l, "5 6", 0, 10)
   participant = participants.get_participant_by_id(par_l, 0)
@@ -166,6 +144,5 @@ def insert_score_test():
 
 convert_score_list_test()
 add_score_test()
-get_free_space_by_participant_id_test()
 insert_score_by_participant_id_test()
 insert_score_test()

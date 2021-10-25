@@ -1,6 +1,6 @@
-from conversions import convert_id_number, convert_id_interval, convert_score_list
+from infrastructure.conversions import convert_id_number, convert_id_interval, convert_score_list
 from validation.validations import validate_participant_id_number, validate_participant_id_interval, validate_score_list
-from computes import compute_average
+from infrastructure.computes import compute_average
 import domain.participants as participants
 
 

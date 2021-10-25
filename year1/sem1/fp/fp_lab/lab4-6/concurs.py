@@ -5,10 +5,10 @@ from filter import ui_filter_score
 from operate import ui_operate_score
 
 import domain.participants as participants
-import comparators
-import conversions
+import infrastructure.comparators as comparators
+import infrastructure.conversions as conversions
 import validation.validations as validations
-from computes import compute_average
+from infrastructure.computes import compute_average
 
 def sort_participants_by_key_and_sort_mode(participants_stats, sort_key, sort_mode):
   """
@@ -40,10 +40,7 @@ def create_string_for_print(participants_stats):
   """
   stats = ""
   for participant in participants_stats:
-    participant_id = participants.get_participant_id(participant)
-    participant_score_avg = participants.get_participant_score_avg(participant)
-    stats += "id: " +  str(participant_id) + "\n" + "score: " + "{:.2f}".format(participant_score_avg) + "\n"
-
+    stats += participants.participant_to_str(participant) 
   stats = stats[:-1]
   return stats
 

@@ -1,3 +1,4 @@
+import domain.participants as participants
 epsilon = 0.0000001
 
 def compute_average(score_l):
@@ -10,6 +11,9 @@ def compute_average(score_l):
     return sum(score_l) / len(score_l)
   else:
     return 0
+
+  free_space = get_free_space_by_participant_id(par_l, 1, 10)
+  assert free_space == 4
 
 def compute_average_test():
   average = compute_average([1, 2, 3])

@@ -1,7 +1,7 @@
 import domain.participants as participants
-import comparators
-from computes import compute_average
-import conversions
+import infrastructure.comparators as comparators
+from infrastructure.computes import compute_average
+import infrastructure.conversions as conversions
 import validation.validations as validations
 
 oo = 0x3f3f3f3f
