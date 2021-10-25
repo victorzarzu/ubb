@@ -1,242 +1,179 @@
 from add import ui_add_score
 from modify import ui_modify_score
-from order import ui_print_score
+#from print import ui_print_score
 from filter import ui_filter_score
-from order import ui_order_score
-
+from operate import ui_operate_score
 
 import participants
 import comparators
+import conversions
+import validations
 from computes import compute_average
-from conversions import convert_id_interval
-from validations import validate_participant_id_interval
 
-def add_element_in_list(score_l, score):
+def sort_participants_by_key_and_sort_mode(participants_stats, sort_key, sort_mode):
   """
-  function that adds score in score_l list
-  params: score_l - a list of floats; score - a float
+  function that sorts a list of participants by sort_key and sort_mode
+  params: participants_stats - a list of participant items; sort_key - a function; sort_mode - a string
   return: -
   """
-  score_l.append(score)
+  participants_stats.sort(key = sort_key, reverse = bool(sort_mode == "desc"))
 
-def create_participant_score_avg_list_by_interval(par_l, id_interval):
+def create_participants_list_that_satisfies_comparer(participants_stats, comparer, argument):
   """
-  function that returns a list with the score averages of all participants
-  params: par_l - a list of participant items; id_interval - a list of 2 integers
-  return: a list of floats
+  function that creates a list of participant items of participants that satisfies a comparer with a given argument
+  params: participants_stats - a list of participant items; comparer - a function; argument - a float number
+  return: a list of participant items
   """
-  average_list = []
-  for i in range(id_interval[0], id_interval[1] + 1):
-    participant_score_avg = participants.get_participant_score_avg(par_l[i])
-    add_element_in_list(average_list, participant_score_avg)
-  return average_list
+  participants_ = []
+  for participant in participants_stats:
+    participant_score_avg = participants.get_participant_score_avg(participant)
+    if comparer(participant_score_avg, argument):
+      participants.add_participant_in_list(participants_, participant)
 
-def svg_participants_average_by_id_interval(par_l, id_interval):
-  """
-  function that computes the average of the average scores of all participants in the inverval
-  params: par_l - a list of participant items; interval - a string
-  return: a float representing the average of the average scores of the participants in the given interval
-  """
-  id_interval = convert_id_interval(id_interval) 
-  validate_participant_id_interval(par_l, id_interval)
-  average_list = create_participant_score_avg_list_by_interval(par_l, id_interval)
-  average = compute_average(average_list)
-  return average
+  return participants_
 
-def minimum_score_by_interval(par_l, id_interval):
+def create_string_for_print(participants_stats):
   """
-  function that returns the minimum average score of a participant in a given interval of ids
-  params: par_l - a list of participant items; interval - a list of 2 intergers
-  return: a float
-  """
-  minimum = 11
-  for i in range(id_interval[0], id_interval[1] + 1):
-    participant_average_score = participants.get_participant_score_avg(par_l[i])
-    if comparators.comparer_smaller(participant_average_score, minimum):
-      minimum = participant_average_score
-  return minimum 
-
-def svg_minimum_score_by_interval(par_l, id_interval):
-  """
-  function that computes the minimum of the average scores of all participants in the inverval
-  params: par_l - a list of participant items; interval - a string
-  return: a float representing the minimum of the average scores of the participants in the given interval
-  """
-  id_interval = convert_id_interval(id_interval) 
-  validate_participant_id_interval(par_l, id_interval)
-  minimum = minimum_score_by_interval(par_l, id_interval)
-  return minimum
-
-
-def create_participant_id_if_multiple(par_l, id_interval, div):
-  """
-  function that creates a list of integers that are the ids of the participant that a score a multiple of div
-  params: par_l - a list of participant items; id_interval - a list of 2 integers; div: a float value
-  """
-  id_l = []
-  for i in range(id_interval[0], id_interval[1] + 1):
-    participant_average_score = participants.get_participant_score_avg(par_l[i])
-    participant_score = participants.get_participant_score(par_l[i])
-    participant_average_score *= len(participant_score) 
-    if comparators.comparer_divisible(participant_average_score, div):  
-      participant_id = participants.get_participant_id(par_l[i])
-      add_element_in_list(id_l, participant_id)
-  return id_l
-
-def create_string_ids(id_l):
-  """
-  creates a string to be shown based on the id_l list
-  params: id_l - a list  of intergers
+  function that creates a string to be printed for a given participant items list
+  params: participants_stats - a list of participant items
   return: a string
   """
-  if not len(id_l):
-    return "no participants!"
+  stats = ""
+  for participant in participants_stats:
+    participant_id = participants.get_participant_id(participant)
+    participant_score_avg = participants.get_participant_score_avg(participant)
+    stats += "id: " +  str(participant_id) + "\n" + "score: " + "{:.2f}".format(participant_score_avg) + "\n"
 
-  ids = "ids: "
-  for _id in id_l:
-    ids += str(_id) + " "
-  ids = ids[:-1]
-  return ids
+  stats = stats[:-1]
+  return stats
 
-def svg_participant_ids_if_multiple(par_l, id_interval, div):
+def svg_create_participants_stats_by_comparer(participants_stats, comparer, max_score):
   """
-  function that computes the ids of the participants that have the score a multiple of div 
-  params: par_l - a list of participant items; interval - a string; div - a float
-  return: a string 
+  function that returns a list of participant items with a score smaller than max_score
+  params: participants_stats - a list of participant items; max_score - a float
+  return: a list of participant items
   """
-  id_interval = convert_id_interval(id_interval) 
-  validate_participant_id_interval(par_l, id_interval)
-  id_l = create_participant_id_if_multiple(par_l, id_interval, div)
-  ids = create_string_ids(id_l)
-  return ids 
+  participants_ = []
+  max_score = conversions.convert_score(max_score)
+  validations.validate_score(max_score)
+  participants_ = create_participants_list_that_satisfies_comparer(participants_stats, comparer, max_score)
+  return participants_
 
-def ui_operate_score(par_l):
-  cmd = input().lstrip().rstrip()  
-  if cmd == "avg_int":
-    id_interval = input("id interval: ")
-    average = svg_participants_average_by_id_interval(par_l, id_interval)
-    print("{:.2f}".format(average)) 
-  elif cmd == "min_int":
-    id_interval = input("id_interval: ")
-    minimum = svg_minimum_score_by_interval(par_l, id_interval)
-    print("{:.2f}".format(minimum))
-  elif cmd == "mul_10":
-    id_interval = input("id interval: ")
-    ids = svg_participant_ids_if_multiple(par_l, id_interval, 10)
-    print(ids)
-  else:
-    print("invalid command!")
-
-
-def add_element_in_list_test():
-  score_l = []
-  add_element_in_list(score_l, 6)
-  add_element_in_list(score_l, 8)
-  add_element_in_list(score_l, 1)
-  assert score_l == [6, 8, 1]
-
-def create_participant_score_avg_list_by_interval_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-
-  average_list = create_participant_score_avg_list_by_interval(par_l, [0, 2])
-  assert average_list == [compute_average([8, 9, 9]), 1, 7]
+def svg_sort_participants_stats_by_sort_mode(participants_stats, sort_key, sort_mode):
+  """
+  function that returns a list of participant items sorted in sort_mode mode
+  params: participants_stats - a list of participant items; sort_mode - a string
+  return: a list of participant items
+  """
+  validations.validate_sort_mode(sort_mode)
+  sort_participants_by_key_and_sort_mode(participants_stats, sort_key, sort_mode)
   
-  participant = participants.create_participant(len(par_l), [6, 6, 6, 7], compute_average([6, 6, 6, 7]))
-  participants.add_participant_in_list(par_l, participant)
 
-  average_list = create_participant_score_avg_list_by_interval(par_l, [1, 3])
-  assert average_list == [1, 7, compute_average([6, 6, 6, 7])]
+def sort_participants_by_key_and_sort_mode_test():
+  participants_stats = []
+  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participants.add_participant_in_list(participants_stats, participant)
 
-def svg_participants_average_by_id_interval_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-  average = svg_participants_average_by_id_interval(par_l, "0 1")
-  assert average == compute_average([compute_average([8, 9, 9]), 1])
+  sort_participants_by_key_and_sort_mode(participants_stats, participants.get_participant_score_avg, "asc")
+  assert participants_stats == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}]
 
-def minimum_score_by_interval_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 2, 1, 1], compute_average([1, 2, 1, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-  minimum = minimum_score_by_interval(par_l, [0, 2])
-  assert minimum == compute_average([1, 2, 1, 1,])
+  sort_participants_by_key_and_sort_mode(participants_stats, participants.get_participant_score_avg, "desc")
+  assert participants_stats == [{'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 0, 'score': [1, 2, 3], 'score_avg': 2}]
 
-
-def svg_minimum_score_by_interval_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [5, 2, 4, 1], compute_average([5, 2, 4, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-  minimum = svg_minimum_score_by_interval(par_l, "0 2")
-  assert minimum == compute_average([5, 2, 4, 1])
-
-  participant = participants.create_participant(len(par_l), [1, 2, 1], compute_average([1, 2, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  minimum = svg_minimum_score_by_interval(par_l, "0 3")
-  assert minimum == compute_average([1, 2, 1]) 
-
-def create_participant_id_if_multiple_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [1, 2, 7], compute_average([1, 2, 7]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [5, 2, 4, 1], compute_average([5, 2, 4, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-  id_l = create_participant_id_if_multiple(par_l, [0, 2], 10)
-  assert id_l == [0]
+def create_participants_list_that_satisfies_comparer_test():
+  participants_stats = []
+  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participants.add_participant_in_list(participants_stats, participant)
   
-  participant = participants.create_participant(len(par_l), [5, 7, 7], compute_average([5, 7, 7]))
-  participants.add_participant_in_list(par_l, participant)
-  id_l = create_participant_id_if_multiple(par_l, [1, 3], 10)
-  assert id_l == []
-
-def svg_participant_ids_if_multiple_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [1, 2, 7], compute_average([1, 2, 7]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [5, 2, 4, 1], compute_average([5, 2, 4, 1]))
-  participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
-  participants.add_participant_in_list(par_l, participant)
-  id_l = svg_participant_ids_if_multiple(par_l, "0 2", 10)
-  assert id_l == "ids: 0"
+  participants_ = create_participants_list_that_satisfies_comparer(participants_stats, comparators.comparer_smaller, 8)
+  assert participants_ == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}]
   
-  participant = participants.create_participant(len(par_l), [5, 7, 7], compute_average([5, 7, 7]))
-  participants.add_participant_in_list(par_l, participant)
-  id_l = svg_participant_ids_if_multiple(par_l, "1 3", 10)
-  assert id_l == "no participants!" 
+  participants_ = create_participants_list_that_satisfies_comparer(participants_stats, comparators.comparer_bigger, 7)
+  assert participants_ == [{'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}]
 
-def create_string_ids_test():
-  id_l = [1, 7, 10, 20]
-  ids = create_string_ids(id_l)
-  assert ids == "ids: 1 7 10 20"
-  
-add_element_in_list_test()
-create_participant_score_avg_list_by_interval_test()
-svg_participants_average_by_id_interval_test()
-minimum_score_by_interval_test()
-svg_minimum_score_by_interval_test()
-create_participant_id_if_multiple_test()
-svg_participant_ids_if_multiple_test()
-create_string_ids_test()
+def create_string_for_print_test():
+  participants_stats = []
+  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participants.add_participant_in_list(participants_stats, participant)
+  stats = create_string_for_print(participants_stats)
+
+  assert stats == "id: 0\nscore: 2.00\nid: 1\nscore: 6.00\nid: 2\nscore: 8.67"
+
+def svg_create_participants_stats_by_comparer_test():
+  participants_stats = []
+  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participants.add_participant_in_list(participants_stats, participant)
+
+  participants_ = svg_create_participants_stats_by_comparer(participants_stats, comparators.comparer_smaller, "8")
+  assert participants_ == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}]
+
+  participants_ = svg_create_participants_stats_by_comparer(participants_, comparators.comparer_bigger, "9.8")
+  assert participants_ == []
+
+def svg_sort_participants_stats_by_sort_mode_test():
+  participants_stats = []
+  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participants.add_participant_in_list(participants_stats, participant)
+  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participants.add_participant_in_list(participants_stats, participant)
+
+  svg_sort_participants_stats_by_sort_mode(participants_stats, participants.get_participant_score_avg, "asc")
+  assert participants_stats == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}]
+
+  svg_sort_participants_stats_by_sort_mode(participants_stats, participants.get_participant_score_avg, "desc")
+  assert participants_stats == [{'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 0, 'score': [1, 2, 3], 'score_avg': 2}]
+
+
+sort_participants_by_key_and_sort_mode_test()
+create_participants_list_that_satisfies_comparer_test()
+create_string_for_print_test()
+svg_create_participants_stats_by_comparer_test()
+svg_sort_participants_stats_by_sort_mode_test()
+
+def ui_print_score(par_l):
+  participants_stats = par_l[:]
+  cmd = input().lstrip().rstrip()
+  try:
+    if cmd == "print_1":
+      max_score = input("smaller than: ")
+      participants_ = svg_create_participants_stats_by_comparer(participants_stats, comparators.comparer_smaller, max_score)
+      stats = create_string_for_print(participants_)
+      print(stats)
+    elif cmd == "print_2":
+      sort_mode = input("asc or desc: ")
+      svg_sort_participants_stats_by_sort_mode(participants_stats, participants.get_participant_score_avg, sort_mode) 
+      stats = create_string_for_print(participants_stats)
+      print(stats)
+    elif cmd == "print_3":
+      min_score = input("bigger than: ")
+      sort_mode = input("asc or desc: ")
+      participants_ = svg_create_participants_stats_by_comparer(participants_stats, comparators.comparer_bigger, min_score)
+      svg_sort_participants_stats_by_sort_mode(participants_, participants.get_participant_score_avg, sort_mode) 
+      stats = create_string_for_print(participants_)
+      print(stats)
+    else:
+      print("invalid command!")
+  except Exception as ex:
+    print(ex)
+  pass
 
 def ui():
   par_l = []
