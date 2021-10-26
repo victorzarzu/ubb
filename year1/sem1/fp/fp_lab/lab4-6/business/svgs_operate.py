@@ -43,23 +43,6 @@ def svg_participant_ids_if_multiple(par_l, id_interval, div):
   ids = strings.create_string_ids(id_l)
   return ids 
 
-def ui_operate_score(par_l):
-  cmd = input().lstrip().rstrip()  
-  if cmd == "avg_int":
-    id_interval = input("id interval: ")
-    average = svg_participants_average_by_id_interval(par_l, id_interval)
-    print("{:.2f}".format(average)) 
-  elif cmd == "min_int":
-    id_interval = input("id interval: ")
-    minimum = svg_minimum_score_by_interval(par_l, id_interval)
-    print("{:.2f}".format(minimum))
-  elif cmd == "mul_10":
-    id_interval = input("id interval: ")
-    ids = svg_participant_ids_if_multiple(par_l, id_interval, 10)
-    print(ids)
-  else:
-    print("invalid command!")
-
 def svg_participants_average_by_id_interval_test():
   par_l = []
   participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))

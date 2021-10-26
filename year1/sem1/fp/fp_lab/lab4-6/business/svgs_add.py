@@ -2,6 +2,7 @@ from infrastructure.conversions import convert_score_list, convert_id_number
 from validation.validations import validate_score_list, validate_participant_id_number, validate_score_list
 import domain.participants as participants
 from infrastructure.computes import compute_average
+import infrastructure.lists as lists
 
 def svg_add_score(par_l, score_l, max_scores):
   """
@@ -23,16 +24,9 @@ def svg_insert_score(par_l, score_l, id_number, max_scores):
   id_number = convert_id_number(id_number)
   validate_participant_id_number(par_l, id_number)
   score_l = convert_score_list(score_l)
-  max_scores_add = participants.get_free_space_by_participant_id(par_l, id_number, max_scores)
+  max_scores_add = lists.get_free_space_by_participant_id(par_l, id_number, max_scores)
   validate_score_list(score_l, max_scores_add, max_scores)
   participants.insert_score_by_participant_id(par_l, id_number, score_l)
-
-def add_participant_list_test():
-  par_l = []
-  participant = participants.create_participant(len(par_l), [6.2, 7, 7, 1, 4.5, 1.99], compute_average([6.2, 7, 7, 1, 4.5, 1.99]))
-  participants.add_participant_in_list(par_l, participant)
-  assert len(par_l) == 1
-  assert par_l[0] == {'id': 0, 'score': [6.2, 7, 7, 1, 4.5, 1.99], 'score_avg': compute_average([6.2, 7, 7, 1, 4.5, 1.99])}
 
 def svg_add_score_test():
   par_l = []

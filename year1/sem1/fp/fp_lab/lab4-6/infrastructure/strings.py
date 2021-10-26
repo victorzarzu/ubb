@@ -13,6 +13,21 @@ def create_string_for_print(participants_stats):
   stats = stats[:-1]
   return stats
 
+def create_string_ids(id_l):
+  """
+  creates a string to be shown based on the id_l list
+  params: id_l - a list  of intergers
+  return: a string
+  """
+  if not len(id_l):
+    return "no participants!"
+
+  ids = "ids: "
+  for _id in id_l:
+    ids += str(_id) + " "
+  ids = ids[:-1]
+  return ids
+
 def create_string_for_print_test():
   participants_stats = []
   participant = participants.create_participant(0, [1, 2, 3], 2)
@@ -25,4 +40,10 @@ def create_string_for_print_test():
 
   assert stats == "id: 0\nscore: 2.00\nid: 1\nscore: 6.00\nid: 2\nscore: 8.67"
 
+def create_string_ids_test():
+  id_l = [1, 7, 10, 20]
+  ids = create_string_ids(id_l)
+  assert ids == "ids: 1 7 10 20"
+
 create_string_for_print_test()
+create_string_ids_test()

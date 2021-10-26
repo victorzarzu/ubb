@@ -1,6 +1,7 @@
 import infrastructure.comparators
 from validation.validations import validate_score_print
 from infrastructure.computes import compute_average
+import infrastructure.comparators as comparators
 
 def create_participant(id_number, score_l, score_avg):
   """ function that creates a participant
@@ -78,15 +79,6 @@ def participant_to_str(participant):
     par_str += "score: " + "{:.2f}".format(participant_score_avg) + "\n"
   return par_str
  
-def get_free_space_by_participant_id(par_l, id_number, max_scores):
-  """
-  function that returns the number of scores that can be inserted for the id_number-th participant
-  params: par_l - a list of participant items; id_number - an integer; max_scores - an integer
-  return: an integer representig the number of scores that can be inserted for the id_number-th participant
-  """
-  participant = get_participant_by_id(par_l, id_number)
-  score_l = get_participant_score(participant)
-  return max_scores - len(score_l)
 
 def insert_score_by_participant_id(par_l, id_number, score_l):
   """
@@ -126,6 +118,7 @@ def replace_participant_score_by_id(par_l, id_number, score_l):
   """
   participant = create_participant(id_number, score_l, compute_average(score_l))
   change_participant_by_id(par_l, id_number, participant)
+
 
 def create_pariticipant_test():
   participant = create_participant(4, [8.9], 8.9)
@@ -196,13 +189,6 @@ def participant_to_str_test():
   participant = create_participant(0, [1, 2, 3], 2)
   par_str = participant_to_str(participant)
   assert par_str == "id: 0\nscore: 2.00\n"
-
-def get_free_space_by_participant_id_test():
-  par_l = []
-  add_participant_in_list(par_l, create_participant(len(par_l), [5, 5, 5, 5, 7], compute_average([5, 5, 5, 5, 7])))
-  add_participant_in_list(par_l, create_participant(len(par_l), [9, 9.9, 9.423, 5, 1, 9], compute_average([9, 9.9, 9.423, 5, 1, 9])))
-  add_participant_in_list(par_l, create_participant(len(par_l), [1, 2, 3, 4, 5, 999], compute_average([1, 2, 3, 4, 5, 999])))
-  add_participant_in_list(par_l, create_participant(len(par_l), [1], 1))
 
 def insert_score_by_participant_id_test():
   par_l = []
@@ -276,5 +262,4 @@ get_participant_score_avg_test()
 get_participant_by_id_test()
 add_participant_in_list_test()
 participant_to_str_test()
-get_free_space_by_participant_id_test()
 insert_score_by_participant_id_test()
