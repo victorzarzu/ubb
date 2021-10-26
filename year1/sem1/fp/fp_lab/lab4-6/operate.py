@@ -110,7 +110,7 @@ def ui_operate_score(par_l):
     average = svg_participants_average_by_id_interval(par_l, id_interval)
     print("{:.2f}".format(average)) 
   elif cmd == "min_int":
-    id_interval = input("id_interval: ")
+    id_interval = input("id interval: ")
     minimum = svg_minimum_score_by_interval(par_l, id_interval)
     print("{:.2f}".format(minimum))
   elif cmd == "mul_10":

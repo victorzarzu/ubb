@@ -1,4 +1,5 @@
 import infrastructure.comparators
+from validation.validations import validate_score_print
 from infrastructure.computes import compute_average
 
 def create_participant(id_number, score_l, score_avg):
@@ -71,9 +72,10 @@ def participant_to_str(participant):
   """
   par_str = ""
   participant_id = get_participant_id(participant)
-  par_str += "id: " + str(participant_id) + "\n"
   participant_score_avg = get_participant_score_avg(participant)
-  par_str += "score: " + "{:.2f}".format(participant_score_avg) + "\n"
+  if validate_score_print(participant_score_avg):
+    par_str += "id: " + str(participant_id) + "\n"
+    par_str += "score: " + "{:.2f}".format(participant_score_avg) + "\n"
   return par_str
  
 def get_free_space_by_participant_id(par_l, id_number, max_scores):
