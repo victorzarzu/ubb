@@ -3,6 +3,8 @@ from validation.validations import validate_score_print
 from infrastructure.computes import compute_average
 import infrastructure.comparators as comparators
 
+oo = 0x3f3f3f3f
+
 def create_participant(id_number, score_l, score_avg):
   """ function that creates a participant
   params: id_number - an integer; score_l - a float list; score_avg - a float
@@ -118,6 +120,19 @@ def replace_participant_score_by_id(par_l, id_number, score_l):
   """
   participant = create_participant(id_number, score_l, compute_average(score_l))
   change_participant_by_id(par_l, id_number, participant)
+
+def filter_participants_by_comparer(par_l, comparer, argument):
+  """
+  function that modifies par_l filtering participants with a score that satisfies the comparer
+  params: par_l - a list of participant items; comparer - a comparer function; argument - a float number 
+  return: -  
+  """
+  for participant in par_l:
+    participant_score_avg = get_participant_score_avg(participant)
+    participant_id = get_participant_id(participant)
+    if not comparer(participant_score_avg, argument):
+      participant_modify = create_participant(participant_id, [], oo)
+      change_participant_by_id(par_l, participant_id, participant_modify)
 
 
 def create_pariticipant_test():
@@ -249,8 +264,20 @@ def replace_participant_score_by_id_test():
   assert par_l == [{'id': 0, 'score' : [1, 1], 'score_avg': compute_average([1, 1])}, {'id': 1, 'score': [1.6, 1.8, 1, 10], 'score_avg' : compute_average([1.6, 1.8, 1, 10])}, {'id': 2, 'score': [6, 7.66, 9.9999, 1], 'score_avg': compute_average([6, 7.66, 9.9999, 1])}]
 
   replace_participant_score_by_id(par_l, 2, [1, 6])
-  assert par_l == [{'id': 0, 'score' : [1, 1], 'score_avg': compute_average([1, 1])}, {'id': 1, 'score': [1.6, 1.8, 1, 10], 'score_avg' : compute_average([1.6, 1.8, 1, 10])}, {'id': 2, 'score': [1, 6], 'score_avg': compute_average([1, 6])}
-]
+  assert par_l == [{'id': 0, 'score' : [1, 1], 'score_avg': compute_average([1, 1])}, {'id': 1, 'score': [1.6, 1.8, 1, 10], 'score_avg' : compute_average([1.6, 1.8, 1, 10])}, {'id': 2, 'score': [1, 6], 'score_avg': compute_average([1, 6])}]
+
+def filter_participants_by_comparer_test():
+  par_l = []
+  participant = create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
+  add_participant_in_list(par_l, participant)
+  participant = create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
+  add_participant_in_list(par_l, participant)
+  participant = create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  add_participant_in_list(par_l, participant)
+  filter_participants_by_comparer(par_l, comparators.comparer_smaller, 7.001)
+  assert par_l == [{'id': 0, 'score': [], 'score_avg': oo}, {'id': 1, 'score': [1, 1, 1, 1], 'score_avg': 1}, {'id': 2, 'score': [6, 7, 8], 'score_avg': 7}]
+  filter_participants_by_comparer(par_l, comparators.comparer_divisible, compute_average([8, 9, 9]) / 7)
+  assert par_l == [{'id': 0, 'score': [], 'score_avg': oo}, {'id': 1, 'score': [], 'score_avg': oo}, {'id': 2, 'score': [], 'score_avg': oo}]
 
 delete_participant_score_by_id_test()
 delete_participant_score_by_id_interval_test()
@@ -263,3 +290,4 @@ get_participant_by_id_test()
 add_participant_in_list_test()
 participant_to_str_test()
 insert_score_by_participant_id_test()
+filter_participants_by_comparer_test()

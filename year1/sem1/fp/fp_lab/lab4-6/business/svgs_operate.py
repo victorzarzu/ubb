@@ -6,7 +6,6 @@ from validation.validations import validate_participant_id_interval
 import infrastructure.lists as lists
 import infrastructure.strings as strings
 
-
 def svg_participants_average_by_id_interval(par_l, id_interval):
   """
   function that computes the average of the average scores of all participants in the inverval
