@@ -30,34 +30,66 @@ def svg_sort_participants_stats_by_sort_mode(participants_stats, sort_key, sort_
 
 def svg_create_participants_stats_by_comparer_test():
   participants_stats = []
-  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participant = participants.create_participant(0, [1, 2, 3])
   participants.add_participant_in_list(participants_stats, participant)
-  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participant = participants.create_participant(1, [5, 6, 7])
   participants.add_participant_in_list(participants_stats, participant)
-  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participant = participants.create_participant(2, [9, 8, 9])
   participants.add_participant_in_list(participants_stats, participant)
 
   participants_ = svg_create_participants_stats_by_comparer(participants_stats, comparators.comparer_smaller, "8")
-  assert participants_ == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}]
+
+  assert len(participants_) == 2
+  participant = participants.get_participant_by_id(participants_, 0)
+  participant_id = participants.get_participant_id(participant)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_id == 0
+  assert participant_score == [1, 2, 3]
+
+  participant = participants.get_participant_by_id(participants_, 1)
+  participant_id = participants.get_participant_id(participant)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_id == 1
+  assert participant_score == [5, 6, 7]
 
   participants_ = svg_create_participants_stats_by_comparer(participants_, comparators.comparer_bigger, "9.8")
   assert participants_ == []
 
 def svg_sort_participants_stats_by_sort_mode_test():
   participants_stats = []
-  participant = participants.create_participant(0, [1, 2, 3], 2)
+  participant = participants.create_participant(0, [1, 2, 3])
   participants.add_participant_in_list(participants_stats, participant)
-  participant = participants.create_participant(1, [5, 6, 7], compute_average([5, 6, 7]))
+  participant = participants.create_participant(1, [5, 6, 7])
   participants.add_participant_in_list(participants_stats, participant)
-  participant = participants.create_participant(2, [9, 8, 9], compute_average([9, 8, 9]))
+  participant = participants.create_participant(2, [9, 8, 9])
   participants.add_participant_in_list(participants_stats, participant)
 
   svg_sort_participants_stats_by_sort_mode(participants_stats, participants.get_participant_score_avg, "asc")
-  assert participants_stats == [{'id': 0, 'score': [1, 2, 3], 'score_avg': 2}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}]
+  participant = participants.get_participant_by_id(participants_stats, 0)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [1, 2, 3]
+
+  participant = participants.get_participant_by_id(participants_stats, 1)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [5, 6, 7]
+
+  participant = participants.get_participant_by_id(participants_stats, 2)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [9, 8, 9]
 
   svg_sort_participants_stats_by_sort_mode(participants_stats, participants.get_participant_score_avg, "desc")
-  assert participants_stats == [{'id': 2, 'score': [9, 8, 9], 'score_avg': compute_average([9, 8, 9])}, {'id': 1, 'score': [5, 6, 7], 'score_avg': compute_average([5, 6, 7])}, {'id': 0, 'score': [1, 2, 3], 'score_avg': 2}]
 
+  participant = participants.get_participant_by_id(participants_stats, 0)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [9, 8, 9]
+
+  participant = participants.get_participant_by_id(participants_stats, 1)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [5, 6, 7]
+
+  participant = participants.get_participant_by_id(participants_stats, 2)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [1, 2, 3]
 
 svg_create_participants_stats_by_comparer_test()
 svg_sort_participants_stats_by_sort_mode_test()

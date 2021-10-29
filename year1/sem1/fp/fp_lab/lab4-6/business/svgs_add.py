@@ -13,7 +13,7 @@ def svg_add_score(par_l, score_l, max_scores):
   score_l = convert_score_list(score_l)
   validate_score_list(score_l, max_scores, max_scores)
   score_avg = compute_average(score_l)
-  participant = participants.create_participant(len(par_l), score_l, score_avg)
+  participant = participants.create_participant(len(par_l), score_l)
   participants.add_participant_in_list(par_l, participant)
 
 def svg_insert_score(par_l, score_l, id_number, max_scores):
@@ -34,6 +34,14 @@ def svg_add_score_test():
   assert len(par_l) == 1
 
   svg_add_score(par_l, "9 1 8 10", 10)
+
+  participant = participants.get_participant_by_id(par_l, 0)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [9.8, 1, 5, 1.4]
+
+  participant = participants.get_participant_by_id(par_l, 1)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [9, 1, 8, 10]
 
   try:
     svg_add_score(par_l, "1 1 1 1 1 1 11 1 1 1 11 1 1 ", 10)
@@ -56,11 +64,13 @@ def svg_insert_score_test():
 
   svg_insert_score(par_l, "5 6", 0, 10)
   participant = participants.get_participant_by_id(par_l, 0)
-  assert participants.get_participant_score(participant) == [6, 6, 6, 2, 4, 1, 5, 6] 
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [6, 6, 6, 2, 4, 1, 5, 6] 
 
   svg_insert_score(par_l, "10 10 10", 1, 10)
   participant = participants.get_participant_by_id(par_l, 1)
-  assert participants.get_participant_score(participant) == [6, 10, 10, 10] 
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [6, 10, 10, 10] 
   
   try: 
     svg_insert_score(par_l, "1 1 1 1 1 1 1 1 6 7", 2, 10)

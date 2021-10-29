@@ -29,14 +29,21 @@ def svg_filter_divisible_with(par_l, div):
 
 def svg_filter_smaller_than_test():
   par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
+  participant = participants.create_participant(len(par_l), [8, 9, 9])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
+  participant = participants.create_participant(len(par_l), [1, 1, 1, 1])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
+
   svg_filter_smaller_than(par_l, 7.001)
-  assert par_l == [{'id': 0, 'score': [], 'score_avg': oo}, {'id': 1, 'score': [1, 1, 1, 1], 'score_avg': compute_average([1, 1, 1, 1])}, {'id': 2, 'score': [6, 7, 8], 'score_avg': compute_average([6, 7, 8])}]
+  participant = participants.get_participant_by_id(par_l, 0)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [oo]
+
+  participant = participants.get_participant_by_id(par_l, 2)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [6, 7, 8]
 
   try:
     svg_filter_smaller_than(par_l, 10.7)
@@ -46,14 +53,25 @@ def svg_filter_smaller_than_test():
 
 def svg_filter_divisible_with_test():
   par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
+  participant = participants.create_participant(len(par_l), [8, 9, 9])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
+  participant = participants.create_participant(len(par_l), [1, 1, 1, 1])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
+
   svg_filter_divisible_with(par_l, compute_average([8, 9, 9]) / 7)
-  assert par_l == [{'id': 0, 'score': [8, 9, 9], 'score_avg': compute_average([8, 9, 9])}, {'id': 1, 'score': [], 'score_avg': oo}, {'id': 2, 'score': [], 'score_avg': oo}]
+  participant = participants.get_participant_by_id(par_l, 0)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [8, 9, 9]
+  
+  participant = participants.get_participant_by_id(par_l, 1)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [oo]
+
+  participant = participants.get_participant_by_id(par_l, 2)
+  participant_score = participants.get_participant_score(participant)
+  assert participant_score == [oo]
 
   try:
     svg_filter_divisible_with(par_l, 10.7)

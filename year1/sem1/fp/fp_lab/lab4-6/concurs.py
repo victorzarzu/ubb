@@ -4,42 +4,31 @@ from presentation.ui_modify import ui_modify_score
 #from print import ui_print_score
 from presentation.ui_filter import ui_filter_score
 from presentation.ui_operate import ui_operate_score
+import domain.undos
 
 def ui():
   par_l = []
   max_scores = 10
   while True:
-    cmd = input().rstrip().lstrip()
-    if cmd == "exit":
-      break
-    if cmd == "1":
-      try:
+    try:
+      cmd = input().rstrip().lstrip()
+      if cmd == "exit":
+        break
+      if cmd == "1":
         ui_add_score(par_l, max_scores)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "2":
-      try:
+      elif cmd == "2":
         ui_modify_score(par_l, max_scores)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "3":
-      try:
+      elif cmd == "3":
         ui_print_score(par_l)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "4":
-      try:
+      elif cmd == "4":
         ui_operate_score(par_l)
-      except Exception as ex:
-        print(ex)
-    elif cmd == "5":
-      try:
+      elif cmd == "5":
         ui_filter_score(par_l)
-      except Exception as ex:
-        print(ex)
-    else:
-      print("invalid command!")
-
+      else:
+        print("invalid command!")
+    except Exception as ex:
+      print(ex)
+  
 def main():
   ui()
 

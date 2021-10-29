@@ -44,11 +44,11 @@ def svg_participant_ids_if_multiple(par_l, id_interval, div):
 
 def svg_participants_average_by_id_interval_test():
   par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
+  participant = participants.create_participant(len(par_l), [8, 9, 9])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [1, 1, 1, 1], compute_average([1, 1, 1, 1]))
+  participant = participants.create_participant(len(par_l), [1, 1, 1, 1])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
   average = svg_participants_average_by_id_interval(par_l, "0 1")
   assert average == compute_average([compute_average([8, 9, 9]), 1])
@@ -56,32 +56,32 @@ def svg_participants_average_by_id_interval_test():
 
 def svg_minimum_score_by_interval_test():
   par_l = []
-  participant = participants.create_participant(len(par_l), [8, 9, 9], compute_average([8, 9, 9]))
+  participant = participants.create_participant(len(par_l), [8, 9, 9])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [5, 2, 4, 1], compute_average([5, 2, 4, 1]))
+  participant = participants.create_participant(len(par_l), [5, 2, 4, 1])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
   minimum = svg_minimum_score_by_interval(par_l, "0 2")
   assert minimum == compute_average([5, 2, 4, 1])
 
-  participant = participants.create_participant(len(par_l), [1, 2, 1], compute_average([1, 2, 1]))
+  participant = participants.create_participant(len(par_l), [1, 2, 1])
   participants.add_participant_in_list(par_l, participant)
   minimum = svg_minimum_score_by_interval(par_l, "0 3")
   assert minimum == compute_average([1, 2, 1]) 
 
 def svg_participant_ids_if_multiple_test():
   par_l = []
-  participant = participants.create_participant(len(par_l), [1, 2, 7], compute_average([1, 2, 7]))
+  participant = participants.create_participant(len(par_l), [1, 2, 7])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [5, 2, 4, 1], compute_average([5, 2, 4, 1]))
+  participant = participants.create_participant(len(par_l), [5, 2, 4, 1])
   participants.add_participant_in_list(par_l, participant)
-  participant = participants.create_participant(len(par_l), [6, 7, 8], compute_average([6, 7, 8]))
+  participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
   id_l = svg_participant_ids_if_multiple(par_l, "0 2", 10)
   assert id_l == "ids: 0"
   
-  participant = participants.create_participant(len(par_l), [5, 7, 7], compute_average([5, 7, 7]))
+  participant = participants.create_participant(len(par_l), [5, 7, 7])
   participants.add_participant_in_list(par_l, participant)
   id_l = svg_participant_ids_if_multiple(par_l, "1 3", 10)
   assert id_l == "no participants!" 
