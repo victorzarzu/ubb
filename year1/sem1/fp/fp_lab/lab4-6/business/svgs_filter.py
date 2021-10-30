@@ -6,25 +6,25 @@ import validation.validations as validations
 
 oo = 0x3f3f3f3f
 
-def svg_filter_smaller_than(par_l, max_score):
+def svg_filter_smaller_than(par_l, max_score, undo_stage):
   """
   function that filters the participants with a score smaller than max_score
-  params: par_l - a list of participants items; max_score - a float
+  params: par_l - a list of participants items; max_score - a float; undo_stage - a list of undo_operation items
   return: - 
   """
   max_score = conversions.convert_score(max_score)
   validations.validate_score(max_score)
-  par_l = participants.filter_participants_by_comparer(par_l, comparators.comparer_smaller, max_score)
+  par_l = participants.filter_participants_by_comparer(par_l, comparators.comparer_smaller, max_score, undo_stage)
 
-def svg_filter_divisible_with(par_l, div):
+def svg_filter_divisible_with(par_l, div, undo_stage):
   """
   function that filters the participants with a score smaller than max_score
-  params: par_l - a list of participants items; max_score - a float
+  params: par_l - a list of participants items; max_score - a float; a list of undo_operation items
   return: - 
   """
   div = conversions.convert_score(div)
   validations.validate_score(div)
-  par_l = participants.filter_participants_by_comparer(par_l, comparators.comparer_divisible, div)
+  par_l = participants.filter_participants_by_comparer(par_l, comparators.comparer_divisible, div, undo_stage)
 
 
 def svg_filter_smaller_than_test():
@@ -36,7 +36,7 @@ def svg_filter_smaller_than_test():
   participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
 
-  svg_filter_smaller_than(par_l, 7.001)
+  svg_filter_smaller_than(par_l, 7.001, [])
   participant = participants.get_participant_by_id(par_l, 0)
   participant_score = participants.get_participant_score(participant)
   assert participant_score == [oo]
@@ -46,7 +46,7 @@ def svg_filter_smaller_than_test():
   assert participant_score == [6, 7, 8]
 
   try:
-    svg_filter_smaller_than(par_l, 10.7)
+    svg_filter_smaller_than(par_l, 10.7, [])
     assert False
   except Exception as ex:
     assert str(ex) == "scores must be between 1 and 10!"
@@ -60,7 +60,7 @@ def svg_filter_divisible_with_test():
   participant = participants.create_participant(len(par_l), [6, 7, 8])
   participants.add_participant_in_list(par_l, participant)
 
-  svg_filter_divisible_with(par_l, compute_average([8, 9, 9]) / 7)
+  svg_filter_divisible_with(par_l, compute_average([8, 9, 9]) / 7, [])
   participant = participants.get_participant_by_id(par_l, 0)
   participant_score = participants.get_participant_score(participant)
   assert participant_score == [8, 9, 9]
@@ -74,7 +74,7 @@ def svg_filter_divisible_with_test():
   assert participant_score == [oo]
 
   try:
-    svg_filter_divisible_with(par_l, 10.7)
+    svg_filter_divisible_with(par_l, 10.7, [])
     assert False
   except Exception as ex:
     assert str(ex) == "scores must be between 1 and 10!"

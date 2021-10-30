@@ -2,6 +2,7 @@ import infrastructure.comparators
 from validation.validations import validate_score_print
 from infrastructure.computes import compute_average
 import infrastructure.comparators as comparators
+import domain.undos as undos
 
 oo = 0x3f3f3f3f
 
@@ -53,9 +54,10 @@ def get_participant_by_id(par_l, id_number):
 def add_participant_in_list(par_l, participant):
   """
   function that adds a participant to par_l
-  params: par_l - a list of list of floats; participant - a participant item
+  params: par_l - a list of list of floats; participant - a participant item; undo - list of undo_operation items
   return: -
-  """
+  """ 
+
   par_l.append(participant)
 
 def remove_participant_from_list(par_l):
@@ -66,12 +68,16 @@ def remove_participant_from_list(par_l):
   """
   par_l.pop()
 
-def change_participant_by_id(par_l, id_number, participant):
+def change_participant_by_id(par_l, id_number, participant, undo_stage):
   """
   function that changes the participant with id_number in par_l list with participant
-  params: par_l - a list of participant items; id_numer - an integer; participant - a participant item
+  params: par_l - a list of participant items; id_numer - an integer; participant - a participant item; undo_stage - a list of undo_operation_items
   return: -
   """
+  participant_score = get_participant_score(get_participant_by_id(par_l, id_number))[:]
+  undo_operation = undos.create_undo_operation(replace_participant_score_by_id, [par_l, id_number, participant_score, []])
+  undos.add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+
   par_l[id_number] = participant
 
 def participant_to_str(participant):
@@ -87,51 +93,51 @@ def participant_to_str(participant):
     par_str += "id: " + str(participant_id) + "\n"
     par_str += "score: " + "{:.2f}".format(participant_score_avg) + "\n"
   return par_str
- 
 
-def insert_score_by_participant_id(par_l, id_number, score_l):
+def insert_score_by_participant_id(par_l, id_number, score_l, undo_stage):
   """
   function that adds the scores in the score_l into the score list coresponding to the id_number-th participant
-  params: par_l - a list of participant items; id_number - integer; score_l - a list of floats
+  params: par_l - a list of participant items; id_number - integer; score_l - a list of floats; undo_stage - a list of undo_operation items
   return: -
   """
   participant = get_participant_by_id(par_l, id_number)
   participant_score = get_participant_score(participant)
   participant_score.extend(score_l)
   participant = create_participant(id_number, participant_score)
-  change_participant_by_id(par_l, id_number, participant)
+  change_participant_by_id(par_l, id_number, participant, undo_stage)
   
-def delete_participant_score_by_id(par_l, id_number):
+def delete_participant_score_by_id(par_l, id_number, undo_stage):
   """
   function that deletes the score list of the id_numer-th participant
-  params: par_l - a list of participant items; id_number - an integer
+  params: par_l - a list of participant items; id_number - an integer; undo_stage - a list of undo_operation items
   return: -, if the deletion is complete
   """
   participant = create_participant(id_number, [0])
-  change_participant_by_id(par_l, id_number, participant)
+  change_participant_by_id(par_l, id_number, participant, undo_stage)
 
-def delete_participant_score_by_id_interval(par_l, id_interval):
+def delete_participant_score_by_id_interval(par_l, id_interval, undo_stage):
   """
   function that deletes the score list of the participants that have an id in id_interval
-  par_l: par_l - a list of participant; id_interval - a list of 2 integers
+  par_l: par_l - a list of participant; id_interval - a list of 2 integers; undo_stage - list of undo_operation items
   return -, if the deletion is complete
   """
   for i in range(id_interval[0], id_interval[1] + 1):
-    delete_participant_score_by_id(par_l, i)
+    delete_participant_score_by_id(par_l, i, undo_stage)
 
-def replace_participant_score_by_id(par_l, id_number, score_l):
+def replace_participant_score_by_id(par_l, id_number, score_l, undo_stage):
   """
   function that replaces the score in the par_l of the id_number-th participant with score_l score list
-  params: par_l - a list of lists of floats; id_numer - an integer; score_l - a list of floats
+  params: par_l - a list of lists of floats; id_numer - an integer; score_l - a list of floats; undo_stage - a list of undo_operation items
   return: -
   """
+  
   participant = create_participant(id_number, score_l)
-  change_participant_by_id(par_l, id_number, participant)
+  change_participant_by_id(par_l, id_number, participant, undo_stage)
 
-def filter_participants_by_comparer(par_l, comparer, argument):
+def filter_participants_by_comparer(par_l, comparer, argument, undo_stage):
   """
   function that modifies par_l filtering participants with a score that satisfies the comparer
-  params: par_l - a list of participant items; comparer - a comparer function; argument - a float number 
+  params: par_l - a list of participant items; comparer - a comparer function; argument - a float number; undo_stage - a list of undo_operation items
   return: -  
   """
   for participant in par_l:
@@ -139,7 +145,7 @@ def filter_participants_by_comparer(par_l, comparer, argument):
     participant_id = get_participant_id(participant)
     if not comparer(participant_score_avg, argument):
       participant_modify = create_participant(participant_id, [oo])
-      change_participant_by_id(par_l, participant_id, participant_modify)
+      change_participant_by_id(par_l, participant_id, participant_modify, undo_stage)
 
 def get_participant_id_test():
   participant = create_participant(6, [5, 2, 1, 7])
@@ -235,7 +241,7 @@ def insert_score_by_participant_id_test():
   add_participant_in_list(par_l, create_participant(len(par_l), [1]))
 
 
-  insert_score_by_participant_id(par_l, 0, [5, 9.1, 6.7])
+  insert_score_by_participant_id(par_l, 0, [5, 9.1, 6.7], [])
   participant = get_participant_by_id(par_l, 0)
 
   participant_id = get_participant_id(participant)
@@ -253,7 +259,7 @@ def delete_participant_score_by_id_test():
   add_participant_in_list(par_l, participant)
   participant = create_participant(2, [6, 7.66, 9.9999, 1])
   add_participant_in_list(par_l, participant)
-  delete_participant_score_by_id(par_l, 1)
+  delete_participant_score_by_id(par_l, 1, [])
 
   assert len(par_l) == 3
 
@@ -261,7 +267,7 @@ def delete_participant_score_by_id_test():
   participant_score_avg = get_participant_score_avg(participant)
   assert participant_score_avg == 0 
 
-  delete_participant_score_by_id(par_l, 0)
+  delete_participant_score_by_id(par_l, 0, [])
 
   participant = get_participant_by_id(par_l, 0)
   participant_score_avg = get_participant_score_avg(participant)
@@ -281,7 +287,7 @@ def delete_participant_score_by_id_interval_test():
   participant = create_participant(4, [1, 6.77, 4, 7, 7, 9])
   add_participant_in_list(par_l, participant)
 
-  delete_participant_score_by_id_interval(par_l, [1, 3])
+  delete_participant_score_by_id_interval(par_l, [1, 3], [])
 
   participant = get_participant_by_id(par_l, 1)
   participant_score_avg = get_participant_score_avg(participant)
@@ -305,12 +311,12 @@ def replace_participant_score_by_id_test():
   participant = create_participant(2, [6, 7.66, 9.9999, 1])
   add_participant_in_list(par_l, participant)
 
-  replace_participant_score_by_id(par_l, 0, [1, 1])
+  replace_participant_score_by_id(par_l, 0, [1, 1], [])
   participant = get_participant_by_id(par_l, 0)
   participant_score = get_participant_score(participant)
   assert participant_score == [1, 1]
 
-  replace_participant_score_by_id(par_l, 2, [1, 6])
+  replace_participant_score_by_id(par_l, 2, [1, 6], [])
   participant = get_participant_by_id(par_l, 2)
   participant_score = get_participant_score(participant)
   assert participant_score == [1, 6]
@@ -323,7 +329,7 @@ def filter_participants_by_comparer_test():
   add_participant_in_list(par_l, participant)
   participant = create_participant(len(par_l), [6, 7, 8])
   add_participant_in_list(par_l, participant)
-  filter_participants_by_comparer(par_l, comparators.comparer_smaller, 7.001)
+  filter_participants_by_comparer(par_l, comparators.comparer_smaller, 7.001, [])
 
   participant = get_participant_by_id(par_l, 0)
   participant_score = get_participant_score(participant)
@@ -333,7 +339,7 @@ def filter_participants_by_comparer_test():
   participant_score = get_participant_score(participant)
   assert participant_score == [1, 1, 1, 1]
 
-  filter_participants_by_comparer(par_l, comparators.comparer_divisible, compute_average([8, 9, 9]) / 7)
+  filter_participants_by_comparer(par_l, comparators.comparer_divisible, compute_average([8, 9, 9]) / 7, [])
   participant = get_participant_by_id(par_l, 2)
   participant_score = get_participant_score(participant)
   assert participant_score == [oo]

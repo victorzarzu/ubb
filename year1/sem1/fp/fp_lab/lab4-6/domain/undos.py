@@ -1,5 +1,3 @@
-import domain.participants as participants 
-
 def create_undo_operation(function, parameters):
   """
   function that creates an undo item
@@ -11,7 +9,7 @@ def create_undo_operation(function, parameters):
     'parameters': parameters 
   }
 
-def get_undo_function(undo):
+def get_undo_operation_function(undo):
   """
   function that returns the function of the undo item
   params: undo - an undo item
@@ -19,25 +17,14 @@ def get_undo_function(undo):
   """
   return undo['function']
 
-def get_undo_parameters(undo):
+def get_undo_operation_parameters(undo):
   """
   function that returns the parameters of the undo item
   params: undo - an undo item
   returns: a list of different types
   """
   return undo['parameters']
-
-def inverse_of_the_function(function):
-  """
-  function that returns the inverse of the operation function
-  params: operation - a function
-  return: a function
-  """
-  if function == participants.add_participant_in_list:
-    return participants.remove_participant_from_list
-  elif function in [participants.insert_score_by_participant_id, participants.delete_participant_score_by_id, participants.replace_participant_score_by_id, participants.filter_participants_by_comparer]:
-    return participants.replace_participant_score_by_id
-
+  
 def undo_wrapper(function, args):
   """
   function that executes the function with the args parameters 
@@ -46,56 +33,176 @@ def undo_wrapper(function, args):
   """
   function(*args)
 
-def create_undo_operation_test():
-  undo = create_undo_operation(participants.add_participant_in_list, [1, 2])
-  function = get_undo_function(undo)
-  parameters = get_undo_parameters(undo)
+def add_undo_operation_in_undo_stage(undo_stage, undo_operation):
+  """
+  function that adds an undo operation in an undo stage
+  params: undo_stage - a list of undo_operation items; undo_operation - an undo_operation item
+  return: -
+  """
+  undo_stage.append(undo_operation)
 
-  assert function == participants.add_participant_in_list
+def execute_undo_stage(undo_stage):
+  """
+  function that executes all undo_operation's from undo stage
+  params: undo_stage - a list of undo_operation items
+  return: -
+  """
+  for undo_operation in undo_stage:
+    function = get_undo_operation_function(undo_operation)
+    parameters = get_undo_operation_parameters(undo_operation)
+    undo_wrapper(function, parameters)
+
+def add_undo_stage_in_undo(undo, undo_stage):
+  """
+  function that adds an undo_stage in undo
+  params: undo - a list of undo_stage items; undo_stage - a list of undo_operation items
+  return: -
+  """
+  if not undo_stage == []:
+    undo.append(undo_stage)
+
+def get_last_undo_stage(undo):
+  """
+  function that returns and pops the last undo_stage from undo
+  params: undo - a list of undo stages
+  return: an undo_stage
+  """
+  if len(undo) == 0:
+    print("no previous actions!")
+    return []
+
+  return undo.pop()
+
+def execute_last_undo_stage(undo):
+  """
+  function that executes the last undo stage
+  params: undo - a list of undo stages
+  return: -
+  """
+  last_undo_stage = get_last_undo_stage(undo)
+  if not last_undo_stage == []:
+    execute_undo_stage(last_undo_stage)
+
+def create_undo_operation_test():
+  undo_operation = create_undo_operation(get_undo_operation_function, [1, 2])
+  function = get_undo_operation_function(undo_operation)
+  parameters = get_undo_operation_parameters(undo_operation)
+
+  assert function == get_undo_operation_function 
   assert parameters == [1, 2]
 
-def get_undo_function_test():
-  undo = create_undo_operation(participants.add_participant_in_list, [1, 2])
-  function = get_undo_function(undo)
-  assert function == participants.add_participant_in_list
+def get_undo_operation_function_test():
+  undo_operation = create_undo_operation(create_undo_operation, [1, 2])
+  function = get_undo_operation_function(undo_operation)
+  assert function == create_undo_operation
 
-  undo = create_undo_operation(participants.replace_participant_score_by_id, [5, 6])
-  function = get_undo_function(undo)
-  assert function == participants.replace_participant_score_by_id
+  undo_operation = create_undo_operation(get_undo_operation_function, [5, 6])
+  function = get_undo_operation_function(undo_operation)
+  assert function == get_undo_operation_function
  
-def get_undo_parameters_test():
-  undo = create_undo_operation(participants.add_participant_in_list, [1, 2])
-  parameters = get_undo_parameters(undo)
+def get_undo_operation_parameters_test():
+  undo_operation = create_undo_operation(get_undo_operation_function, [1, 2])
+  parameters = get_undo_operation_parameters(undo_operation)
   assert parameters == [1, 2] 
 
-  undo = create_undo_operation(participants.replace_participant_score_by_id, [5, 6])
-  parameters = get_undo_parameters(undo)
+  undo_operation = create_undo_operation(create_undo_operation, [5, 6])
+  parameters = get_undo_operation_parameters(undo_operation)
   assert parameters == [5, 6]
  
-def inverse_of_the_function_test():
-  inverse = inverse_of_the_function(participants.add_participant_in_list)
-  assert inverse == participants.remove_participant_from_list
+def add_undo_operation_in_undo_stage_test():
+  undo = []
+  undo_operation = create_undo_operation(create_undo_operation, [1, 2])
+  add_undo_operation_in_undo_stage(undo, undo_operation)
+  assert len(undo) == 1
 
-  inverse = inverse_of_the_function(participants.filter_participants_by_comparer)
-  assert inverse == participants.replace_participant_score_by_id
-
-  inverse = inverse_of_the_function(participants.delete_participant_score_by_id)
-  assert inverse == participants.replace_participant_score_by_id
+  undo_parameters = get_undo_operation_parameters(undo[0])
+  assert undo_parameters == [1, 2]
 
 def undo_wrapper_test():
-  par_l = []
-  participant = participants.create_participant(0, [6, 7, 9])
-  undo_wrapper(participants.add_participant_in_list, [par_l, participant])
-  assert len(par_l) == 1
+  undo = []
+  undo_operation = create_undo_operation(create_undo_operation, [6, 7, 9])
+  undo_wrapper(add_undo_operation_in_undo_stage, [undo, undo_operation])
+  assert len(undo) == 1
 
-  participant = participants.get_participant_by_id(par_l, 0)
-  participant_id = participants.get_participant_id(participant)
-  assert participant_id == 0
-  participant_score = participants.get_participant_score(participant)
-  assert participant_score == [6, 7, 9]
+  undo_opeartion = undo[0]
+  undo_operation_function = get_undo_operation_function(undo_operation)
+  assert undo_operation_function == create_undo_operation
+  undo_operation_parameters = get_undo_operation_parameters(undo_operation) 
+  assert undo_operation_parameters == [6, 7, 9]
 
-get_undo_function_test()
-get_undo_parameters_test()
+def execute_undo_stage_test():
+  undo_stage = []
+  undo = []
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  execute_undo_stage(undo_stage)
+
+  assert len(undo) == 2
+
+def add_undo_stage_in_undo_test():
+  undo_stage = []
+  undo = []
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [2, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  add_undo_stage_in_undo(undo, undo_stage)
+
+  assert len(undo) == 1
+
+  undo_stage = []
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  add_undo_stage_in_undo(undo, undo_stage)
+
+  assert len(undo) == 2
+  undo_stage = undo[1]
+  undo_operation = undo_stage[0]
+  undo_operation_parameters = get_undo_operation_parameters(undo_operation)
+  assert undo_operation_parameters == [undo, create_undo_operation(get_undo_operation_function, [1, 3])]
+
+
+def get_last_undo_stage_test():
+  undo_stage = []
+  undo = []
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [2, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  add_undo_stage_in_undo(undo, undo_stage)
+
+  undo_operation = get_last_undo_stage(undo)[1]
+  assert len(undo) == 0
+  undo_operation_parameters = get_undo_operation_parameters(undo_operation)
+  assert undo_operation_parameters == [undo, create_undo_operation(get_undo_operation_function, [2, 3])]
+
+
+def execute_last_undo_stage_test():
+  undo_stage = []
+  undo = []
+  undo1 = []
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [1, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  undo_operation = create_undo_operation(add_undo_operation_in_undo_stage, [undo, create_undo_operation(get_undo_operation_function, [2, 3])])
+  add_undo_operation_in_undo_stage(undo_stage, undo_operation)
+  add_undo_stage_in_undo(undo1, undo_stage)
+
+  execute_last_undo_stage(undo1)
+  assert len(undo1) == 0
+  assert len(undo) == 2
+  
+  undo_operation = undo[0]
+  undo_operation_parameters = get_undo_operation_parameters(undo_operation)
+  assert undo_operation_parameters == [1, 3]
+
+get_undo_operation_function_test()
+get_undo_operation_parameters_test()
 create_undo_operation_test()
-inverse_of_the_function_test()
+add_undo_operation_in_undo_stage_test()
 undo_wrapper_test()
+execute_undo_stage_test()
+add_undo_stage_in_undo_test()
+get_last_undo_stage_test()
+execute_last_undo_stage_test()
