@@ -1,6 +1,5 @@
 from validation.validations import validate_score
-epsilon = 0.0000001
-oo = 0x3f3f3f3f
+from infrastructure.constants import epsilon, oo
 
 def comparer_smaller(score1, score2):
   """

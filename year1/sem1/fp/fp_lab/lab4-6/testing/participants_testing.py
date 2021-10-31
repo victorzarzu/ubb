@@ -220,7 +220,7 @@ def remove_participant_from_list_test():
   remove_participant_from_list(par_l)
   assert par_l == []
 
-def run_participants_test():
+def run_participants_tests():
   delete_participant_score_by_id_test()
   delete_participant_score_by_id_interval_test()
   replace_participant_score_by_id_test()

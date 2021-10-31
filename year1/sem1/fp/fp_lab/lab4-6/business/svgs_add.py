@@ -1,4 +1,3 @@
-import inspect
 from infrastructure.conversions import convert_score_list, convert_id_number
 from validation.validations import validate_score_list, validate_participant_id_number, validate_score_list
 import domain.participants as participants
@@ -62,41 +61,3 @@ def svg_add_score_test():
   except Exception as ex:
     assert str(ex) == "invalid numbers!"
 
-def svg_insert_score_test():
-  par_l = []
-  undo_stage = []
-  svg_add_score(par_l, "6 6 6 2 4 1", 10, undo_stage)
-  svg_add_score(par_l, "6", 10, undo_stage)
-  svg_add_score(par_l, "10 1.7 9.4", 10, undo_stage)
-  svg_add_score(par_l, "9 9 2", 10, undo_stage)
-
-  svg_insert_score(par_l, "5 6", 0, 10, undo_stage)
-  participant = participants.get_participant_by_id(par_l, 0)
-  participant_score = participants.get_participant_score(participant)
-  assert participant_score == [6, 6, 6, 2, 4, 1, 5, 6] 
-
-  svg_insert_score(par_l, "10 10 10", 1, 10, undo_stage)
-  participant = participants.get_participant_by_id(par_l, 1)
-  participant_score = participants.get_participant_score(participant)
-  assert participant_score == [6, 10, 10, 10] 
-  
-  try: 
-    svg_insert_score(par_l, "1 1 1 1 1 1 1 1 6 7", 2, 10, undo_stage)
-    assert False
-  except Exception as ex:
-    assert str(ex) == "too many scores trying to be added -> the maximum scores to be stored for a participant is 10!" 
-
-  try:
-    svg_insert_score(par_l, "6 & 1 4", 3, 10, undo_stage)
-    assert False
-  except Exception as ex:
-    assert str(ex) == "invalid numbers!"
-
-  try:
-    svg_insert_score(par_l, "3 4", 6, 10, undo_stage)
-    assert False
-  except Exception as ex:
-    assert str(ex) == "invalid contest id!"
-
-svg_add_score_test()
-svg_insert_score_test()

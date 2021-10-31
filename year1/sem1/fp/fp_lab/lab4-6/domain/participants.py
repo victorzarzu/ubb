@@ -3,8 +3,7 @@ from validation.validations import validate_score_print
 from infrastructure.computes import compute_average
 import infrastructure.comparators as comparators
 import domain.undos as undos
-
-oo = 0x3f3f3f3f
+from infrastructure.constants import oo
 
 def create_participant(id_number, score_l):
   """ function that creates a participant

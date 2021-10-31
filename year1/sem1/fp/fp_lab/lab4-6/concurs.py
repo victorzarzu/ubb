@@ -1,9 +1,8 @@
 from presentation.ui import ui
 from testing.tests import run_all_tests
 
-def main():
+def concurs():
   run_all_tests()
   ui()
 
-
-main()
+concurs()
