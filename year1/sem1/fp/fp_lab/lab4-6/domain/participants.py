@@ -53,7 +53,7 @@ def get_participant_by_id(par_l, id_number):
 def add_participant_in_list(par_l, participant):
   """
   function that adds a participant to par_l
-  params: par_l - a list of list of floats; participant - a participant item; undo - list of undo_operation items
+  params: par_l - a list of list of floats; participant - a participant item; 
   return: -
   """ 
 
@@ -70,7 +70,7 @@ def remove_participant_from_list(par_l):
 def change_participant_by_id(par_l, id_number, participant, undo_stage):
   """
   function that changes the participant with id_number in par_l list with participant
-  params: par_l - a list of participant items; id_numer - an integer; participant - a participant item; undo_stage - a list of undo_operation_items
+  params: par_l - a list of participant items; id_number - an integer; participant - a participant item; undo_stage - a list of undo_operation items 
   return: -
   """
   participant_score = get_participant_score(get_participant_by_id(par_l, id_number))[:]
@@ -99,10 +99,11 @@ def insert_score_by_participant_id(par_l, id_number, score_l, undo_stage):
   params: par_l - a list of participant items; id_number - integer; score_l - a list of floats; undo_stage - a list of undo_operation items
   return: -
   """
+  participant_score = get_participant_score(get_participant_by_id(par_l, id_number))[:]
   participant = get_participant_by_id(par_l, id_number)
-  participant_score = get_participant_score(participant)
   participant_score.extend(score_l)
   participant = create_participant(id_number, participant_score)
+
   change_participant_by_id(par_l, id_number, participant, undo_stage)
   
 def delete_participant_score_by_id(par_l, id_number, undo_stage):

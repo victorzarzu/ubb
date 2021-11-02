@@ -9,7 +9,7 @@ import infrastructure.strings as strings
 def svg_participants_average_by_id_interval(par_l, id_interval):
   """
   function that computes the average of the average scores of all participants in the inverval
-  params: par_l - a list of participant items; interval - a string
+  params: par_l - a list of participant items; id_interval - a string
   return: a float representing the average of the average scores of the participants in the given interval
   """
   id_interval = convert_id_interval(id_interval) 
@@ -21,7 +21,7 @@ def svg_participants_average_by_id_interval(par_l, id_interval):
 def svg_minimum_score_by_interval(par_l, id_interval):
   """
   function that computes the minimum of the average scores of all participants in the inverval
-  params: par_l - a list of participant items; interval - a string
+  params: par_l - a list of participant items; id_interval - a string
   return: a float representing the minimum of the average scores of the participants in the given interval
   """
   id_interval = convert_id_interval(id_interval) 
@@ -29,11 +29,10 @@ def svg_minimum_score_by_interval(par_l, id_interval):
   minimum = lists.minimum_score_by_interval(par_l, id_interval)
   return minimum
 
-
 def svg_participant_ids_if_multiple(par_l, id_interval, div):
   """
   function that computes the ids of the participants that have the score a multiple of div 
-  params: par_l - a list of participant items; interval - a string; div - a float
+  params: par_l - a list of participant items; id_interval - a string; div - a float
   return: a string 
   """
   id_interval = convert_id_interval(id_interval) 

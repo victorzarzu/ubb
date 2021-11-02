@@ -123,4 +123,4 @@ def run_undos_tests():
   execute_undo_stage_test()
   add_undo_stage_in_undo_test()
   get_last_undo_stage_test()
-execute_last_undo_stage_test()
+  execute_last_undo_stage_test()

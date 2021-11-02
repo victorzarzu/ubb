@@ -26,7 +26,7 @@ def svg_delete_participant_interval_score(par_l, id_interval, undo_stage):
 def svg_replace_participant_score(par_l, id_number, score_l, max_scores, undo_stage):
   """
   function that replaces the list of index id_number in the par_l list with score_l list
-  params: par_l - a list of lists of integers; id_number - an integer; score_l - a list of floatsmax_scores - a float; undo_stage - a list of undo_operation items
+  params: par_l - a list of lists of integers; id_number - an integer; score_l - a list of floats; max_scores - a float; undo_stage - a list of undo_operation items
   return: -
   """
   id_number = convert_id_number(id_number)

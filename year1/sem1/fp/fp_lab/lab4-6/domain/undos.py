@@ -2,7 +2,7 @@ def create_undo_operation(function, parameters):
   """
   function that creates an undo item
   params: funcion - a function; parameters - a list of different types
-  return: an undo item
+  return: an undo_operation item
   """
   return{
     'function': function,
@@ -12,7 +12,7 @@ def create_undo_operation(function, parameters):
 def get_undo_operation_function(undo):
   """
   function that returns the function of the undo item
-  params: undo - an undo item
+  params: undo - an undo_operation item
   returns: a function
   """
   return undo['function']
@@ -20,7 +20,7 @@ def get_undo_operation_function(undo):
 def get_undo_operation_parameters(undo):
   """
   function that returns the parameters of the undo item
-  params: undo - an undo item
+  params: undo - an undo_operation item
   returns: a list of different types
   """
   return undo['parameters']
@@ -28,7 +28,7 @@ def get_undo_operation_parameters(undo):
 def undo_wrapper(function, args):
   """
   function that executes the function with the args parameters 
-  params: function - a function; args - a list of paramerts for the function 
+  params: function - a function; args - a list of parameters for the function 
   return: -
   """
   function(*args)
@@ -82,4 +82,3 @@ def execute_last_undo_stage(undo):
   last_undo_stage = get_last_undo_stage(undo)
   if not last_undo_stage == []:
     execute_undo_stage(last_undo_stage)
-
