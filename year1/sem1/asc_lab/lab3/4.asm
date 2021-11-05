@@ -35,8 +35,10 @@ segment code use32 class = code
 		idiv cx
 		
 		cwde
-		add eax, dword [e]
 		cdq
+		add eax, dword [e]
+    adc edx, 0
+
 		sub eax, dword [x]
 		sbb edx, dword [x + 4]
 		

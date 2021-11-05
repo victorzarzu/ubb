@@ -6,7 +6,7 @@ def validate_score_list_by_len(score_l, max_scores, max_scores_participant):
   raisee: Exception with text
           "too many scores trying to be added -> the maximum scores to be stored for a participant is {$max_scores}!" if the length of score_l is bigger than max_scores 
   """
-  if len(score_l) > max_scores:
+  if len(score_l) > max_scores or len(score_l) == 0:
     raise Exception("too many scores trying to be added -> the maximum scores to be stored for a participant is " + str(max_scores_participant) + "!")
 
 def validate_score_list_by_values(score_l):
