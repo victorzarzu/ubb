@@ -3,8 +3,8 @@ class LabProblem:
   abstract data for a problem for a lab
   domain: {{lab_prob, description, deadline}| lab_prob - a dictionary, description - string; deadline - a date}}
   """
-  def __init__(self, lab_problem, description, deadline):
-    self.__lab_problem = lab_problem
+  def __init__(self, lab, problem, description, deadline):
+    self.__lab_problem = {'lab': lab, 'problem': problem}
     self.__description = description
     self.__deadline = deadline
 

@@ -121,12 +121,12 @@ class Tests:
       assert str(ve) == "invalid id!\ninvalid name!\ninvalid group!\n"
 
   def __test_create_lab_problem(self):
-    lab_prob = {'lab': 6, 'problem': 10}
+    lab = 6
+    problem = 10
     description = "Actualizati baza de date"
     deadline = datetime.date(2021, 8, 25)
 
-    lab_problem = LabProblem(lab_prob, description, deadline)
-    assert lab_problem.get_lab_problem() == lab_prob
+    lab_problem = LabProblem(lab, problem, description, deadline)
     assert lab_problem.get_description() == description
     assert lab_problem.get_deadline() == deadline
     assert lab_problem.get_lab() == 6
@@ -134,20 +134,22 @@ class Tests:
 
     new_description = "Sterge baza de date"
     new_deadline = datetime.date(2021, 10, 11)
-    lab_problem_same = LabProblem(lab_prob, new_description, new_deadline)
+    lab_problem_same = LabProblem(lab, problem , new_description, new_deadline)
     assert lab_problem == lab_problem_same
 
   def __test_validate_lab_problem(self):
-    lab_prob = {'lab': 6, 'problem': 10}
+    lab = 6
+    problem = 10
     description = "Actualizati baza de date"
     deadline = datetime.date(2222, 11, 25)
     validator = ValidatorLabProblem()
 
-    lab_problem = LabProblem(lab_prob, description, deadline)
+    lab_problem = LabProblem(lab, problem, description, deadline)
     validator.validate(lab_problem)
 
-    invalid_lab_prob = {'lab': -1, 'problem': 10}
-    lab_problem_invalid_lab_prob = LabProblem(invalid_lab_prob, description, deadline)
+    invalid_lab = -1
+    problem = 10
+    lab_problem_invalid_lab_prob = LabProblem(invalid_lab, problem, description, deadline)
     try:
       validator.validate(lab_problem_invalid_lab_prob)
       assert False
@@ -156,7 +158,7 @@ class Tests:
 
     invalid_description = ""
     invalid_deadline = datetime.date(2020, 10, 1)
-    invalid_lab_problem_all = LabProblem(invalid_lab_prob, invalid_description, invalid_deadline)
+    invalid_lab_problem_all = LabProblem(invalid_lab, problem, invalid_description, invalid_deadline)
 
     try:
       validator.validate(invalid_lab_problem_all)
@@ -165,18 +167,20 @@ class Tests:
       assert str(ve) == "invalid lab problem!\ninvalid description!\ninvalid deadline!\n"
 
   def __test_add_lab_problem_repo(self):
-    lab_prob = {'lab': 6, 'problem': 10}
+    lab = 6
+    problem = 10
     description = "Actualizati baza de date"
     deadline = datetime.date(2222, 11, 25)
     
     repo = RepositoryLabProblems()
     assert len(repo) == 0
-    lab_problem = LabProblem(lab_prob, description, deadline)
+    lab_problem = LabProblem(lab, problem, description, deadline)
     repo.add_lab_problem(lab_problem)
     assert len(repo) == 1
 
-    absent_lab_prob = {'lab': 10, 'problem': 100}
-    absent_lab_problem = LabProblem(absent_lab_prob, description, deadline)
+    absent_lab = 10
+    absent_problem = 100
+    absent_lab_problem = LabProblem(absent_lab, absent_problem, description, deadline)
     try:
       repo.search_lab_problem(absent_lab_problem)
       assert False
@@ -185,7 +189,7 @@ class Tests:
 
     new_description = "Sterge baza de date"
     new_deadline = datetime.date(2333, 11, 25)
-    lab_problem_same = LabProblem(lab_prob, new_description, new_deadline)
+    lab_problem_same = LabProblem(lab, problem, new_description, new_deadline)
 
     try:
       repo.add_lab_problem(lab_problem_same)
@@ -194,7 +198,8 @@ class Tests:
       assert str(re) == "existent lab problem!"
 
   def __test_add_lab_problem_service(self):
-    lab_prob = {'lab': 6, 'problem': 10}
+    lab = 6
+    problem = 10
     description = "Actualizati baza de date"
     deadline = datetime.date(2222, 11, 25)
 
@@ -203,12 +208,13 @@ class Tests:
     srv = ServiceLabProblems(validator, repo)
 
     assert srv.number_of_lab_problems() == 0
-    srv.add_lab_problem(lab_prob, description, deadline)
+    srv.add_lab_problem(lab, problem, description, deadline)
     assert srv.number_of_lab_problems() == 1
 
-    invalid_lab_prob = {'lab': -1, 'prob': -5} 
+    invalid_lab = -1
+    invalid_problem = -5
     try:
-      srv.add_lab_problem(invalid_lab_prob, description, deadline)
+      srv.add_lab_problem(invalid_lab, invalid_problem, description, deadline)
       assert False
     except ValidationError as ve:
       assert str(ve) == "invalid lab problem!\n"
@@ -216,7 +222,7 @@ class Tests:
     new_description = "Sterge baza de date"   
     new_deadline = datetime.date(2500, 1, 8) 
     try:
-      srv.add_lab_problem(lab_prob, new_description, new_deadline)
+      srv.add_lab_problem(lab, problem, new_description, new_deadline)
       assert False
     except RepositoryError as re:
       assert str(re) == "existent lab problem!"

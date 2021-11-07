@@ -17,13 +17,13 @@ class ServiceLabProblems:
     """
     return len(self.__repo_lab_problems)
 
-  def add_lab_problem(self, lab_prob, description, deadline):
+  def add_lab_problem(self, lab, problem, description, deadline):
     """
     function that adds a lab_problem object in __repo_lab_problems
     parameters: lab_prob - a dictionary; description - a string; deadline - a datetime object
     return: -
     """
-    lab_problem = LabProblem(lab_prob, description, deadline)
+    lab_problem = LabProblem(lab, problem, description, deadline)
     self.__validator_lab_problem.validate(lab_problem)
     self.__repo_lab_problems.add_lab_problem(lab_problem)
 
