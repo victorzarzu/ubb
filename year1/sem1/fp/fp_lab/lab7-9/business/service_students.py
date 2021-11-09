@@ -36,6 +36,15 @@ class ServiceStudents:
     self.__repo_students.search_student_by_id(studentID)
     self.__repo_students.delete_student(studentID)
 
+  def modify_student(self, studentID, name, group):
+    """
+    function that modifies the name and/or the group of a student from __repo_students
+    parameters: studentID - an integer; name - a string; group - an integer
+    return: -
+    """
+    student = self.__repo_students.search_student_by_id(studentID)
+    student.modify(name, group)
+
   def get_all_students(self):
     """
     function that returns the whole list of student objects from the current repo

@@ -1,4 +1,6 @@
 from testing.tests import Tests
+from testing.tests_students import TestsStudents
+from testing.tests_lab_problems import TestsLabProblems
 from presentation.console import Console
 from business.service_students import ServiceStudents
 from business.service_lab_problems import ServiceLabProblems
@@ -19,7 +21,9 @@ if __name__ == "__main__":
 
   ui = Console(srv_students, srv_lab_problems)
 
-  tests = Tests()
+  tests_students = TestsStudents()
+  tests_lab_problems = TestsLabProblems()
+  tests = Tests(tests_students, tests_lab_problems)
   tests.run_all_tests()
   
   ui.run()

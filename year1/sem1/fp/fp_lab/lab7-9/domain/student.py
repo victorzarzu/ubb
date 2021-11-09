@@ -19,7 +19,7 @@ class Student:
     """
     return self.__studentID
   
-  def get_nume(self):
+  def get_name(self):
     """
     function that returns the name of the current object
     params: -
@@ -27,7 +27,7 @@ class Student:
     """
     return self.__nume
 
-  def get_grup(self):
+  def get_group(self):
     """
     function that returns the group of the current object
     params: -
@@ -52,6 +52,17 @@ class Student:
     """
     self.__grup = grup
   
+  def modify(self, name, group):
+    """
+    function that modifies the name and the group of the student based on the parameters
+    params: name - a string or None; group - an integer or None
+    return: -
+    """
+    if not name == None:
+      self.set_nume(name)
+    if not group == None:
+      self.set_grup(group)
+
   def __eq__(self, other_student):
     """
     function that verifies if the current student object is equal to the other_student object based on their ids

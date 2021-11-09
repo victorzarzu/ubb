@@ -66,6 +66,18 @@ class LabProblem:
     return: - 
     """
     self.__deadline = deadline
+  
+  def modify(self, description, deadline):
+    """
+    function that modifies the description and the deadline of the lab_problem based on the given parameters
+    params: description - a string; deadline - a datetime object
+    return: -
+    """
+    if not description == None:
+      self.set_description(description)
+    if not deadline == None:
+      self.set_deadline(deadline)
+    pass
 
   def __eq__(self, other_lab_problem):
     """

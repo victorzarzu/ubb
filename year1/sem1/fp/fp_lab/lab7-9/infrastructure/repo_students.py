@@ -50,11 +50,20 @@ class RepositoryStudents:
     params: studentID - an integer
     return: -
     """
-    
     for i in range(len(self.__students)):
       if self.__students[i].get_id() == studentID:
         del self.__students[i]
         return
+
+  def modify_student(self, studentID, name, group):
+    """
+    function that modifies a student based on his id
+    params: name - a string; group - an integer
+    return: -
+    """
+    student.set_nume(name)
+    student.set_grup(group)
+
 
   def get_all(self):
     """

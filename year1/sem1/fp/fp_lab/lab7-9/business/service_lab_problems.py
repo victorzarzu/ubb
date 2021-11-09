@@ -36,6 +36,16 @@ class ServiceLabProblems:
     self.__repo_lab_problems.search_lab_problem(lab, problem)
     self.__repo_lab_problems.delete_lab_problem(lab, problem)
 
+	
+  def modify_lab_problem(self, lab, problem, description, deadline):
+    """
+    function that modifies the name and/or the group of a student from __repo_students
+    parameters: lab - an integer; problem - an integer; desscription - a string; deadline - a datetime object
+    return: -
+    """
+    lab_problem = self.__repo_lab_problems.search_lab_problem(lab, problem)
+    lab_problem.modify(description, deadline)
+    
   def get_all_lab_problems(self):
     """
     function that returns the whole list of lab_problems objects of the current repo

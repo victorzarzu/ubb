@@ -18,9 +18,9 @@ class ValidatorStudent:
     errors = ""
     if student.get_id() < 0:
       errors += "invalid id!\n"
-    if student.get_nume() == "":
+    if student.get_name() == "":
       errors += "invalid name!\n"
-    if student.get_grup() < 0:
+    if student.get_group() < 0:
       errors += "invalid group!\n"
 
     if len(errors) > 0:
