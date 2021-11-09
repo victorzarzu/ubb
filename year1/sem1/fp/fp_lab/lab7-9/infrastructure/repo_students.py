@@ -44,6 +44,18 @@ class RepositoryStudents:
     if True:
       raise RepositoryError("absent id!")
 
+  def delete_student(self, studentID):
+    """
+    function that deletes from the repo the student with the given id
+    params: studentID - an integer
+    return: -
+    """
+    
+    for i in range(len(self.__students)):
+      if self.__students[i].get_id() == studentID:
+        del self.__students[i]
+        return
+
   def get_all(self):
     """
     a function that returns the whole list of student objects of the current object

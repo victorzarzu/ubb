@@ -120,6 +120,57 @@ class Tests:
     except ValidationError as ve:
       assert str(ve) == "invalid id!\ninvalid name!\ninvalid group!\n"
 
+  def __test_delete_student_repo(self):
+    studentID = 15
+    name = "G"
+    group = 456
+    student = Student(studentID, name, group)
+    repo = RepositoryStudents()
+    repo.add_student(student)
+  
+    studentID = 17
+    name = "A"
+    group = 455
+    student = Student(studentID, name, group)
+    repo.add_student(student)
+
+    repo.delete_student(studentID)
+    assert len(repo) == 1
+
+    absent_studentID = 7
+    repo.delete_student(absent_studentID)
+    assert len(repo) == 1
+
+  def __test_delete_student_service(self):
+    studentID = 15
+    name = "G"
+    group = 456
+    repo = RepositoryStudents()  
+    validator = ValidatorStudent()
+    srv = ServiceStudents(validator, repo)
+    
+    srv.add_student(studentID, name, group)
+
+    studentID1 = 16 
+    name = "A"
+    group = 455
+    srv.add_student(studentID1, name, group)
+    
+    studentID2 = 14 
+    name = "B"
+    group = 455
+    srv.add_student(studentID2, name, group)
+
+    srv.delete_student(studentID1)
+    assert srv.number_of_students() == 2
+   
+    absent_studentID = 2
+    try:
+      srv.delete_student(absent_studentID)
+      assert False
+    except RepositoryError as re:
+      assert str(re) == "absent id!"
+
   def __test_create_lab_problem(self):
     lab = 6
     problem = 10
@@ -182,7 +233,7 @@ class Tests:
     absent_problem = 100
     absent_lab_problem = LabProblem(absent_lab, absent_problem, description, deadline)
     try:
-      repo.search_lab_problem(absent_lab_problem)
+      repo.search_lab_problem(absent_lab, absent_problem)
       assert False
     except RepositoryError as re:
       assert str(re) == "absent lab problem!"
@@ -196,6 +247,34 @@ class Tests:
       assert False
     except RepositoryError as re:
       assert str(re) == "existent lab problem!"
+  
+  def __test_delete_lab_problem_repo(self):
+    lab = 6
+    problem = 10
+    description = "Actualizati baza de date"
+    deadline = datetime.date(2222, 11, 25)
+    lab_problem = LabProblem(lab, problem, description, deadline)
+    
+    repo = RepositoryLabProblems()
+
+    repo.add_lab_problem(lab_problem)
+
+    lab1 = 5
+    problem1 = 10
+    description = "Stergeti baza de date"
+    deadline = datetime.date(2222, 10, 25)
+    lab_problem = LabProblem(lab1, problem1, description, deadline)
+
+    repo.add_lab_problem(lab_problem)
+    
+    repo.delete_lab_problem(lab, problem)
+    assert len(repo) == 1
+
+    absent_lab = 7
+    absent_problem = 20
+    repo.delete_lab_problem(absent_lab, absent_problem)
+    assert len(repo) == 1
+
 
   def __test_add_lab_problem_service(self):
     lab = 6
@@ -226,13 +305,46 @@ class Tests:
       assert False
     except RepositoryError as re:
       assert str(re) == "existent lab problem!"
+  
+  def __test_delete_lab_problem_service(self):
+    lab = 6
+    problem = 10
+    description = "Actualizati baza de date"
+    deadline = datetime.date(2222, 11, 25)
     
+    repo = RepositoryLabProblems()
+    validator = ValidatorLabProblem()
+    srv = ServiceLabProblems(validator, repo)
+
+    srv.add_lab_problem(lab, problem, description, deadline)
+
+    lab1 = 5
+    problem1 = 10
+    description = "Stergeti baza de date"
+    deadline = datetime.date(2222, 10, 25)
+    srv.add_lab_problem(lab1, problem1, description, deadline)
+
+    srv.delete_lab_problem(lab, problem)
+    assert srv.number_of_lab_problems() == 1
+
+    absent_lab = 7
+    absent_problem = 100 
+    try:
+      srv.delete_lab_problem(absent_lab, absent_problem) 
+      assert False
+    except RepositoryError as re:
+      assert str(re) == "absent lab problem!"
+
   def run_all_tests(self):
     self.__test_create_student()
     self.__test_validate_student()
     self.__test_add_student_repo()
+    self.__test_delete_student_repo()
     self.__test_add_student_service()
+    self.__test_delete_student_service()
     self.__test_create_lab_problem()
     self.__test_validate_lab_problem()
     self.__test_add_lab_problem_repo()
+    self.__test_delete_lab_problem_repo()
     self.__test_add_lab_problem_service()
+    self.__test_delete_lab_problem_service()

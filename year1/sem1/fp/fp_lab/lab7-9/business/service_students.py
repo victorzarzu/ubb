@@ -27,6 +27,15 @@ class ServiceStudents:
     self.__validator_student.validate(student)
     self.__repo_students.add_student(student)
   
+  def delete_student(self, studentID):
+    """
+    function that deletes a student object from __repo_stundets by its id
+    parameters: studentID - an integer
+    return: -
+    """
+    self.__repo_students.search_student_by_id(studentID)
+    self.__repo_students.delete_student(studentID)
+
   def get_all_students(self):
     """
     function that returns the whole list of student objects from the current repo
