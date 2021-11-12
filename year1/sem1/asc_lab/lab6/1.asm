@@ -35,6 +35,7 @@ start:
 		sort:
 			mov dl, [esi]
 			cmp dl, [esi + 1]
+			
 			jb is_ok
 			mov al, [esi + 1]
 			mov [esi], al
