@@ -8,8 +8,8 @@ import exit msvcrt.dll
 segment data use32 class = data
 	S db 1, 3, -2, -5, 3, -8, 5, 0
 	len equ $ - S
-	D1 resb 5
-	D2 resb 3
+	D1 resb len
+	D2 resb len
 	
 segment code use32 class = code
 	;Se da un sir de octeti S. Sa se construiasca un sir D1 care sa contina toate numerele pozitive si un sir 
@@ -47,11 +47,13 @@ segment code use32 class = code
 		jecxz empty
 		create:
 			mov dl, byte [esi]
+			
 			cmp dl, 0
 			jl negative
 			mov [eax], dl
 			inc eax
 			jmp end_compare
+			
 			negative:
 			mov [ebx], dl
 			inc ebx
