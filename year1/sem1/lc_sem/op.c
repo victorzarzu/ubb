@@ -106,10 +106,10 @@ void ui_convert()
   */
   int base_sursa, base_destinatie, len;
   char numar[4 * 201], fractionara[101], intreaga[101];
+  printf("baza sursa\nnumar\nbaza destinatie\n\n");
   scanf("%d", &base_sursa);
   scanf("%200s", numar);  
   scanf("%d", &base_destinatie);
-
 
   if(base_sursa < 2 || base_sursa > 26 || base_destinatie < 2 || base_destinatie > 26)
     {
@@ -495,7 +495,7 @@ void ui_operatii(char operatie)
   functie ui pentru operatii
   params: operatie - un caracter care codifica opeartia dorita
   */
-  printf("%s\n", "baza sursa\nnumarul 1\nbaza destinatie\nnumarul 2\nbaza destinatie");
+  printf("%s\n", "baza sursa\nnumarul 1\nbaza destinatie\nnumarul 2\nbaza destinatie\n");
   int baza_numar1, baza_numar2, baza_rezultat, rest;
   char numar1[201], numar2[201], rezultat[202];
 
@@ -564,12 +564,12 @@ void ui()
   functia ui a aplicatiei
   */
   char operatie[10], end;
+  printf("Zarzu Victor-Eugen\n");
   while(true)
   {
-    printf("Zarzu Victor-Eugen\n");
+    printf("Baze - 2 - 26 \n");
     printf("exit - iesire\n");
-    printf("Baze : 2 - 26 \n");
-    printf("%s\n", "convert - conversie unui numar dintr-o baza in alta");
+    printf("%s\n", "convert - conversia unui numar dintr-o baza in alta");
     printf("%s\n", "+, -, *, / - adunare, scadere, inmultire, impartire");
     printf(">");
       
