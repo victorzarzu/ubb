@@ -17,7 +17,7 @@ class ServiceStudents:
     """
     return len(self.__repo_students)
 
-  def add_student(self, studentID, name, group):
+  def store(self, studentID, name, group):
     """
     function that adds a student object in __repo_students
     parameters: studentID - an integer; name - a string; group - an integer
@@ -25,25 +25,34 @@ class ServiceStudents:
     """
     student = Student(studentID, name, group)
     self.__validator_student.validate(student)
-    self.__repo_students.add_student(student)
+    self.__repo_students.store(student)
   
-  def delete_student(self, studentID):
+  def delete(self, studentID):
     """
     function that deletes a student object from __repo_stundets by its id
     parameters: studentID - an integer
     return: -
     """
-    self.__repo_students.search_student_by_id(studentID)
-    self.__repo_students.delete_student(studentID)
+    self.__repo_students.search(studentID)
+    self.__repo_students.delete(studentID)
 
-  def modify_student(self, studentID, name, group):
+  def modify(self, studentID, name, group):
     """
     function that modifies the name and/or the group of a student from __repo_students
     parameters: studentID - an integer; name - a string; group - an integer
     return: -
     """
-    student = self.__repo_students.search_student_by_id(studentID)
-    student.modify(name, group)
+    self.__repo_students.search(studentID)
+    self.__repo_students.modify(studentID, name, group)
+
+  def search(self, studentID):
+    """
+    function that gets a student by its id and returns a printable form of it
+    params: studentID - an integer
+    return: a string
+    """
+    student = self.__repo_students.search(studentID)
+    return student.to_print()
 
   def get_all_students(self):
     """

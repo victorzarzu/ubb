@@ -1,74 +1,70 @@
 from errors.errors import RepositoryError
+from infrastructure.repo import Repository
 
-class RepositoryStudents:
+class RepositoryStudents(Repository):
   """
   repository class for Student class
   domain: {student objects}
   """
 
   def __init__(self):
-    self.__students = []
+    super().__init__()
 
   def __len__(self):
     """
-    function that returns the len of the __students list of students
+    function that returns the number of the actual students that exists
     params: -
     return: an integer
     """
-    return len(self.__students)
+    students = 0
+    for student in self._storage:
+      if student.get_status():
+        students += 1
 
-  def add_student(self, student):
+    return students
+
+  def store(self, student):
     """
-    function that adds a student into the __studets list of the current class
+    function that adds a student into the _storage list of the current class
     params: student - a student object
     return: -
-    exceptions: RepositoryError with text "exitent id!" if it is already a student with the id of the parameter in the __students list
+    exceptions: RepositoryError with text "exitent id!" if it is already a student with the id of the parameter in the _storage list
     """
-    for stud in self.__students:
-      if student == stud:
+    for _student in self._storage:
+      if student == _student and _student.get_status():
         raise RepositoryError("existent id!")
 
-    self.__students.append(student)
+    self.add(student)
 
-  def search_student_by_id(self, studentID):
+  def search(self, studentID):
     """
-    function that searches for a student with an id equal to studentID in __students and returns it if it exis
+    function that searches for a student with an id equal to studentID in _storage and returns it if it exis
     params: studentID - an integer
     return: a student object
     exceptions: RepositoryError with text "absent id!" if there is no student with the given id
     """
-    for student in self.__students:
-      if student.get_id() == studentID:
+    for student in self._storage:
+      if student.get_id() == studentID and student.get_status():
         return student
 
-    if True:
-      raise RepositoryError("absent id!")
+    raise RepositoryError("absent id!")
 
-  def delete_student(self, studentID):
+  def delete(self, studentID):
     """
     function that deletes from the repo the student with the given id
     params: studentID - an integer
     return: -
     """
-    for i in range(len(self.__students)):
-      if self.__students[i].get_id() == studentID:
-        del self.__students[i]
-        return
+    for student in self._storage:
+      if student.get_id() == studentID:
+        student.set_status(False)
 
-  def modify_student(self, studentID, name, group):
+  def modify(self, studentID, name, group):
     """
     function that modifies a student based on his id
-    params: name - a string; group - an integer
+    params: studentID - an integer; name - a string; group - an integer
     return: -
     """
-    student.set_nume(name)
-    student.set_grup(group)
-
-
-  def get_all(self):
-    """
-    a function that returns the whole list of student objects of the current object
-    params: -
-    return: a list of objects
-    """
-    return self.__students[:]
+    for student in self._storage:
+      if student.get_id() == studentID:
+        student.modify(name, group)

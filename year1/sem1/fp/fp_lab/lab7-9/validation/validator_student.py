@@ -8,7 +8,7 @@ class ValidatorStudent:
   def validate(self, student):
     """
     function that validates a student object
-    params: stundet - a student object
+    params: student - a student object
     return: -
     exceptions: ValidateError with text
                 "invalid id!\n" - if the id is invalid

@@ -1,3 +1,5 @@
+import datetime
+
 class LabProblem:
   """
   abstract data for a problem for a lab
@@ -7,6 +9,7 @@ class LabProblem:
     self.__lab_problem = {'lab': lab, 'problem': problem}
     self.__description = description
     self.__deadline = deadline
+    self.__exists = True
 
   def get_lab_problem(self):
     """
@@ -51,6 +54,14 @@ class LabProblem:
     lab_problem = self.get_lab_problem()
     return lab_problem['problem']
 
+  def get_status(self):
+    """
+    function that returns the status of the current object
+    params: -
+    return: a boolean value
+    """
+    return self.__exists
+
   def set_description(self, description):
     """
     function that sets the __description of a LabProblem object
@@ -67,6 +78,41 @@ class LabProblem:
     """
     self.__deadline = deadline
   
+  def set_status(self, status):
+    """
+    function that sets the status of the current object to status
+    params: status - a boolean value
+    return: -
+    """
+    
+    self.__exists = status
+
+  @classmethod
+  def from_string(cls, string):
+    """
+    function that returns a lab_problem from a string
+    params: string - a string
+    return: a lab_problem object
+    """
+    string = string.split(";")
+    return cls(int(string[0]), int(string[1]), string[2], datetime.datetime.strptime(string[3].strip(), "%d %m %Y").date())
+
+  def to_string(self):
+    """
+    function that returns a string representing a lab problem
+    params: -
+    return: a string
+    """
+    return f'{self.get_lab()};{self.get_problem()};{self.get_description()};{self.get_deadline().strftime("%d %m %Y")}'
+
+  def to_print(self):
+    """
+    function that returns a printable form of the lab_problem
+    params: -
+    return: a string
+    """
+    return f'description: {self.get_description()}\ndeadline: {self.get_deadline().strftime("%d %m %Y")}\n'
+
   def modify(self, description, deadline):
     """
     function that modifies the description and the deadline of the lab_problem based on the given parameters
@@ -77,7 +123,6 @@ class LabProblem:
       self.set_description(description)
     if not deadline == None:
       self.set_deadline(deadline)
-    pass
 
   def __eq__(self, other_lab_problem):
     """

@@ -2,9 +2,10 @@ from errors.errors import ValidationError, RepositoryError
 import datetime
 
 class Console:
-  def __init__(self, srv_students, srv_lab_problems):
+  def __init__(self, srv_students, srv_lab_problems, srv_grades):
     self.__srv_students = srv_students
     self.__srv_lab_problems = srv_lab_problems
+    self.__srv_grades = srv_grades
 
   def __ui_add_student(self):
     try:
@@ -21,7 +22,7 @@ class Console:
       print("invalid group!")
       return
 
-    self.__srv_students.add_student(studentID, name, group)
+    self.__srv_students.store(studentID, name, group)
 
   def __ui_delete_student(self):
     try:
@@ -30,10 +31,10 @@ class Console:
       print("invalid id!")
       return
 
-    self.__srv_students.delete_student(studentID)
+    self.__srv_students.delete(studentID)
 
   def __ui_modify_student(self, cmd):
-    name = None
+    name = None 
     group = None
 
     try:
@@ -52,7 +53,17 @@ class Console:
         print("invalid group!")
         return
 
-    self.__srv_students.modify_student(studentID, name, group)
+    self.__srv_students.modify(studentID, name, group)
+
+  def __ui_search_student(self):
+    try:
+      studentID = int(input("id: "))
+    except ValueError:
+      print("invalid id!")
+      return
+    
+    student_print = self.__srv_students.search(studentID)
+    print(student_print)
 
   def __ui_add_lab_problem(self):
     try:
@@ -75,7 +86,7 @@ class Console:
       print("invalid deadline!")
       return
 
-    self.__srv_lab_problems.add_lab_problem(lab, problem, description, deadline)
+    self.__srv_lab_problems.store(lab, problem, description, deadline)
 
   def __ui_delete_lab_problem(self):
     try:
@@ -90,7 +101,7 @@ class Console:
       print("invalid problem!")
       return
 
-    self.__srv_lab_problems.delete_lab_problem(lab, problem)
+    self.__srv_lab_problems.delete(lab, problem)
 
   def __ui_modify_lab_problem(self, cmd):
     description = None
@@ -115,13 +126,104 @@ class Console:
       except ValueError:
         print("invalid deadline!")
     
-    self.__srv_lab_problems.modify_lab_problem(lab, problem, description, deadline)
+    self.__srv_lab_problems.modify(lab, problem, description, deadline)
       
+  def __ui_search_lab_problem(self):
+    try:
+      lab = int(input("lab: "))
+    except ValueError:
+      print("invalid id!")
+      return
+
+    try:
+      problem = int(input("problem: "))
+    except ValueError:
+      print("invalid problem!")
+      return
+
+    lab_problem_print = self.__srv_lab_problems.search(lab, problem)
+    print(lab_problem_print)
+
+  def __ui_grade_student(self):
+    try:
+      studentID = int(input("student id: "))
+    except ValueError:
+      print("invalid student id!")
+      return
+    
+    try:
+      lab = int(input("lab: "))
+    except ValueError:
+      print("invalid lab!")
+      return
+
+    try:
+      problem = int(input("problem: "))
+    except ValueError:
+      print("invalid problem!")
+      return
+
+    try:
+      grade_number = float(input("grade: "))
+    except ValueError:
+      print("invalid grade!")
+      return
+    
+    self.__srv_grades.grade(studentID, lab, problem, grade_number)
+
+  def __ui_delete_grade(self):
+    try:
+      studentID = int(input("student id: "))
+    except ValueError:
+      print("invalid student id!")
+      return
+    
+    try:
+      lab = int(input("lab: "))
+    except ValueError:
+      print("invalid lab!")
+      return
+
+    try:
+      problem = int(input("problem: "))
+    except ValueError:
+      print("invalid problem!")
+      return
+
+    self.__srv_grades.delete_grade(studentID, lab, problem)
+
+  def __ui_modify_grade(self):
+    try:
+      studentID = int(input("student id: "))
+    except ValueError:
+      print("invalid student id!")
+      return
+    
+    try:
+      lab = int(input("lab: "))
+    except ValueError:
+      print("invalid lab!")
+      return
+
+    try:
+      problem = int(input("problem: "))
+    except ValueError:
+      print("invalid problem!")
+      return
+
+    try:
+      grade_number = float(input("grade: "))
+    except ValueError:
+      print("invalid grade!")
+      return
+    
+    self.__srv_grades.modify_grade(studentID, lab, problem, grade_number)
+
 
   def run(self):
     while True:
       try:
-        cmd = input(">").lstrip().rstrip()
+        cmd = input(">").strip()
         if cmd == "exit":
           return
         elif cmd == "":
@@ -130,10 +232,14 @@ class Console:
           self.__ui_add_student()
         elif cmd == "delete student":
           self.__ui_delete_student()
+        elif cmd == "search student":
+          self.__ui_search_student()
         elif cmd == "add lab problem":
           self.__ui_add_lab_problem()
         elif cmd == "delete lab problem":
           self.__ui_delete_lab_problem()
+        elif cmd == "search lab problem":
+          self.__ui_search_lab_problem()
         elif "modify student" in cmd:
           if "name" in cmd or "group" in cmd:
             self.__ui_modify_student(cmd)
@@ -144,10 +250,16 @@ class Console:
             self.__ui_modify_lab_problem(cmd)
           else:
             print("incomplete command!")
+        elif cmd == "grade student":
+          self.__ui_grade_student()
+        elif cmd == "delete grade":
+          self.__ui_delete_grade()
+        elif cmd == "modify grade":
+          self.__ui_modify_grade()
         else:
           print("invalid command!")
       except ValidationError as ve:
-         print("validation error " + str(ve))
+         print("validation error: " + str(ve))
       except RepositoryError as re:
          print("repo error: " + str(re))
 

@@ -19,9 +19,9 @@ class ValidatorLabProblem:
     errors = ""
     if lab_problem.get_lab() < 0 or lab_problem.get_problem() < 0:
       errors += "invalid lab problem!\n"
-    if lab_problem.get_description() == "":
+    if lab_problem.get_description().strip() == "":
       errors += "invalid description!\n"
-    if lab_problem.get_deadline() < datetime.date.today():
+    if lab_problem.get_deadline() != None and lab_problem.get_deadline() < datetime.date.today():
       errors += "invalid deadline!\n"
     if len(errors):
       raise ValidationError(errors) 

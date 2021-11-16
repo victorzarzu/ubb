@@ -10,6 +10,7 @@ class Student:
     self.__studentID = studentID
     self.__nume = nume
     self.__grup = grup
+    self.__exists = True
 
   def get_id(self):
     """
@@ -36,9 +37,17 @@ class Student:
 
     return self.__grup
 
+  def get_status(self):
+    """
+    function that returns the status of the current object
+    params: -
+    return: a boolean value
+    """
+    return self.__exists
+
   def set_nume(self, nume):
     """
-    function that sets the name of the current object with name
+    function that sets the name of the current object to name
     params: name - a string
     return: -
     """
@@ -46,12 +55,20 @@ class Student:
 
   def set_grup(self, grup):
     """
-    function that sets the grup of the current object with grup
+    function that sets the grup of the current object to grup
     params: name - an integer
     return: -
     """
     self.__grup = grup
   
+  def set_status(self, status):
+    """
+    function that sets the status of the current object to status
+    params: status - a boolean value
+    return: -
+    """
+    self.__exists = status
+
   def modify(self, name, group):
     """
     function that modifies the name and the group of the student based on the parameters
@@ -62,6 +79,32 @@ class Student:
       self.set_nume(name)
     if not group == None:
       self.set_grup(group)
+
+  @classmethod
+  def from_string(cls, string):
+    """
+    function that returns a student from a string
+    params: string - a string;
+    return: a student object
+    """
+    string = string.split(";")
+    return cls(int(string[0]), string[1], int(string[2]))
+
+  def to_string(self):
+    """
+    function that returns a string representing the student
+    params: 
+    return: a string
+    """
+    return f"{self.get_id()};{self.get_name()};{self.get_group()}"
+
+  def to_print(self):
+    """
+    function that returns a printable form of a student
+    params: -
+    return: a string
+    """
+    return f'name: {self.get_name()}\ngroup: {self.get_group()}'
 
   def __eq__(self, other_student):
     """
