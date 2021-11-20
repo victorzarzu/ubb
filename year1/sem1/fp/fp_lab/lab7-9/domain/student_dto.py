@@ -31,7 +31,7 @@ class StudentDTO:
     params: -
     return: a string
     """
-    return self.__name + ": {:.2f}".format(self.average())
+    return self.__name + ": {:.4f}".format(self.average())
 
   def average(self):
     """
