@@ -2,54 +2,78 @@ bits 32
 
 global start
 
-extern exit
+extern exit, printf
 import exit msvcrt.dll
+import printf msvcrt.dll
 
 segment data use32 class = data
-	S dd 12345607h, 1A2B3C15h
-	len equ ($ - S) / 4
-	d resb len * 4
+	S dd 12345607h, 1A2B3C15h, 00BC6712h, 12121212h
+	len equ ($ - S)
+	d resb len
+    mesaj db "%d "
 
 segment code use32 class = code
 start:
 
-	mov ecx, len * 4
+	mov ecx, len
 	mov edi, d
 	mov esi, S
 	
 	jecxz not_dim
+    cld
+    
 	move:
 		movsb
 	loop move
 	
 	not_dim:
 	
+
 	mov ecx, len
 	cmp ecx, 0
 	je not_dimension
+    cld
+    
 	iterate:
 		mov ecx, 0
 		mov ebx, 0
 		mov esi, d
 		
 		sort:
-			mov dl, [esi]
-			cmp dl, [esi + 1]
-			
-			jb is_ok
-			mov al, [esi + 1]
-			mov [esi], al
-			mov [esi + 1], dl
-			mov ebx, 1
-			is_ok:
-		
-			inc esi
-			inc ecx
-			cmp ecx, len * 4 - 1
-		jne sort
+            cld
+            lodsb
+            mov edi, esi
+            push esi
+            push esi
+            
+            scasb
+            
+            jbe is_ok
+            
+            pop edi
+            mov esi, edi
+            std
+            lodsb
+            movsb
+            cld
+            stosb
+            mov ebx, 1
+            
+            is_ok:
+            cmp ebx, 1
+            jz changed
+            add esp, 4
+            changed:
+            
+            pop esi
+            inc ecx
+            cmp ecx, len - 1
+        
+        jne sort
+           
 		
 		cmp ebx, 1
-	je iterate
+	jz iterate
 	
 	not_dimension:
 
