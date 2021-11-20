@@ -7,7 +7,7 @@ import exit msvcrt.dll
 import printf msvcrt.dll
 
 segment data use32 class = data
-	S dd 12345607h, 1A2B3C15h, 00BC6712h
+	S dd 12345607h, 1A2B3C15h, 00BC6712h, 12121212h
 	len equ ($ - S)
 	d resb len
     mesaj db "%d "
@@ -48,7 +48,7 @@ start:
             
             scasb
             
-            jb is_ok
+            jbe is_ok
             
             pop edi
             mov esi, edi
