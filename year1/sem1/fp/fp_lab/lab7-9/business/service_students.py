@@ -32,7 +32,7 @@ class ServiceStudents:
     student = Student(studentID, name, group)
     self.__validator_student.validate(student)
     self.__repo_students.store(student)
-  
+      
   def delete(self, studentID):
     """
     function that deletes a student object from __repo_stundets by its id
@@ -48,8 +48,10 @@ class ServiceStudents:
     parameters: studentID - an integer; name - a string; group - an integer
     return: -
     """
-    self.__repo_students.search(studentID)
+    student = self.__repo_students.search(studentID)
+    student = Student(studentID, name, group) 
     self.__repo_students.modify(studentID, name, group)
+
 
   def search(self, studentID):
     """

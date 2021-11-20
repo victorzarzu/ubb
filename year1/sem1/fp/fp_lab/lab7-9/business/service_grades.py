@@ -2,6 +2,7 @@ from domain.student import Student
 from domain.student_dto import StudentDTO
 from domain.lab_problem import LabProblem
 from domain.grade import Grade
+from functools import cmp_to_key
 
 class ServiceGrades:
   """
@@ -84,14 +85,39 @@ class ServiceGrades:
 
     result = []
     for student_data in students_data:  
-      name = self.__repo_students.search(student_data).get_name();
+      name = self.__repo_students.search(student_data).get_name()
       student_dto = StudentDTO(name)
       for grade in students_data[student_data]:
         student_dto.add_grade(grade) 
       result.append(student_dto)
 
     return result
+  
+  def get_students_by_lab_problem(self, lab, problem):
+    """
+    function that returns a list of StudentDTO objects that have the lab and the problem as parameters
+    params: lab - an integer
+            problem - an integer
+    return: a list of StundetDTO objects
+    """
+    grades = self.__repo_grades.get_all_lab_problem(lab, problem)
+  
+    students_data = {}
+    for grade in grades:
+      if grade.get_student() not in students_data:
+        students_data[grade.get_student()] = []
+      students_data[grade.get_student()].append(grade)
 
+    result = []
+    for student_data in students_data:
+      name = self.__repo_students.search(student_data).get_name()
+      student_dto = StudentDTO(name)
+      for grade in students_data[student_data]:
+        student_dto.add_grade(grade)
+      result.append(student_dto)
+        
+    result.sort(key = cmp_to_key(sort_grade_name))
+    return result
   
   def get_students_with_small_average(self):
     """
@@ -99,17 +125,36 @@ class ServiceGrades:
     param: -
     return: a list of StudentDTO objects
     """
-    student_odts = self.get_all()
-    student_odts = list(filter(filter_average_smaller_than_5, student_odts))
-    return student_odts
+    student_dtos = self.get_all()
+    student_dtos = list(filter(filter_average_smaller_than_5, student_dtos))
+    return student_dtos
+
+
+
 
 def filter_average_smaller_than_5(student_odt):
     """
     function used at filtering for students that have an average of grades smaller than 5
-    params: student_odt - a StudentODT object
+    params: student_odt - a StudentDTO object
     return: True if the current object has an average smaller than 5, False otherwise
     """
     if student_odt.average() - 5 < 0.000001:
       return True
     return False
 
+def sort_grade_name(studentdto1, studentdto2):
+  """
+  function used for sorting the students based on their grades and names
+  params: stundetdto1, studentdto2 - StundetDTO object
+  return: -1 if studentdto1 need to be in front of studentdto2 in sorted list
+          -1 if studentdto1 need to be after the studentdto2 in sorted list
+          0 if they are equal
+  """
+  if abs(studentdto1.average() - studentdto2.average()) <= 0.000001:
+    if studentdto1.get_name() < studentdto2.get_name():
+      return -1
+    elif studentdto1.get_name() > studentdto2.get_name():
+      return 1
+    return 0
+  else:
+    return studentdto1.average() - studentdto2.average()

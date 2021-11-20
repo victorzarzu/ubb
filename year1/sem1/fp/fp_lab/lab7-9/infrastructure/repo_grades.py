@@ -82,3 +82,24 @@ class RepositoryGrades(Repository):
     for grade in self._storage:
       if grade == artificial_grade:
         grade.set_grade(grade_number)
+
+  def get_all(self):
+    """
+    function that returns all the grades
+    params: -
+    return: a list of grades
+    """
+    return self._storage[:]
+
+  def get_all_lab_problem(self, lab, problem):
+    """
+    function that returns the grades that has the lab and the problem
+    params: lab - an integer
+            problem - an integer
+    return: a list of grades
+    """
+    result = []
+    for grade in self._storage:
+      if grade.get_lab() == lab and grade.get_problem() == problem:
+        result.append(grade)
+    return result

@@ -10,6 +10,19 @@ class RepositoryLabProblems(Repository):
   def __init__(self):
     super().__init__()
 
+  def __len__(self):
+    """
+    function that returns the number of actual lab problems that exista
+    params: -
+    return: an integer
+    """
+    lab_problems = 0
+    for lab_problem in self._storage:
+      if lab_problem.get_status():
+         lab_problems += 1
+
+    return lab_problems
+
   def store(self, lab_problem):
     """
     function that adds a lab_problem into the _storage list of the current class
@@ -18,7 +31,7 @@ class RepositoryLabProblems(Repository):
     exceptions: RepositoryError with text "exitent lab problem!" if there already is a lab_problem equal with the given one 
     """
     for lab_prob in self._storage:
-      if lab_prob == lab_problem:
+      if lab_prob == lab_problem and lab_prob.get_status():
         raise RepositoryError("existent lab problem!")
 
     self.add(lab_problem)
@@ -31,7 +44,7 @@ class RepositoryLabProblems(Repository):
     exceptions: RepositoryError with text "absent lab problem!" if lab_problem is not in the repo 
     """
     for lab_prob in self._storage:
-      if lab_prob.get_lab() == lab and lab_prob.get_problem() == problem:
+      if lab_prob.get_lab() == lab and lab_prob.get_problem() == problem and lab_prob.get_status():
         return lab_prob
 
     raise RepositoryError("absent lab problem!")      
@@ -42,10 +55,9 @@ class RepositoryLabProblems(Repository):
     params: lab - an integer; problem - an integer
     return: -
     """
-    for i in range(len(self._storage)):
-      if self._storage[i].get_lab() == lab and self._storage[i].get_problem() == problem:
-        del self._storage[i] 
-        return
+    for lab_problem in self._storage:
+      if lab_problem.get_lab() == lab and lab_problem.get_problem() == problem:
+        lab_problem.set_status(False)
 
   def modify(self, lab, problem, description, datetime):
     """

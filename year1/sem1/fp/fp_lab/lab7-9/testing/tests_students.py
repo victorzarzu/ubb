@@ -137,6 +137,7 @@ class TestsStudents:
     invalid_studentID = -5
     invalid_name = ""
     invalid_group = -6
+
     try:
       srv.store(invalid_studentID, invalid_name, invalid_group) 
       assert False

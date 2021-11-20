@@ -223,14 +223,37 @@ class Console:
   def __ui_add_random_students(self):
     self.__srv_students.store_random_students()
 
-  def __ui_statistics_average(self):
-    students_odt = self.__srv_grades.get_students_with_small_average()
-    
-    if len(students_odt) == 0:
+  def __ui_statistics_lab_problem(self):
+    try:
+      lab = int(input("lab: "))
+    except ValueError:
+      print("invalid lab!")
+      return
+
+    try:
+      problem = int(input("problem: "))
+    except ValueError:
+      print("invalid lab!")
+      return
+
+
+    student_odts = self.__srv_grades.get_students_by_lab_problem(lab, problem)
+    if len(student_odts) == 0:
       print("No students!")
       return
 
-    for student in students_odt:
+    for student in student_odts:
+      print(str(student))
+
+
+  def __ui_statistics_average(self):
+    student_odts = self.__srv_grades.get_students_with_small_average()
+    
+    if len(student_odts) == 0:
+      print("No students!")
+      return
+
+    for student in student_odts:
       print(str(student))
 
   def run(self):
@@ -271,6 +294,8 @@ class Console:
           self.__ui_modify_grade()
         elif cmd == "add random students":
           self.__ui_add_random_students()
+        elif cmd == "statistics lab problem":
+          self.__ui_statistics_lab_problem()
         elif cmd == "statistics average":
           self.__ui_statistics_average()
         else:

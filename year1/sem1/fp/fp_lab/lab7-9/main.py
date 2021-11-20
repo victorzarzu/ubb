@@ -36,13 +36,9 @@ if __name__ == "__main__":
   #repo_lab_problems = RepositoryLabProblems()
   #repo_grades = RepositoryGrades()
 
-  try: 
-    repo_students = FileRepositoryStudents(students_file)
-    repo_lab_problems = FileRepositoryLabProblems(lab_problems_file)
-    repo_grades = FileRepositoryGrades(grades_file)
-  except IOError:
-    print("Couldn't load the data from the memory right now")
-    exit()
+  repo_students = FileRepositoryStudents(students_file)
+  repo_lab_problems = FileRepositoryLabProblems(lab_problems_file)
+  repo_grades = FileRepositoryGrades(grades_file)
 
   srv_students = ServiceStudents(validator_student, repo_students)
   srv_lab_problems = ServiceLabProblems(validator_lab_problem, repo_lab_problems)

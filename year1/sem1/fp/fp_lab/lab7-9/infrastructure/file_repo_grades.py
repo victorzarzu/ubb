@@ -7,7 +7,6 @@ class FileRepositoryGrades(RepositoryGrades):
   def __init__(self, filename):
     super().__init__()
     self.__filename = filename
-    #self.__load_from_file()
 
   def __load_from_file(self):
     """
@@ -39,6 +38,7 @@ class FileRepositoryGrades(RepositoryGrades):
     params: grade - a grade object
     return: -
     """
+    self.__load_from_file()
     RepositoryGrades.store(self, grade)
     self.__store_to_file()
 
@@ -50,6 +50,7 @@ class FileRepositoryGrades(RepositoryGrades):
             problem - an integer
     return: -
     """
+    self.__load_from_file()
     RepositoryGrades.delete(self, studentID, lab, problem)
     self.__store_to_file()
 
@@ -62,6 +63,7 @@ class FileRepositoryGrades(RepositoryGrades):
             grade_number - a float number
     return: -
     """
+    self.__load_from_file()
     RepositoryGrades.modify(self, studentID, lab, problem, grade_number)
     self.__store_to_file()
  
@@ -83,4 +85,14 @@ class FileRepositoryGrades(RepositoryGrades):
     return: a list of grades
     """
     self.__load_from_file()
-    return self._storage[:]
+    return RepositoryGrades.get_all(self)
+
+  def get_all_lab_problem(self, lab, problem):
+    """
+    function that return all the grades that has lab and problem as parameters
+    params: lab - an integer
+            problem - an integer
+    return: a list of grades
+    """
+    self.__load_from_file()
+    return RepositoryGrades.get_all_lab_problem(self, lab, problem)

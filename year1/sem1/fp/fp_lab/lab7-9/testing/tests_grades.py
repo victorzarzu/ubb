@@ -102,6 +102,14 @@ class TestsGrades:
     repo.store(new_grade)
 
     assert len(repo) == 2
+    repo_all = repo.get_all()
+    assert len(repo_all) == 2
+    assert repo_all[0].get_student() == studentID
+    assert repo_all[1].get_student() == new_studentID
+
+    repo_lab_problem = repo.get_all_lab_problem(lab, problem)
+    assert len(repo_lab_problem) == 1
+    assert repo_lab_problem[0] == grade
 
     try:
       repo.store(new_grade)

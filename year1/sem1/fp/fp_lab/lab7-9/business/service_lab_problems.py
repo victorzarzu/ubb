@@ -1,4 +1,5 @@
 from domain.lab_problem import LabProblem
+from errors.errors import RepositoryError, ValidationError
 
 class ServiceLabProblems:
   """
@@ -26,6 +27,7 @@ class ServiceLabProblems:
     lab_problem = LabProblem(lab, problem, description, deadline)
     self.__validator_lab_problem.validate(lab_problem)
     self.__repo_lab_problems.store(lab_problem)
+
 
   def delete(self, lab, problem):
     """
