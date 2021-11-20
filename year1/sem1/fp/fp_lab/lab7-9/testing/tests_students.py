@@ -1,7 +1,6 @@
 from domain.student import Student
 from domain.student_dto import StudentDTO
 from domain.grade import Grade
-from domain.student_grade import StudentGrade
 from validation.validator_student import ValidatorStudent 
 from errors.errors import ValidationError, RepositoryError
 from infrastructure.repo_students import RepositoryStudents
@@ -305,24 +304,6 @@ class TestsStudents:
     assert len(studentdto) == 2
     assert studentdto.average() - 10.5 <= 0.0000001
 
-  def __test_create_student_grade(self):
-    studentID = 5
-    lab = 7
-    problem = 7
-    grade = 7.8
-  
-    student_grade = StudentGrade(studentID, lab, problem, grade)
-    assert student_grade.get_student_id() == studentID
-    assert student_grade.get_lab() == lab
-    assert student_grade.get_problem() == problem 
-    assert student_grade.get_grade() == grade
-
-    name = "Mike"
-    student_grade.set_student_name(name)
-    assert student_grade.get_student_name() == name
-
-
-
   def run_all_tests(self):
     self.__test_create_student()
     self.__test_validate_student()
@@ -332,4 +313,3 @@ class TestsStudents:
     self.__test_delete_service()
     self.__test_file_repo_students()
     self.__test_create_studentdto()
-    self.__test_create_student_grade()
