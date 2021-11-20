@@ -82,5 +82,3 @@ class RepositoryGrades(Repository):
     for grade in self._storage:
       if grade == artificial_grade:
         grade.set_grade(grade_number)
-    pass
-

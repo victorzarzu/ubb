@@ -1,0 +1,9 @@
+1;Mark;15
+15;Eric;217
+0;Victor;217
+999;Bart;1
+555;Eric;888
+188;Tim;788
+8;Henry;144
+3237;Qw;4070
+765;Victor;217

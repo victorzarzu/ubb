@@ -90,10 +90,10 @@ class Student:
     string = string.split(";")
     return cls(int(string[0]), string[1], int(string[2]))
 
-  def to_string(self):
+  def __str__(self):
     """
     function that returns a string representing the student
-    params: 
+    params: -
     return: a string
     """
     return f"{self.get_id()};{self.get_name()};{self.get_group()}"

@@ -29,7 +29,7 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     with open(self.__filename, "w") as f:
       for lab_problem in self._storage:
         if lab_problem.get_status():
-          lab_problem_string = lab_problem.to_string() + "\n"
+          lab_problem_string = str(lab_problem) + "\n"
           f.write(lab_problem_string)
 
   def store(self, lab_problem):

@@ -220,6 +220,19 @@ class Console:
     self.__srv_grades.modify_grade(studentID, lab, problem, grade_number)
 
 
+  def __ui_add_random_students(self):
+    self.__srv_students.store_random_students()
+
+  def __ui_statistics_average(self):
+    students_odt = self.__srv_grades.get_students_with_small_average()
+    
+    if len(students_odt) == 0:
+      print("No students!")
+      return
+
+    for student in students_odt:
+      print(str(student))
+
   def run(self):
     while True:
       try:
@@ -256,10 +269,15 @@ class Console:
           self.__ui_delete_grade()
         elif cmd == "modify grade":
           self.__ui_modify_grade()
+        elif cmd == "add random students":
+          self.__ui_add_random_students()
+        elif cmd == "statistics average":
+          self.__ui_statistics_average()
         else:
           print("invalid command!")
       except ValidationError as ve:
-         print("validation error: " + str(ve))
+        print("validation error: " + str(ve))
       except RepositoryError as re:
-         print("repo error: " + str(re))
-
+        print("repo error: " + str(re))
+      except IOError as ioe:
+        print("Couldn't make a persistent modification right now") 

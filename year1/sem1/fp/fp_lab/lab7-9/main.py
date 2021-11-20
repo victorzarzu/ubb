@@ -18,8 +18,10 @@ from infrastructure.repo_lab_problems import RepositoryLabProblems
 from infrastructure.repo_grades import RepositoryGrades
 from infrastructure.repo_lab_problems import RepositoryLabProblems
 from infrastructure.repo_grades import RepositoryGrades
+
 from infrastructure.file_repo_students import FileRepositoryStudents
 from infrastructure.file_repo_lab_problems import FileRepositoryLabProblems
+from infrastructure.file_repo_grades import FileRepositoryGrades
 
 if __name__ == "__main__":
   validator_student = ValidatorStudent()
@@ -28,12 +30,19 @@ if __name__ == "__main__":
 
   students_file = "students.txt"
   lab_problems_file = "lab_problems.txt"
+  grades_file = "grades.txt"
 
   #repo_students = RepositoryStudents()
-  repo_students = FileRepositoryStudents(students_file)
   #repo_lab_problems = RepositoryLabProblems()
-  repo_lab_problems = FileRepositoryLabProblems(lab_problems_file)
-  repo_grades = RepositoryGrades()
+  #repo_grades = RepositoryGrades()
+
+  try: 
+    repo_students = FileRepositoryStudents(students_file)
+    repo_lab_problems = FileRepositoryLabProblems(lab_problems_file)
+    repo_grades = FileRepositoryGrades(grades_file)
+  except IOError:
+    print("Couldn't load the data from the memory right now")
+    exit()
 
   srv_students = ServiceStudents(validator_student, repo_students)
   srv_lab_problems = ServiceLabProblems(validator_lab_problem, repo_lab_problems)

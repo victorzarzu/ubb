@@ -1,4 +1,10 @@
 from domain.student import Student
+from validation.validator_student import ValidatorStudent
+from errors.errors import RepositoryError, ValidationError
+import random
+import string
+
+letters = string.ascii_lowercase
 
 class ServiceStudents:
   """
@@ -61,3 +67,30 @@ class ServiceStudents:
     return: a list of student objects
     """
     return self.__repo_students.get_all()
+  
+  def store_random_students(self):
+    """
+    function that adds a random number of students with random data
+    params: -
+    return: -
+    """
+    students_number = random.randrange(20)
+    validator = ValidatorStudent()
+
+    for i in range(students_number):
+      try:
+        studentID = random.randrange(10000)
+        name_len = random.randrange(25)
+        name = "".join(random.choices(letters, k = name_len)).capitalize()
+        group = random.randrange(10000)
+        student = Student(studentID, name, group)
+        validator.validate(student)
+        
+        self.__repo_students.store(student)
+      except RepositoryError as re:
+        if str(re) == "existent id!":
+          i -= 1 
+        else:
+          raise RepositoryError(str(re))
+      except ValidationError as ve:
+        i -= 1

@@ -97,7 +97,7 @@ class LabProblem:
     string = string.split(";")
     return cls(int(string[0]), int(string[1]), string[2], datetime.datetime.strptime(string[3].strip(), "%d %m %Y").date())
 
-  def to_string(self):
+  def __str__(self):
     """
     function that returns a string representing a lab problem
     params: -

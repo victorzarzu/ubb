@@ -6,7 +6,7 @@ class Grade:
   def __init__(self, studentID, lab, problem, grade):
     """
     studentID - an integer
-    lab - an integer
+    lab - an integer 
     problem - an integer
     grade - a float number
     """
@@ -96,6 +96,24 @@ class Grade:
     """
     self.__exists = status
  
+  @classmethod
+  def from_string(cls, string):
+    """
+    function that returns a grade from a string
+    params: string - a string 
+    return: a grade object
+    """
+    string = string.split(";")
+    return cls(int(string[0]), int(string[1]), int(string[2]), float(string[3]))
+
+  def __str__(self):
+    """
+    function that returns a string representing the grade
+    params: -
+    return: a string
+    """
+    return f"{self.get_student()};{self.get_lab()};{self.get_problem()};{self.get_grade()}"
+
   def __eq__(self, grade):
     """
     function that compares if 2 grade objects are the same

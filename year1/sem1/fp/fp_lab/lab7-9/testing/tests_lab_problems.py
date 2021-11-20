@@ -51,7 +51,7 @@ class TestsLabProblems:
     assert lab_problem.get_description() == description
     assert lab_problem.get_deadline() == deadline
 
-    string = lab_problem.to_string()
+    string = str(lab_problem)
     assert string == lab_problem_string
 
     printable_string = lab_problem.to_print()

@@ -29,7 +29,7 @@ class FileRepositoryStudents(RepositoryStudents):
     with open(self.__filename, "w") as f:
       for student in self._storage:
         if student.get_status():
-          student_string = student.to_string() + "\n"
+          student_string = str(student) + "\n"
           f.write(student_string)
 
   def store(self, student):
