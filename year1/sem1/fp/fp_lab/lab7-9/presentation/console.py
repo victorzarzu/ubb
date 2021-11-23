@@ -305,4 +305,4 @@ class Console:
       except RepositoryError as re:
         print("repo error: " + str(re))
       except IOError as ioe:
-        print("Couldn't make a persistent modification right now") 
+        print("Couldn't make the modification right now!") 
