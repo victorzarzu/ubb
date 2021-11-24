@@ -55,7 +55,7 @@ class TestsLabProblems:
     assert string == lab_problem_string
 
     printable_string = lab_problem.to_print()
-    assert printable_string == "description: Sterge baza de date\ndeadline: 11 10 2022\n"
+    assert printable_string == "lab: 1\nproblem: 1\ndescription: Sterge baza de date\ndeadline: 11 10 2022\n"
 
   def __test_validate_lab_problem(self):
     lab = 6
@@ -176,7 +176,7 @@ class TestsLabProblems:
       assert str(re) == "existent lab problem!"
 
     printable_lab_problem = srv.search(lab, problem)
-    assert printable_lab_problem == "description: Actualizati baza de date\ndeadline: 25 11 2222\n"
+    assert printable_lab_problem == "lab: 6\nproblem: 10\ndescription: Actualizati baza de date\ndeadline: 25 11 2222\n"
   
   def __test_delete_service(self):
     lab = 6

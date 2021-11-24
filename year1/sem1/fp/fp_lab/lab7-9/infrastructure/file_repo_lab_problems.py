@@ -7,6 +7,7 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
   def __init__(self, filename):
     super().__init__()
     self.__filename = filename
+    self.__load_from_file()
 
   def __load_from_file(self):
     """
@@ -14,10 +15,14 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     params: -
     return: -
     """
-    with open(self.__filename, "r") as f:
-      for line in f:
-        lab_problem = LabProblem.from_string(line)
-        RepositoryLabProblems.add(self, lab_problem)
+    try:
+      with open(self.__filename, "r") as f:
+        for line in f:
+          lab_problem = LabProblem.from_string(line)
+          RepositoryLabProblems.add(self, lab_problem)
+    except IOError:
+      print("Could not load data from persistent storage")
+
 
   def __store_to_file(self):
     """
@@ -37,7 +42,6 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     params: lab_problem - a lab_problem object
     return: -
     """
-    self.__load_from_file()
     RepositoryLabProblems.store(self, lab_problem)
     self.__store_to_file()
 
@@ -47,7 +51,6 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     params: lab, an integer; problem - an integer
     return: -
     """
-    self.__load_from_file()
     RepositoryLabProblems.delete(self, lab, problem)
     self.__store_to_file()
 
@@ -57,7 +60,6 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     params: lab - an integer; problem - an integer; description - a string; deadline - a datetime object 
     return: -
     """
-    self.__load_from_file()
     RepositoryLabProblems.modify(self, lab, problem, description, deadline)
     self.__store_to_file()
 
@@ -68,6 +70,5 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
             problem - an integer
     return: a lab_problem object
     """
-    self.__load_from_file()
     return RepositoryLabProblems.search(self, lab, problem)
 

@@ -111,7 +111,7 @@ class LabProblem:
     params: -
     return: a string
     """
-    return f'description: {self.get_description()}\ndeadline: {self.get_deadline().strftime("%d %m %Y")}\n'
+    return f'lab: {self.get_lab()}\nproblem: {self.get_problem()}\ndescription: {self.get_description()}\ndeadline: {self.get_deadline().strftime("%d %m %Y")}\n'
 
   def modify(self, description, deadline):
     """

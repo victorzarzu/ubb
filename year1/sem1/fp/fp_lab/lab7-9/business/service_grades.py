@@ -93,6 +93,35 @@ class ServiceGrades:
 
     return result
   
+  def get_student_most_grades(self):
+    """
+    function that returns the student that has the most grades along with the lab problems
+    params: -
+    return: a list of lab problems
+    """
+    grades = self.__repo_grades.get_all()
+
+    students_data = {}
+    for grade in grades:
+      if grade.get_student() not in students_data:
+        students_data[grade.get_student()] = []
+      students_data[grade.get_student()].append(grade)
+
+    maximum_pos = 0
+    maximum_grades = 0
+    for student_data in students_data:  
+      if len(students_data[student_data]) > maximum_grades:
+        maximum_pos = student_data
+        maximum_grades = len(students_data[student_data])
+
+    result = []
+    for grade in students_data[maximum_pos]:
+      lab_problem = self.__repo_lab_problems.search(grade.get_lab(), grade.get_problem())
+      result.append(lab_problem)
+  
+    return result 
+       
+
   def get_students_by_lab_problem(self, lab, problem):
     """
     function that returns a list of StudentDTO objects that have the lab and the problem as parameters

@@ -7,6 +7,7 @@ class FileRepositoryStudents(RepositoryStudents):
   def __init__(self, filename):
     super().__init__()
     self.__filename = filename
+    self.__load_from_file()
 
   def __load_from_file(self):
     """
@@ -14,10 +15,13 @@ class FileRepositoryStudents(RepositoryStudents):
     params: -
     return: -
     """
-    with open(self.__filename, "r") as f:
-      for line in f:
-        student = Student.from_string(line)
-        RepositoryStudents.add(self, student)
+    try:
+      with open(self.__filename, "r") as f:
+        for line in f:
+          student = Student.from_string(line)
+          RepositoryStudents.add(self, student)
+    except IOError:
+      print("Could not load data from persistent storage")
 
   def __store_to_file(self):
     """
@@ -37,7 +41,6 @@ class FileRepositoryStudents(RepositoryStudents):
     params: student - a student object
     return: -
     """
-    self.__load_from_file()
     RepositoryStudents.store(self, student)
     self.__store_to_file()
 
@@ -47,7 +50,6 @@ class FileRepositoryStudents(RepositoryStudents):
     params: studentID - an integer
     return: -
     """
-    self.__load_from_file()
     RepositoryStudents.delete(self, studentID)
     self.__store_to_file()
 
@@ -57,7 +59,6 @@ class FileRepositoryStudents(RepositoryStudents):
     params: name - a string; group - an integer
     return: -
     """
-    self.__load_from_file()
     RepositoryStudents.modify(self, studentID, name, group)
     self.__store_to_file()
 
@@ -67,6 +68,5 @@ class FileRepositoryStudents(RepositoryStudents):
     params: studentID - an integer
     return: a student object
     """
-    self.__load_from_file()
     return RepositoryStudents.search(self, studentID)
 

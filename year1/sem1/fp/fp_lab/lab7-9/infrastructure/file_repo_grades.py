@@ -7,6 +7,7 @@ class FileRepositoryGrades(RepositoryGrades):
   def __init__(self, filename):
     super().__init__()
     self.__filename = filename
+    self.__load_from_file()
 
   def __load_from_file(self):
     """
@@ -15,10 +16,15 @@ class FileRepositoryGrades(RepositoryGrades):
     return: -
     """
     self.clear()
-    with open(self.__filename, "r") as f:
-      for line in f:
-        grade = Grade.from_string(line)
-        RepositoryGrades.add(self, grade)
+    try:
+      with open(self.__filename, "r") as f:
+        for line in f:
+          grade = Grade.from_string(line)
+          RepositoryGrades.add(self, grade)
+    except IOError:
+      print("Could not load data from persistent storage")
+      pass
+      
 
   def __store_to_file(self):
     """
@@ -38,7 +44,6 @@ class FileRepositoryGrades(RepositoryGrades):
     params: grade - a grade object
     return: -
     """
-    self.__load_from_file()
     RepositoryGrades.store(self, grade)
     self.__store_to_file()
 
@@ -50,7 +55,6 @@ class FileRepositoryGrades(RepositoryGrades):
             problem - an integer
     return: -
     """
-    self.__load_from_file()
     RepositoryGrades.delete(self, studentID, lab, problem)
     self.__store_to_file()
 
@@ -63,7 +67,6 @@ class FileRepositoryGrades(RepositoryGrades):
             grade_number - a float number
     return: -
     """
-    self.__load_from_file()
     RepositoryGrades.modify(self, studentID, lab, problem, grade_number)
     self.__store_to_file()
  
@@ -75,7 +78,6 @@ class FileRepositoryGrades(RepositoryGrades):
             problem - an integer
     return: a grade 
     """
-    self.__load_from_file()
     RepositoryGrades.search(self, studentID, lab, problem)
 
   def get_all(self):
@@ -84,7 +86,6 @@ class FileRepositoryGrades(RepositoryGrades):
     params: -
     return: a list of grades
     """
-    self.__load_from_file()
     return RepositoryGrades.get_all(self)
 
   def get_all_lab_problem(self, lab, problem):
@@ -94,5 +95,4 @@ class FileRepositoryGrades(RepositoryGrades):
             problem - an integer
     return: a list of grades
     """
-    self.__load_from_file()
     return RepositoryGrades.get_all_lab_problem(self, lab, problem)

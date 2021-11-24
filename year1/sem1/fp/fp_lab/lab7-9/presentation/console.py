@@ -256,6 +256,12 @@ class Console:
     for student in student_odts:
       print(str(student))
 
+  def __ui_statistics_most_grades(self):
+    grades = self.__srv_grades.get_student_most_grades() 
+
+    for grade in grades:
+      print(grade.to_print())
+
   def run(self):
     while True:
       try:
@@ -298,6 +304,8 @@ class Console:
           self.__ui_statistics_lab_problem()
         elif cmd == "statistics average":
           self.__ui_statistics_average()
+        elif cmd == "statistics most grades":
+          self.__ui_statistics_most_grades()
         else:
           print("invalid command!")
       except ValidationError as ve:
