@@ -599,7 +599,7 @@ void ui_operatii(char operatie)
         service_sub(numar1, numar2, rezultat, baza_numar1, baza_numar2, baza_rezultat);
         break;
       case '*':
-        if(char_int(strlen(numar2)) / 10)
+        if(strlen(numar2) > 1 || char_int(numar2[0]) / 10)
           {
             printf("Valoarea trebuie inmultita cu o cifra!\n");
             return;
@@ -607,7 +607,7 @@ void ui_operatii(char operatie)
         service_mul(numar1, numar2, rezultat, baza_numar1, baza_numar2, baza_rezultat);
         break;
       case '/':
-        if(char_int(strlen(numar2)) / 10)
+        if(strlen(numar2) > 1 || char_int(numar2[0]) / 10)
           {
             printf("Valoarea trebuie inmultita cu o cifra!\n");
             return;
