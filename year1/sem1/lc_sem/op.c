@@ -91,7 +91,7 @@ bool verif_nr(int b, char *s)
 
   */
   for(int i = 0;i < strlen(s);++i)
-    if(!(s[i] >= '0' && s[i] - '0' <= 26))
+    if(!(s[i] >= '0' && s[i] - '0' <= 36))
       return false;
   for(int i = 0;i < strlen(s);++i)
     if(char_int(s[i]) >= b)
