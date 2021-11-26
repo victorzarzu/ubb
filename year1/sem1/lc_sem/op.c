@@ -181,7 +181,7 @@ void convert_low_to_high_power_2(char *numar, int len_numar, int baza_sursa, int
   }
 
   int diff = 0;
-  if((len_numar % len_of_item))
+  if((len_numar % len_of_item)) //se completeaza cu 0-uri
     {
       diff = len_of_item - (len_numar % len_of_item);
       for(int i = len_numar - 1;i >= 0;--i)
