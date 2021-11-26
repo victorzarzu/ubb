@@ -88,7 +88,6 @@ bool verif_nr(int b, char *s)
           s - un pointer catre un sir de caractere
   return: true - daca numarul oferit este in baza indicata
           fals - daca numarul oferit nu este in baza indicata
-
   */
   for(int i = 0;i < strlen(s);++i)
     if(!(s[i] >= '0' && s[i] - '0' <= 26))
@@ -126,7 +125,7 @@ void ui_convert()
   char numar[4 * 201];
   printf("baza sursa\nnumar\nbaza destinatie\n\n");
   scanf("%d", &base_sursa);
-  scanf("%200s", numar);  
+  scanf("%s", numar);  
   scanf("%d", &base_destinatie);
 
   if(base_sursa < 2 || base_sursa > 36 || base_destinatie < 2 || base_destinatie > 36)
@@ -140,13 +139,6 @@ void ui_convert()
       printf("Numerele oferite nu sunt in baza indicata! \n");
       return;
     }
-
-  /*
-  if(!(min(base_sursa, base_destinatie) == 2 && !(max(base_sursa, base_destinatie) & (max(base_sursa, base_destinatie) - 1)))) //se verifica daca o baza este 2 si cealalta este o baza putere a lui 2 
-    convert(numar, base_sursa, base_destinatie);
-  else
-    convert_power_2(numar, base_sursa, base_destinatie);
-  */
   convert_service(numar, base_sursa, base_destinatie);
   print(numar);
 }
@@ -311,7 +303,7 @@ int add(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2,
   */
   int t = 0, len = max(len_numar1, len_numar2);
   
-  for(int i = 0;i <= max(len_numar1, len_numar2);++i)
+  for(int i = 0;i <= len;++i)
     {
       rezultat[i] = numar1[i] + numar2[i] + t;
       t = rezultat[i] / baza;
@@ -352,7 +344,7 @@ int sub(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2,
   return len;
 }
 
-int mul(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2, int baza)
+int mul(int *numar1, int numar2, int *rezultat, int len_numar1, int len_numar2, int baza)
 {
   /*
   functie care inmulteste un numar cu o cifra intr-o baza
@@ -367,7 +359,7 @@ int mul(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2,
   int t = 0;
   for(int i = 0;i <= len_numar1;++i)
   {
-    rezultat[i] = numar2[0] * numar1[i] + t;
+    rezultat[i] = numar2 * numar1[i] + t;
     t = rezultat[i] / baza;
     rezultat[i] %= baza;
   }
@@ -376,7 +368,7 @@ int mul(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2,
   return len_numar1;
 }
 
-int div(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2, int baza, int *rest)
+int div(int *numar1, int numar2, int *rezultat, int len_numar1, int len_numar2, int baza, int *rest)
 {
   /*
   functie care imparte un numar cu o cifra intr-o baza
@@ -393,8 +385,8 @@ int div(int *numar1, int *numar2, int *rezultat, int len_numar1, int len_numar2,
   for(int i = len_numar1 - 1;i >= 0;--i)
   {
     rezultat[i] = t * baza + numar1[i];
-    t = rezultat[i] % numar2[0];
-    rezultat[i] /= numar2[0];
+    t = rezultat[i] % numar2;
+    rezultat[i] /= numar2;
   }
 
   *rest = t;
@@ -423,16 +415,16 @@ void service_div(char *numar1, char *numar2, char *rezultat, int baza_numar1, in
   */
   int len_numar1, len_numar2;
   len_numar1 = convert_service(numar1, baza_numar1, baza_rezultat);
-  len_numar2 = convert_service(numar2, baza_numar2, baza_rezultat);
+  //len_numar2 = convert_service(numar2, baza_numar2, baza_rezultat);
 
   int numar1_int[201], numar2_int[201], rezultat_int[201];
   memset(numar1_int, 0, sizeof(numar1_int));
   memset(numar2_int, 0, sizeof(numar2_int));
   memset(rezultat_int, 0, sizeof(rezultat_int));
   string_to_int(numar1, numar1_int);
-  string_to_int(numar2, numar2_int);
+  //string_to_int(numar2, numar2_int);
 
-  int len_rezultat = div(numar1_int, numar2_int, rezultat_int, len_numar1, len_numar2, baza_rezultat, rest);
+  int len_rezultat = div(numar1_int, char_int(numar2[0]), rezultat_int, len_numar1, len_numar2, baza_rezultat, rest);
   int_to_string(rezultat, rezultat_int, len_rezultat);
 
 }
@@ -451,16 +443,16 @@ void service_mul(char *numar1, char *numar2, char *rezultat, int baza_numar1, in
   */
   int len_numar1, len_numar2;
   len_numar1 = convert_service(numar1, baza_numar1, baza_rezultat);
-  len_numar2 = convert_service(numar2, baza_numar2, baza_rezultat);
+  //len_numar2 = convert_service(numar2, baza_numar2, baza_rezultat);
 
   int numar1_int[201], numar2_int[201], rezultat_int[201];
   memset(numar1_int, 0, sizeof(numar1_int));
   memset(numar2_int, 0, sizeof(numar2_int));
   memset(rezultat_int, 0, sizeof(rezultat_int));
   string_to_int(numar1, numar1_int);
-  string_to_int(numar2, numar2_int);
+  //string_to_int(numar2, numar2_int);
 
-  int len_rezultat = mul(numar1_int, numar2_int, rezultat_int, len_numar1, len_numar2, baza_rezultat);
+  int len_rezultat = mul(numar1_int, char_int(numar2[0]), rezultat_int, len_numar1, len_numar2, baza_rezultat);
   int_to_string(rezultat, rezultat_int, len_rezultat);
 }
 
@@ -561,7 +553,7 @@ void ui_operatii(char operatie)
   scanf("%200s", numar1);
 
   
-  if(!verif_nr(baza_numar1, numar1))
+  if(!verif_nr(baza_numar1, numar1) || !strlen(numar1))
   {
     printf("Numarul nu este in baza specificata! \n");
     return;
@@ -576,7 +568,7 @@ void ui_operatii(char operatie)
 
   scanf("%200s", numar2);
   
-  if(!verif_nr(baza_numar2, numar2))
+  if(!verif_nr(baza_numar2, numar2) || !strlen(numar2))
   {
     printf("Numarul nu este in baza specificata! \n");
     return;
@@ -599,7 +591,7 @@ void ui_operatii(char operatie)
         service_sub(numar1, numar2, rezultat, baza_numar1, baza_numar2, baza_rezultat);
         break;
       case '*':
-        if(strlen(numar2) > 1 || char_int(numar2[0]) / 10)
+        if(strlen(numar2) > 1)
           {
             printf("Valoarea trebuie inmultita cu o cifra!\n");
             return;
@@ -607,7 +599,7 @@ void ui_operatii(char operatie)
         service_mul(numar1, numar2, rezultat, baza_numar1, baza_numar2, baza_rezultat);
         break;
       case '/':
-        if(strlen(numar2) > 1 || char_int(numar2[0]) / 10)
+        if(strlen(numar2) > 1)
           {
             printf("Valoarea trebuie inmultita cu o cifra!\n");
             return;
@@ -617,9 +609,15 @@ void ui_operatii(char operatie)
       default:
         printf("Operatie invalida!\n");
     }
-  printf("%s ", rezultat);
+  printf("Rezultat: ");
   if(operatie == '/')
-    printf("rest: %c", int_char(rest));
+    {
+      printf("cat: %s, ", rezultat);
+      printf("rest: %c", int_char(rest));
+    }
+  else
+    printf("%s", rezultat);
+  printf("\n");
   printf("\n");
 }
 
@@ -628,7 +626,7 @@ void ui()
   /*
   functia ui a aplicatiei
   */
-  char operatie[10], end;
+  char operatie[10];
   printf("Zarzu Victor-Eugen\n");
   while(true)
   {
@@ -814,16 +812,18 @@ void test_div()
   char rez[] = "1403601";
   for(int i = 0;i < strlen(rez);++i)
     assert(rezultat[i] == rez[i]);
+  assert(rest == 1);
   
   char numar11[] = "56";
   char numar22[] = "3";
-  char rez1[] = "153";
+  char rez1[] = "18";
   baza_numar1 = 10, baza_numar2 = 7, baza_rezultat = 7;
 
-  service_mul(numar11, numar22, rezultat, baza_numar1, baza_numar2, baza_rezultat);
+  service_div(numar11, numar22, rezultat, baza_numar1, baza_numar2, baza_rezultat, &rest);
 
   for(int i = 0;i < strlen(rez1);++i)
     assert(rezultat[i] == rez1[i]);
+  assert(rest == 2);
 }
 
 void run_all_tests()
