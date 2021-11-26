@@ -90,7 +90,7 @@ bool verif_nr(int b, char *s)
           fals - daca numarul oferit nu este in baza indicata
   */
   for(int i = 0;i < strlen(s);++i)
-    if(!(s[i] >= '0' && s[i] - '0' <= 26))
+    if(!(s[i] >= '0' && s[i] - '0' <= 36))
       return false;
   for(int i = 0;i < strlen(s);++i)
     if(char_int(s[i]) >= b)
@@ -173,7 +173,7 @@ void convert_low_to_high_power_2(char *numar, int len_numar, int baza_sursa, int
   }
 
   int diff = 0;
-  if((len_numar % len_of_item))
+  if((len_numar % len_of_item)) //se completeaza cu 0-uri
     {
       diff = len_of_item - (len_numar % len_of_item);
       for(int i = len_numar - 1;i >= 0;--i)
