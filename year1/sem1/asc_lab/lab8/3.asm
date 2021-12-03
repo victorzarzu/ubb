@@ -43,6 +43,9 @@ segment code use32 class = code
         call [fopen]
         add esp, 4 * 2
         
+        cmp eax, 0
+        jz not_fisier
+        
         mov dword [descriptor], eax
         
         push text
@@ -54,6 +57,8 @@ segment code use32 class = code
         push dword [descriptor]
         call [fclose]
         add esp, 4
+        
+        not_fisier:
         
         push dword 0
         call [exit]
