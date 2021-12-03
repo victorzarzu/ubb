@@ -20,6 +20,7 @@ segment code use32 class = code
     start:
     
         mov esi, text
+        cld
         
         iterate:
             mov edi, esi

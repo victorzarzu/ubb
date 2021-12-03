@@ -10,7 +10,9 @@ import scanf msvcrt.dll
 
 segment data use32 class = data
     a resb 1
+    x dd 0
     b resw 1
+    y dd 0
     read_format db "%hhd %hd", 0
     print_format db "%d %d", 0
     da_text db "DA", 0
