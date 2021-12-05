@@ -96,3 +96,12 @@ class FileRepositoryGrades(RepositoryGrades):
     return: a list of grades
     """
     return RepositoryGrades.get_all_lab_problem(self, lab, problem)
+
+  def clear(self):
+    """
+    function that clears the repo
+    params: -
+    return: -
+    """
+    RepositoryGrades.clear(self)
+    self.__store_to_file()

@@ -72,3 +72,11 @@ class FileRepositoryLabProblems(RepositoryLabProblems):
     """
     return RepositoryLabProblems.search(self, lab, problem)
 
+  def clear(self):
+    """
+    function that clears the repo
+    params: -
+    return: -
+    """
+    RepositoryLabProblems.clear(self)
+    self.__store_to_file()

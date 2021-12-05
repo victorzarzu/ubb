@@ -6,53 +6,66 @@ from errors.errors import ValidationError, RepositoryError
 from infrastructure.repo_students import RepositoryStudents
 from business.service_students import ServiceStudents
 from infrastructure.file_repo_students import FileRepositoryStudents
+import unittest
 
-class TestsStudents:
+class TestsStudents(unittest.TestCase):
   """
   class with tests for students
   """
-  
-  def __test_create_student(self):
-    """
-    function to test the constructor of the Student class
-    """
+
+  def setUp(self):
+    validator = ValidatorStudent()
+    self.repo = RepositoryStudents()
+    self.file_repo = FileRepositoryStudents("testing/students_persistance_test.txt") 
+    self.srv = ServiceStudents(validator, self.repo)
+    self.srv_file = ServiceStudents(validator, self.file_repo)
+
+
+  def tearDown(self):
+    self.repo.clear()
+    self.file_repo.clear()
+
+  def testCreate(self):
     studentID = 15
     name = "G"
     group = 456
     student = Student(studentID, name, group)
-    assert student.get_id() == studentID
-    assert student.get_name() == name
-    assert student.get_group() == group
-    assert student.get_status() == True
 
+    self.assertEqual(student.get_id(), studentID)
+    self.assertEqual(student.get_name(), name)
+    self.assertEqual(student.get_group(), group)
+    self.assertEqual(student.get_status(), True)
+    
     student.set_status(False)
-    assert student.get_status() == False
+    self.assertEqual(student.get_status(), False)
 
     new_name = "A"
     new_group = 345
     student_same_id = Student(studentID, new_name, new_group)
-    assert student == student_same_id
+    self.assertEqual(student, student_same_id)
 
     new_name = "E"
     new_group = 567
     student.modify(new_name, new_group)
-    assert student.get_name() == new_name
-    assert student.get_group() == new_group
+    self.assertEqual(student.get_name(), new_name)
+    self.assertTrue(student.get_group() == new_group)
 
     string = "15;Mark;982"
     student = Student.from_string(string);
-    assert student.get_id() == 15
-    assert student.get_name() == "Mark"
-    assert student.get_group() == 982
+    self.assertEqual(student.get_id(), 15)
+    self.assertEqual(student.get_name(), "Mark")
+    self.assertEqual(student.get_group(), 982)
 
     string = str(student)
-    assert string == "15;Mark;982"
+    self.assertEqual(string, "15;Mark;982")
 
     string = "name: Mark\ngroup: 982"
     student_string = student.to_print()
-    assert student_string == string
 
-  def __test_validate_student(self):
+    self.assertEqual(student_string, string)
+
+  
+  def testValidate(self):
     """
     function to text the validator of a stundet
     """
@@ -65,22 +78,14 @@ class TestsStudents:
 
     invalid_studentID = -5
     invalid_student = Student(invalid_studentID, name, group)
-    try:
-      validator.validate(invalid_student)
-      assert False
-    except ValidationError as ve:
-      assert str(ve) == "invalid id!\n"
+    self.assertRaisesRegex(ValidationError, "invalid id!\n", validator.validate, invalid_student)
 
     invalid_name = ""
     invalid_group = -6
     invalid_student = Student(invalid_studentID, invalid_name, invalid_group)
-    try:
-      validator.validate(invalid_student)
-      assert False
-    except ValidationError as ve:
-      assert str(ve) == "invalid id!\ninvalid name!\ninvalid group!\n"
+    self.assertRaisesRegex(ValidationError, "invalid id!\ninvalid name!\ninvalid group!\n", validator.validate, invalid_student)
 
-  def __test_add_repo(self):
+  def testAddRepo(self):
     """
     function to test the process of adding a stundent in students repo
     """
@@ -88,34 +93,23 @@ class TestsStudents:
     name = "G"
     group = 456
     student = Student(studentID, name, group)
-    repo = RepositoryStudents()
-    repo.store(student)
-    assert len(repo) == 1
+    self.repo.store(student)
+    self.assertTrue(len(self.repo) == 1)
 
-    found_student = repo.search(studentID)
-    assert student.get_id() == found_student.get_id()
-    assert student.get_name() == found_student.get_name()
-    assert student.get_group() == found_student.get_group()
+    found_student = self.repo.search(studentID)
+    self.assertTrue(student.get_id() == found_student.get_id())
+    self.assertTrue(student.get_name() == found_student.get_name())
+    self.assertTrue(student.get_group() == found_student.get_group())
 
     name_nou = "A"
     group_nou = 345
     student_same_id = Student(studentID, name_nou, group_nou)
-    
-    try:
-      repo.store(student_same_id)
-      assert False
-    except RepositoryError as re:
-      assert str(re) == "existent id!"
+    self.assertRaisesRegex(RepositoryError, "existent id!", self.repo.store, student_same_id) 
 
     absent_studentID = 10
-    try:
-      found_student = repo.search(absent_studentID)
-      assert False
-    except RepositoryError as re:
-      assert str(re) == "absent id!"
-  
+    self.assertRaisesRegex(RepositoryError, "absent id!", self.repo.search, absent_studentID) 
 
-  def __test_add_service(self):
+  def testAddService(self):
     studentID = 15
     name = "G"
     group = 456
@@ -151,116 +145,77 @@ class TestsStudents:
     printable = srv.search(studentID)
     assert printable == "name: A\ngroup: 217"
 
-  def __test_delete_repo(self):
+  def testDeleteRepo(self):
     studentID = 15
     name = "G"
     group = 456
     student = Student(studentID, name, group)
-    repo = RepositoryStudents()
-    repo.store(student)
+    self.repo.store(student)
   
     studentID = 17
     name = "A"
     group = 455
     student = Student(studentID, name, group)
-    repo.store(student)
+    self.repo.store(student)
 
-    assert len(repo) == 2
+    self.assertTrue(len(self.repo) == 2)
 
-    repo.delete(studentID)
-    assert len(repo) == 1
+    self.repo.delete(studentID)
+    self.assertEqual(len(self.repo), 1)
 
     absent_studentID = 7
-    repo.delete(absent_studentID)
-    assert len(repo) == 1
+    self.repo.delete(absent_studentID)
+    self.assertTrue(len(self.repo) == 1)
 
-  def __test_delete_service(self):
+  def testDeleteService(self):
     studentID = 15
     name = "G"
     group = 456
-    repo = RepositoryStudents()  
-    validator = ValidatorStudent()
-    srv = ServiceStudents(validator, repo)
     
-    srv.store(studentID, name, group)
+    self.srv.store(studentID, name, group)
 
     studentID1 = 16 
     name = "A"
     group = 455
-    srv.store(studentID1, name, group)
+    self.srv.store(studentID1, name, group)
     
     studentID2 = 14 
     name = "B"
     group = 455
-    srv.store(studentID2, name, group)
+    self.srv.store(studentID2, name, group)
 
-    srv.delete(studentID1)
-    assert srv.number_of_students() == 2
+    self.srv.delete(studentID1)
+    self.assertTrue(self.srv.number_of_students() == 2)
    
     absent_studentID = 2
-    try:
-      srv.delete(absent_studentID)
-      assert False
-    except RepositoryError as re:
-      assert str(re) == "absent id!"
+    self.assertRaisesRegex(RepositoryError, "absent id!", self.srv.delete, absent_studentID)
 
-  def __test_add_service(self):
+  def testAddService(self):
     studentID = 15
     name = "G"
     group = 456
-    repo = RepositoryStudents()  
-    validator = ValidatorStudent()
-    srv = ServiceStudents(validator, repo)
     
-    srv.store(studentID, name, group)
+    self.srv.store(studentID, name, group)
 
     new_studentID = 16
     new_name = "E"
     new_group = 456
-    srv.store(new_studentID, new_name, new_group)
+    self.srv.store(new_studentID, new_name, new_group)
 
     modify_name = "H"
     modify_group = 15
-    srv.modify(studentID, modify_name, modify_group)
+    self.srv.modify(studentID, modify_name, modify_group)
     
-    new_student = repo.search(studentID)
-    assert new_student.get_name() == modify_name
-    assert new_student.get_group() == modify_group
+    new_student = self.repo.search(studentID)
+    self.assertTrue(new_student.get_name() == modify_name)
+    self.assertTrue(new_student.get_group() == modify_group)
 
-    srv.modify(new_studentID, None, modify_group)
-    new_student = repo.search(new_studentID)
-    assert new_student.get_name() == new_name
-    assert new_student.get_group() == modify_group
+    self.srv.modify(new_studentID, None, modify_group)
+    new_student = self.repo.search(new_studentID)
+    self.assertTrue(new_student.get_name() == new_name)
+    self.assertTrue(new_student.get_group() == modify_group)
   
-  def __test_file_repo_students(self):
-    repo = RepositoryStudents()  
-    filename = "testing/students_persistance_test.txt"
-    object_class = Student
-    separators = ";"
-
-    repo_persistance = RepositoryPersistance(repo, filename, object_class, separators)
-    repo_persistance.load()
-    assert len(repo) == 4
-
-    studentID = 99
-    repo.delete(studentID)
-    studentID = 99 
-    name = "Eric"
-    group = 124
-    student = Student(studentID, name, group)
-    repo.store(student)
-
-    repo_persistance.store()
-    repo_persistance.load()
-
-    repo1 = RepositoryStudents()
-    repo_persistance1 = RepositoryPersistance(repo1, filename, object_class, separators)
-    repo_persistance1.load()
-    assert len(repo1) == 4
-  """  
-  
-  """
-  def __test_file_repo_students(self):
+  def testFileRepoStudents(self):
     studentID = 15
     name = "G"
     group = 912
@@ -268,48 +223,40 @@ class TestsStudents:
 
     filename = "testing/students_persistance_test.txt"
 
-    repo = FileRepositoryStudents(filename)
-    repo.store(student)
+    self.file_repo.store(student)
     
     with open(filename, "r") as f:
       number = 0
       for line in f:
         number += 1
-    assert number == 1
+    self.assertEqual(number, 1)
 
     new_name = "E"
     new_group = 217
-    repo.modify(studentID, new_name, new_group)
+    self.file_repo.modify(studentID, new_name, new_group)
 
     with open(filename, "r") as f:
       string = f.readline().strip()
-      assert string == "15;E;217"
+      self.assertEqual(string, "15;E;217")
 
-    repo.delete(studentID)
+    self.file_repo.delete(studentID)
 
     with open(filename, "r") as f:
       number = 0
       for line in f:
         number += 1
-    assert number == 0
+    self.assertTrue(number == 0)
 
-  def __test_create_studentdto(self):
+  def testCreateStudentdto(self):
     name = "Mike"
     studentdto = StudentDTO(name)
 
-    assert studentdto.get_name() == "Mike"
+    self.assertTrue(studentdto.get_name() == "Mike")
 
     studentdto.add_grade(Grade(0, 1, 2, 6))
     studentdto.add_grade(Grade(1, 2, 3, 15))
-    assert len(studentdto) == 2
-    assert studentdto.average() - 10.5 <= 0.0000001
+    self.assertEqual(len(studentdto), 2)
+    self.assertAlmostEqual(studentdto.average(), 10.5)
 
   def run_all_tests(self):
-    self.__test_create_student()
-    self.__test_validate_student()
-    self.__test_add_repo()
-    self.__test_delete_repo()
-    self.__test_add_service()
-    self.__test_delete_service()
-    self.__test_file_repo_students()
-    self.__test_create_studentdto()
+    unittest.main()

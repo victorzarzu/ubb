@@ -70,3 +70,11 @@ class FileRepositoryStudents(RepositoryStudents):
     """
     return RepositoryStudents.search(self, studentID)
 
+  def clear(self):
+    """
+    function that clears the repo
+    params: -
+    return: -
+    """
+    RepositoryStudents.clear(self)
+    self.__store_to_file()
