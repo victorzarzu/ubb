@@ -1,5 +1,8 @@
-%ifndef _BASE2_TO_INTEGER_
-%define _BASE2_TO_INTEGER_
+bits 32
+
+global base2_to_integer
+
+segment code use32 class = code
 
 base2_to_integer:
     push ecx
@@ -60,5 +63,3 @@ base2_to_integer:
     pop ecx
     
     ret
-
-%endif

@@ -8,7 +8,7 @@ import exit msvcrt.dll
 import scanf msvcrt.dll
 import printf msvcrt.dll
 
-%include  "base2_to_integer.asm"
+extern base2_to_integer
 
 segment data use32 class = data
     number resd 1
@@ -71,4 +71,3 @@ segment code use32 class = code
     
         push 0
         call [exit]
-
