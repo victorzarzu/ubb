@@ -5,30 +5,44 @@ global base2_to_integer
 segment code use32 class = code
 
 base2_to_integer:
-    push ecx
     push ebp
-    
     mov ebp, esp
     
     push esi
     push edi
+    push ebx
     
-    mov ecx, dword [ebp + 4 * 3]
+    mov ecx, dword [ebp + 4 * 2]
     jecxz .invalid
     
-    mov edi, 0
-    mov edx, 1
+    mov esi, dword [ebp + 4 * 3]
+    mov edi, dword [ebp + 4 * 4]
+
+    mov eax, ecx
+    mov edx, 0
     
-    dec ecx
-    .create_power:
-        shl edx, 1
-    loop .create_power
+    mov ebx, 3
+    div ebx
     
-    mov ecx, dword [ebp + 4 * 3]
+    cmp edx, 0
+    jnz .not_divisible
     
-    mov esi, dword [ebp + 4 * 4]
+    mov edx, 3
+    jmp .end_precompute
+    
+    .not_divisible:
+    inc eax
+    .end_precompute:
+    push eax
+    
+    
+    mov ebx, 2
+    mov eax, 3
+    sub eax, edx
+    sub ebx, eax
+    mov edx, 0
+    
     cld
-    
     .iterate:
         lodsb
         sub al, '0'
@@ -40,26 +54,44 @@ base2_to_integer:
         
         cmp al, 1
         jnz .zero
-        add edi, edx
+        bts edx, ebx
         
         .zero:
         
-        shr edx, 1
+        dec ebx
+        cmp ebx, 0
+        jge .not_switch
+        
+            add edx, '0'
+            mov al, dl
+            
+            stosb
+            
+            mov ebx, 2
+            mov edx, 0
+        
+        .not_switch:
         
     loop .iterate
     
     jmp .valid
     
     .invalid:
-        mov edi, 0
+        mov byte [edi], 0
+        jmp .all
     
     .valid:
     
+    pop ecx
+    mov edi, dword [ebp + 4 * 4]
+    mov byte [edi + ecx], 0
     mov eax, edi
     
+    .all:
+    
+    pop ebx
     pop edi
     pop esi
     pop ebp
-    pop ecx
     
     ret
