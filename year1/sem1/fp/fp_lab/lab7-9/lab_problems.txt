@@ -1,6 +1,0 @@
-5;100;Sterge;11 10 2022
-10;10;Ceva;11 10 2022
-77;77;Trage cu pusca;17 07 2025
-11;22;Sterge;17 05 2023
-13;13;Aduna doua numere;15 10 2022
-18;18;Trrrr;11 08 2022
