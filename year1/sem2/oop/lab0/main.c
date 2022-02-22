@@ -27,6 +27,12 @@ static void CalculareSuma()
 
     scanf_s("%d", n);
 
+    if (*n < 0)
+    {
+        printf("Numarul de elemente trebuie sa fie pozitiv");
+        return;
+    }
+
     for (int i = 0; i < *n; ++i)
     {
         scanf_s("%d", number);
