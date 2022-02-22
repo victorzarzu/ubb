@@ -1,5 +1,15 @@
 #include <stdio.h>
 
+static void PrintareHelloWorld();
+static void CalculareSuma();
+
+int main()
+{
+    PrintareHelloWorld();
+    CalculareSuma();
+    return 0;
+}
+
 static void PrintareHelloWorld()
 {
     printf("Hello World\n");
@@ -16,11 +26,14 @@ static void CalculareSuma()
     int* number = (int*)malloc(sizeof(int));
     if (number == NULL)
     {
+        free(n);
         return 0;
     }
     int* sum = (int*)malloc(sizeof(int));
     if (sum == NULL)
     {
+        free(n);
+        free(number);
         return 0;
     }
     *sum = 0;
@@ -44,11 +57,4 @@ static void CalculareSuma()
     free(n);
     free(number);
     free(sum);
-}
-
-int main()
-{
-    PrintareHelloWorld();
-    CalculareSuma();
-    return 0;
 }
