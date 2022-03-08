@@ -42,6 +42,27 @@ int SearchProdus(PREPOSITORY_PRODUSE Repository, int Id, PPRODUS Result)
     return -1;
 }
 
+static int MaintainRepositoryIncreasing(PREPOSITORY_PRODUSE* Repository)
+{
+    if(Repository == NULL)
+    {
+        return -1;
+    }
+
+    if ((*Repository)->Count == (*Repository)->Size)
+    {
+        (*Repository)->Size = (*Repository)->Size * 2;
+        PPRODUS* temporary = realloc((*Repository)->Array, sizeof(PRODUS*) * (*Repository)->Size);
+        if (temporary == NULL)
+        {
+            return -1;
+        }
+        (*Repository)->Array = temporary;
+    }
+
+    return 0;
+}
+
 int InsertProdus(PREPOSITORY_PRODUSE Repository, PPRODUS Produs)
 {
     for (int i = 0; i < Repository->Count; ++i)
@@ -59,19 +80,45 @@ int InsertProdus(PREPOSITORY_PRODUSE Repository, PPRODUS Produs)
         }
     }
 
-    if (Repository->Count == Repository->Size)
+    /*if (Repository->Count == Repository->Size)
     {
         Repository->Size = Repository->Size * 2;
-        PPRODUS temporary = realloc(Repository->Array, sizeof(PRODUS) * Repository->Size);
+        PPRODUS* temporary = realloc(Repository->Array, sizeof(PRODUS*) * Repository->Size);
         if (temporary == NULL)
         {
-            return 0;
+            return -1;
         }
         Repository->Array = temporary;
+    }*/
+    if(MaintainRepositoryIncreasing(&Repository) != 0)
+    {
+        return -1;
     }
 
     Repository->Array[Repository->Count] = Produs;
     Repository->Count = Repository->Count + 1;
+
+    return 0;
+}
+
+static int MaintainRepositoryDecreasing(PREPOSITORY_PRODUSE* Repository)
+{
+    if(Repository == NULL)
+    {
+        return -1;
+    }
+
+    if ((*Repository)->Size > INITIAL_SIZE && (*Repository)->Size / (*Repository)->Count > RM)
+    {
+        (*Repository)->Size = (*Repository)->Size / RM;
+        PPRODUS* temporary = realloc((*Repository)->Array, sizeof(PRODUS*) * (*Repository)->Size);
+        if (temporary == NULL)
+        {
+            perror("The repository could not be alocated");
+            exit(1);
+        }
+        (*Repository)->Array = temporary;
+    }
 
     return 0;
 }
@@ -95,16 +142,20 @@ int DeleteProdus(PREPOSITORY_PRODUSE Repository, int Id)
         }
     }
 
-    if (Repository->Size > INITIAL_SIZE && Repository->Size / Repository->Count > RM)
+    /*if (Repository->Size > INITIAL_SIZE && Repository->Size / Repository->Count > RM)
     {
         Repository->Size = Repository->Size / RM;
-        PPRODUS temporary = realloc(Repository->Array, sizeof(PRODUS) * Repository->Size);
+        PPRODUS* temporary = realloc(Repository->Array, sizeof(PRODUS*) * Repository->Size);
         if (temporary == NULL)
         {
             perror("The repository could not be alocated");
             exit(1);
         }
         Repository->Array = temporary;
+    }*/
+    if(MaintainRepositoryDecreasing((&Repository)) != 0)
+    {
+        return -1;
     }
 
     return returnValue;

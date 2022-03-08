@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "service.h"
+#include "utils.h"
 #include <ctype.h>
 
 #define oo 0x3f3f3f3f

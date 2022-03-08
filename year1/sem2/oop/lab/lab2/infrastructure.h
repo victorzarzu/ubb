@@ -93,7 +93,7 @@ int ClearRepository(PREPOSITORY_PRODUSE Repository);
 * @return: 0 - if the GetAll is successful
 *         -1 - otherwise
 */
-int GetAll(PREPOSITORY_PRODUSE Repository, PPRODUS Array);
+int GetAll(PREPOSITORY_PRODUSE Repository, PPRODUS* Array);
 
 /**
 * Function that returns the number of products in the Repository

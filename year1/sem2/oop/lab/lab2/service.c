@@ -23,6 +23,11 @@ int CreateService(PSERVICE_PRODUCTS* Service, PREPOSITORY_PRODUSE Repository, Va
 
 int StoreProdus(PSERVICE_PRODUCTS Service, int Id, char* Tip, char* Producator, char* Model, double Pret, int Cantitate, char* errors)
 {
+    if(Service == NULL || errors == NULL)
+    {
+        return -1;
+    }
+
     errors[0] = NULL;
     PPRODUS Produs;
     if (CreateProdus(&Produs, Id, Tip, Producator, Model, Pret, Cantitate) != 0)
@@ -48,11 +53,11 @@ int StoreProdus(PSERVICE_PRODUCTS Service, int Id, char* Tip, char* Producator, 
 
 int EraseProdus(PSERVICE_PRODUCTS Service, int Id, char* errors)
 {
-    errors[0] = NULL;
     if (Service == NULL || errors == NULL)
     {
         return -1;
     }
+    errors[0] = NULL;
 
     if (DeleteProdus(Service->Repository, Id) != 0)
     {
@@ -65,11 +70,11 @@ int EraseProdus(PSERVICE_PRODUCTS Service, int Id, char* errors)
 
 int ChangeProdus(PSERVICE_PRODUCTS Service, int Id, double Pret, int Cantitate, char* errors)
 {
-    errors[0] = NULL;
     if (Service == NULL || errors == NULL)
     {
         return -1;
     }
+    errors[0] = NULL;
 
     PPRODUS Produs = (PPRODUS)malloc(sizeof(PRODUS));
     if (Produs == NULL)
@@ -117,12 +122,12 @@ int ChangeProdus(PSERVICE_PRODUCTS Service, int Id, double Pret, int Cantitate, 
 
 int ViewProduse(PSERVICE_PRODUCTS Service, int Mode, PPRODUS* Array, char* errors)
 {
-    errors[0] = NULL;
-    if (Service == NULL || Array == NULL)
+    if (Service == NULL || Array == NULL || errors == NULL)
     {
         strcat(errors, "Viewing failed!\n");
         return -1;
     }
+    errors[0] = NULL;
 
     if (GetLength(Service->Repository) == 0)
     {
@@ -157,10 +162,11 @@ int ViewProduse(PSERVICE_PRODUCTS Service, int Mode, PPRODUS* Array, char* error
 
 int FilterProduse(PSERVICE_PRODUCTS Service, char* Producator, double Pret, int Cantitate, PPRODUS* Array, int* Number, char* errors)
 {
-    if (Service == NULL || Array == NULL)
+    if (Service == NULL || Array == NULL || errors == NULL)
     {
         return -1;
     }
+    errors[0] = NULL;
 
     if (GetLength(Service->Repository) == 0)
     {
@@ -277,6 +283,11 @@ void testService()
     PPRODUS Result = NULL;
     assert(CreateProdus(&Result, 0, "", "", "", 0, 0) == 0);
 
+    assert(CreateService(NULL, Repo, validate) == -1);
+    assert(CreateService(&Service, NULL, validate) == -1);
+    assert(CreateService(&Service, Repo, NULL) == -1);
+    assert(CreateService(NULL, NULL, NULL) == -1);
+
     assert(CreateService(&Service, Repo, validate) == 0);
     assert(StoreProdus(Service, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10, errors) == 0);
     assert(GetLength(Service->Repository) == 1);
@@ -289,12 +300,20 @@ void testService()
 
     assert(StoreProdus(Service, 3, "haha", "nana", "Wow", 3299.99, 10, errors) == -1);
     assert(strcmp(errors, "The product with this id already exists!\n") == 0);
-   
+
+    assert(StoreProdus(NULL, 3, "haha", "nana", "Wow", 3299.99, 10, errors) == -1);
+    assert(StoreProdus(Service, 3, "haha", "nana", "Wow", 3299.99, 10, NULL) == -1);
+    assert(StoreProdus(NULL, 3, "haha", "nana", "Wow", 3299.99, 10, NULL) == -1);
+
     assert(EraseProdus(Service, 3, errors) == 0);
     assert(GetLength(Service->Repository) == 1);
 
     assert(EraseProdus(Service, 3, errors) == -1);
     assert(strcmp(errors, "The product does not exist!\n") == 0);
+
+    assert(EraseProdus(NULL, 3, errors) == -1);
+    assert(EraseProdus(Service, 3, NULL) == -1);
+    assert(EraseProdus(NULL, 3, NULL) == -1);
 
     assert(ChangeProdus(Service, 6, 2999.99, 5, errors) == 0);
     assert(SearchProdus(Service->Repository, 6, Result) == 0);
@@ -306,6 +325,10 @@ void testService()
 
     assert(ChangeProdus(Service, 2, 2999.99, 5, errors) == -1);
     assert(strcmp(errors, "The product does not exist!\n") == 0);
+
+    assert(ChangeProdus(NULL, 2, 2999.99, 5, errors) == -1);
+    assert(ChangeProdus(Service, 2, 2999.99, 5, NULL) == -1);
+    assert(ChangeProdus(NULL, 2, 2999.99, 5, NULL) == -1);
 
     assert(GetLength(Service->Repository) == 1);
     for (int i = 15; i < 25; ++i)
@@ -325,7 +348,15 @@ void testService()
     assert(fabs(GetPret(Array[9]) - 160) <= epsilon);
     assert(fabs(GetPret(Array[0]) - 2999.99) <= epsilon);
 
+    assert(ViewProduse(NULL, 1, &Array, errors) == -1);
+    assert(ViewProduse(Service, 1, NULL, errors) == -1);
+    assert(ViewProduse(NULL, 1, NULL, errors) == -1);
+    //assert(ViewProduse(NULL, 1, NULL, NULL) == -1);
+
     int number = 0;
+    assert(FilterProduse(NULL, "Samsung", -1, -1, &Array, &number, errors) == -1);
+    assert(FilterProduse(Service, "Samsung", -1, -1, NULL, &number, errors) == -1);
+
     assert(FilterProduse(Service, "Samsung", -1, -1, &Array, &number, errors) == 0);
     assert(fabs(GetPret(Array[0]) - 150) <= epsilon);
     assert(FilterProduse(Service, "Lenovo", -1, -1, &Array, &number, errors) == 0);
@@ -333,6 +364,7 @@ void testService()
     assert(FilterProduse(Service, "Lenovo", 2999.99, -1, &Array, &number, errors) == 0);
     assert(fabs(GetPret(Array[0]) - 2999.99) <= epsilon);
 
+    assert(DestroyService(NULL) == -1);
     assert(GetLength(Service->Repository) == 11);
     assert(DestroyService(&Service) == 0);
 

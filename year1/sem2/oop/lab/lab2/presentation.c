@@ -99,8 +99,7 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
     }
 
     printf("Id: ");
-    if (scanf_s("%d", &id) != 1)
-    {
+    if (scanf("%d", &id) != 1) {
         strcat(errors, "Could not read the id!\n");
         return -1;
     }
@@ -123,7 +122,7 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
         return -1;
     }
     printf("Price: ");
-    if (scanf("%lf", &pret) != 1)
+    if (scanf("%llf", &pret) != 1)
     {
         strcat(errors, "Could not read the price!\n");
         return -1;
@@ -138,13 +137,16 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
 
     if (StoreProdus(Console->ServiceProduse, id, tip, producator, model, pret, cantitate, errors) != 0)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "The adding failed!\n");
         return -1;
     }
 
-    //free(tip);
-    //free(producator);
-    //free(model);
+    free(tip);
+    free(producator);
+    free(model);
 
     return 0;
 }
@@ -155,7 +157,7 @@ int consoleDeleteProdus(PCONSOLE Console, char* errors)
     int id;
 
     printf("Id: ");
-    if (scanf_s("%d", &id) != 1)
+    if (scanf("%d", &id) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -177,7 +179,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
 
     int modifyType;
     printf("0 - Modify just the price\n1 - Modify just the quantity\n2 - Modify both\n");
-    if (scanf_s("%d", &modifyType) != 1)
+    if (scanf("%d", &modifyType) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -190,7 +192,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     }
 
     printf("Id: ");
-    if (scanf_s("%d", &id) != 1)
+    if (scanf("%d", &id) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -199,7 +201,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     if (modifyType == 0 || modifyType == 2)
     {
         printf("New price: ");
-        if (scanf_s("%lf", &pret) != 1)
+        if (scanf("%lf", &pret) != 1)
         {
             strcat(errors, "Could not read the price!\n");
             return -1;
@@ -209,7 +211,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     if (modifyType == 1 || modifyType == 2)
     {
         printf("New quantity: ");
-        if (scanf_s("%d", &cantitate) != 1)
+        if (scanf("%d", &cantitate) != 1)
         {
             strcat(errors, "Could not read the quantity!\n");
             return -1;
@@ -233,7 +235,7 @@ int consoleViewProduse(PCONSOLE Console, char* errors)
     printf("0 - Increasing mode\n1 - Decreasing mode\n");
 
     printf("Mode: ");
-    if (scanf_s("%d", &mode) != 1)
+    if (scanf("%d", &mode) != 1)
     {
         strcat(errors, "Could not read the mode!\n");
         return -1;

@@ -172,9 +172,37 @@ int CreateProdus(PPRODUS* Produs, int Id, char* Tip, char* Producator, char* Mod
     }
 
     produs->Id = Id;
-    produs->Tip = Tip;
-    produs->Producator = Producator;
-    produs->Model = Model;
+
+    int tipLength = strlen(Tip);
+    char* tip = (char *)malloc(sizeof(char) * (tipLength + 1));
+    if(tip == NULL)
+    {
+        return -1;
+    }
+    strcpy(tip, Tip);
+    produs->Tip = tip;
+
+    int producatorLength = strlen(Producator);
+    char* producator = (char*)malloc(sizeof(char) * (producatorLength + 1));
+    if(producator == NULL)
+    {
+        free(tip);
+        return -1;
+    }
+    strcpy(producator, Producator);
+    produs->Producator = producator;
+
+    int modelLength = strlen(Model);
+    char* model = (char*)malloc(sizeof(char) * (modelLength + 1));
+    if(model == NULL)
+    {
+        free(tip);
+        free(producator);
+        return -1;
+    }
+    strcpy(model, Model);
+    produs->Model = model;
+
     produs->Pret = Pret;
     produs->Cantitate = Cantitate;
 
@@ -189,6 +217,9 @@ int DestroyProdus(PPRODUS* Produs)
         return -1;
     }
 
+    free((*Produs)->Tip);
+    free((*Produs)->Producator);
+    free((*Produs)->Model);
     free(*Produs);
     *Produs = NULL;
 
@@ -237,10 +268,16 @@ static void testGetAndSet()
     SetCantitate(Produs, 10);
     assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == 0);
     assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 0);
+    assert(CompareProduseDecreasing(NULL, Produs) == -1);
+    assert(CompareProduseDecreasing(Produs, NULL) == -1);
+    assert(CompareProduseDecreasing(NULL, NULL) == -1);
 
     SetPret(Produs, 100);
     assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == -1);
     assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 1);
+    assert(CompareProduseIncreasing(NULL, Produs) == -1);
+    assert(CompareProduseIncreasing(Produs, NULL) == -1);
+    assert(CompareProduseIncreasing(NULL, NULL) == -1);
 
     SetModel(Produs, "new model");
     assert(strcmp(GetModel(*Produs), "new model") == 0);
@@ -280,8 +317,12 @@ static void testGetAndSet()
     assert(fabs(GetPret(*ProdusCreat) - 3299.99) <= epsilon);
     assert(GetCantitate(*ProdusCreat) == 10);
 
+    assert(CreateProdus(NULL, 5, "fad", "fda", "fad", 10, 5) == -1);
+    assert(DestroyProdus(NULL) == -1);
     assert(DestroyProdus(&ProdusCreat) == 0);
     assert(ProdusCreat == NULL);
+
+
 
 
     free(errors);
