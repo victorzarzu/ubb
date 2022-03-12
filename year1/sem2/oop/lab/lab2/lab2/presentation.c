@@ -17,14 +17,7 @@ int readCommand()
     {
         return -1;
     }
-   /*
-   if (strCommand[0] < '0' || strCommand[0] > '9' || strlen(strCommand) != 1)
-    {
-        return -1;
-    }
-    */
 
-    
     return atoi(strCommand);
 }
 
@@ -55,7 +48,8 @@ int DestroyConsole(PCONSOLE* Console)
         return -1;
     }
 
-    if (DestroyService(&((*Console)->ServiceProduse)) != 0)
+    PREPOSITORY_PRODUSE service = (*Console)->ServiceProduse;
+    if (DestroyService(&service) != 0)
     {
         return -1;
     }
@@ -99,37 +93,56 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
     }
 
     printf("Id: ");
-    if (scanf("%d", &id) != 1) {
+    if (scanf_s("%d", &id) != 1)
+    {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the id!\n");
         return -1;
     }
     printf("Type: ");
     if (scanf("%20s", tip) != 1)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the type!\n");
         return -1;
     }
     printf("Manufacturer: ");
     if (scanf("%20s", producator) != 1)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the manufacturer!\n");
         return -1;
     }
     printf("Model: ");
     if (scanf("%20s", model) != 1)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the model!\n");
         return -1;
     }
     printf("Price: ");
-    if (scanf("%llf", &pret) != 1)
+    if (scanf("%lf", &pret) != 1)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the price!\n");
         return -1;
     }
     printf("Quantity: ");
     if (scanf("%d", &cantitate) != 1)
     {
+        free(tip);
+        free(producator);
+        free(model);
         strcat(errors, "Could not read the quantity!\n");
         return -1;
     }
@@ -157,7 +170,7 @@ int consoleDeleteProdus(PCONSOLE Console, char* errors)
     int id;
 
     printf("Id: ");
-    if (scanf("%d", &id) != 1)
+    if (scanf_s("%d", &id) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -179,7 +192,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
 
     int modifyType;
     printf("0 - Modify just the price\n1 - Modify just the quantity\n2 - Modify both\n");
-    if (scanf("%d", &modifyType) != 1)
+    if (scanf_s("%d", &modifyType) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -192,7 +205,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     }
 
     printf("Id: ");
-    if (scanf("%d", &id) != 1)
+    if (scanf_s("%d", &id) != 1)
     {
         strcat(errors, "Could not read the id!\n");
         return -1;
@@ -201,7 +214,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     if (modifyType == 0 || modifyType == 2)
     {
         printf("New price: ");
-        if (scanf("%lf", &pret) != 1)
+        if (scanf_s("%lf", &pret) != 1)
         {
             strcat(errors, "Could not read the price!\n");
             return -1;
@@ -211,7 +224,7 @@ int consoleModifyProdus(PCONSOLE Console, char* errors)
     if (modifyType == 1 || modifyType == 2)
     {
         printf("New quantity: ");
-        if (scanf("%d", &cantitate) != 1)
+        if (scanf_s("%d", &cantitate) != 1)
         {
             strcat(errors, "Could not read the quantity!\n");
             return -1;
@@ -235,7 +248,7 @@ int consoleViewProduse(PCONSOLE Console, char* errors)
     printf("0 - Increasing mode\n1 - Decreasing mode\n");
 
     printf("Mode: ");
-    if (scanf("%d", &mode) != 1)
+    if (scanf_s("%d", &mode) != 1)
     {
         strcat(errors, "Could not read the mode!\n");
         return -1;
@@ -282,18 +295,21 @@ int consoleFilterProduse(PCONSOLE Console, char* errors)
     printf("Manufacturer: ");
     if (scanf("%20s", producator) != 1)
     {
+        free(producator);
         strcat(errors, "Could not read the mode!\n");
         return -1;
     }
     printf("Price: ");
     if (scanf("%lf", &pret) != 1)
     {
+        free(producator);
         strcat(errors, "Could not read the price!\n");
         return -1;
     }
     printf("Quantity: ");
     if (scanf("%d", &cantitate) != 1)
     {
+        free(producator);
         strcat(errors, "Could not read the quantity!\n");
         return -1;
     }
@@ -301,6 +317,7 @@ int consoleFilterProduse(PCONSOLE Console, char* errors)
     PPRODUS Array;
     if (FilterProduse(Console->ServiceProduse, producator, pret, cantitate, &Array, &number, errors) != 0)
     {
+        free(producator);
         return -1;
     }
 
@@ -310,6 +327,7 @@ int consoleFilterProduse(PCONSOLE Console, char* errors)
     }
 
     free(Array);
+    free(producator);
 
     return 0;
 }
@@ -363,6 +381,7 @@ int runConsole(PCONSOLE Console)
 
         if (returnValue != 0)
         {
+            while ((command = getchar()) != '\n' && command != EOF);
             printf("%s", errors);
         }
     }
