@@ -2,7 +2,7 @@
 
 int ValidateProdus(PRODUS Produs, char* errors)
 {
-    errors[0] = NULL;
+    errors[0] = '\0';
     if (GetId(Produs) < 0)
     {
         strcat(errors, "Invalid id!\n");

@@ -5,5 +5,5 @@ void runAllTests()
     testDomain();
     testInfrastructure();
     testService();
-    //testUtils();
+    testUtils();
 }

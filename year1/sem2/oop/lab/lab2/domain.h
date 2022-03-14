@@ -148,12 +148,12 @@ int ProdusEqual(PRODUS Produs1, PRODUS Produs2);
 * Function that creates a product with the given attributes and returns the product via the pointer to a product
 * 
 * @params: Produs - pointer to a pointer to a product
+*          Id - an integer
 *          Tip - pointer to a char
 *          Producator - pointer to a char
 *          Model - pointer to a char
 *          Pret - a double
 *          Cantitate - an integer
-*          Id - an integer
 * 
 * @return: 0 - if the creation is succesful and the product is referenced by product
 *         -1 - if the creation failed
@@ -161,7 +161,7 @@ int ProdusEqual(PRODUS Produs1, PRODUS Produs2);
 int CreateProdus(PPRODUS* Produs, int Id, char* Tip, char* Producator, char* Model, double Pret, int Cantitate);
 
 /**
-* Function that compares 2 products in increasing order (first based on the price and after base on the quantity)
+* Function that compares 2 products in increasing order (first based on the price and after based on the quantity)
 * 
 * @params: Produs1 - a pointer to void
 *          Produs2 - a pointer to void
@@ -173,7 +173,7 @@ int CreateProdus(PPRODUS* Produs, int Id, char* Tip, char* Producator, char* Mod
 int CompareProduseIncreasing(const void* Produs1, const void* Produs2);
 
 /**
-* Function that compares 2 products in decreasing order (first based on the price and after base on the quantity)
+* Function that compares 2 products in decreasing order (first based on the price and after based on the quantity)
 *
 * @params: Produs1 - a pointer to void
 *          Produs2 - a pointer to void
@@ -201,7 +201,7 @@ int DestroyProdus(PPRODUS* Produs);
 * 
 * @return: -
 */
-void PrintFormat(PRODUS Produs);
+//void PrintFormat(PRODUS Produs);
 
 void testDomain();
 

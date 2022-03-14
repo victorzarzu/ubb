@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "domain.h"
+
+typedef int(*CompareFunction)(PRODUS* o1, PRODUS* o2);
 
 /**
 * Function that verifies if a string is an integer
@@ -26,5 +29,27 @@ int isInteger(char* text);
 *         -1 - if the pointer is NULL
 */
 int isDouble(char* text);
+
+/**
+* Function that sorts an array of products
+* 
+* params: Array - a pointer to a product (an array of products)
+*         cmpF - a pointer to a compare function (const void*, const void*)
+*         length - the number of elements in Array
+* 
+* @return: -
+*/
+void BubbleSort(PPRODUS Array, CompareFunction cmpF, int length);
+
+/**
+* Function that sorts an array of products
+*
+* params: Array - a pointer to a product (an array of products)
+*         cmpF - a pointer to a compare function (const void*, const void*)
+*         length - the number of elements in Array
+*
+* @return: -
+*/
+void SelectionSort(PPRODUS Array, CompareFunction cmpF, int length);
 
 #endif 

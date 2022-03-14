@@ -12,11 +12,11 @@ int CreateService(PSERVICE_PRODUCTS* Service, PREPOSITORY_PRODUSE Repository, Va
     }
 
     PSERVICE_PRODUCTS service = (PSERVICE_PRODUCTS)malloc(sizeof(SERVICE_PRODUCTS));
-    if (service == NULL)
+    /*if (service == NULL)
     {
         DestroyRepository(&Repository);
         return -1;
-    }
+    }*/
 
     service->Repository = Repository;
     service->ValidateProduct = Validation;
@@ -40,11 +40,12 @@ int StoreProdus(PSERVICE_PRODUCTS Service, int Id, char* Tip, char* Producator, 
     }
 
     PPRODUS Produs;
-    if (CreateProdus(&Produs, Id, Tip, Producator, Model, Pret, Cantitate) != 0)
+    /*if (CreateProdus(&Produs, Id, Tip, Producator, Model, Pret, Cantitate) != 0)
     {
         strcat(errors, "Could not create a product!\n");
         return -1;
-    }
+    }*/
+    CreateProdus(&Produs, Id, Tip, Producator, Model, Pret, Cantitate);
 
     if (Service->ValidateProduct(*Produs, errors) != 0)
     {
@@ -132,11 +133,12 @@ int ChangeProdus(PSERVICE_PRODUCTS Service, int Id, double Pret, int Cantitate, 
         return -1;
     }
 
-    if (ModifyProdus(Service->Repository, Id, Pret, Cantitate) != 0)
+    /*if (ModifyProdus(Service->Repository, Id, Pret, Cantitate) != 0)
     {
         strcat(errors, "The modification failed!\n");
         return -1;
-    }
+    }*/
+    ModifyProdus(Service->Repository, Id, Pret, Cantitate);
 
     return 0;
 }
@@ -160,20 +162,24 @@ int ViewProduse(PSERVICE_PRODUCTS Service, int Mode, PPRODUS* Array, char* error
         return -1;
     }
 
-    if (GetAll(Service->Repository, Array) != 0)
+    /*if (GetAll(Service->Repository, Array) != 0)
     {
         free(*Array);
         strcat(errors, "Viewing failed!\n");
         return -1;
-    }
+    }*/
+    GetAll(Service->Repository, Array);
 
+    int length = GetLength(Service->Repository);
     if (Mode == 0)
     {
-        qsort(*Array, Service->Repository->Count, sizeof(PRODUS), CompareProduseIncreasing);
+        SelectionSort(*Array, CompareProduseIncreasing, length);
+        //qsort(*Array, Service->Repository->Count, sizeof(PRODUS), CompareProduseIncreasing);
     }
     else
     {
-        qsort(*Array, Service->Repository->Count, sizeof(PRODUS), CompareProduseDecreasing);
+        SelectionSort(*Array, CompareProduseDecreasing, length);
+        //qsort(*Array, Service->Repository->Count, sizeof(PRODUS), CompareProduseDecreasing);
     }
 
     return 0;
@@ -199,18 +205,19 @@ int FilterProduse(PSERVICE_PRODUCTS Service, char* Producator, double Pret, int 
     }
 
     PPRODUS array;
-    if (GetAll(Service->Repository, &array) != 0)
+    /*if (GetAll(Service->Repository, &array) != 0)
     {
         return -1;
-    }
+    }*/
+    GetAll(Service->Repository, &array);
     int count = GetLength(Service->Repository);
     PPRODUS arrayFilter = (PPRODUS)malloc(count * sizeof(PRODUS));
-    if (arrayFilter == NULL)
+    /*if (arrayFilter == NULL)
     {
         free(array);
         strcat(errors, "Viewing failed!\n");
         return -1;
-    }
+    }*/
 
     *Number = 0;
     char* producatorHere;
@@ -219,13 +226,13 @@ int FilterProduse(PSERVICE_PRODUCTS Service, char* Producator, double Pret, int 
         PRODUS Produs;
         int length = max(strlen(GetProducator(array[i])), strlen(Producator));
         producatorHere = (char*)malloc(sizeof(char) * (length + 1));
-        if (producatorHere == NULL)
+        /*if (producatorHere == NULL)
         {
             free(array);
             free(arrayFilter);
             strcat(errors, "Viewing failed!\n");
             return -1;
-        }
+        }*/
 
         double pretHere = Pret;
         int cantitateHere = Cantitate;
@@ -281,10 +288,11 @@ int DestroyService(PSERVICE_PRODUCTS* Service)
     }
 
     PREPOSITORY_PRODUSE repository = (*Service)->Repository;
-    if (DestroyRepository(&repository) != 0)
+    /*if (DestroyRepository(&repository) != 0)
     {
         return -1;
-    }
+    }*/
+    DestroyRepository(&repository);
 
     free(*Service);
     *Service = NULL;
@@ -301,6 +309,8 @@ static void testCreateDestroy()
     assert(CreateRepository(&Repo) == 0);
 
     assert(CreateService(NULL, NULL, NULL) == -1);
+    assert(CreateService(NULL, Repo, NULL) == -1);
+    assert(CreateRepository(&Repo) == 0);
 
     assert(CreateService(&Service, Repo, validate) == 0);
 

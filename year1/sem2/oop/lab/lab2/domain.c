@@ -20,10 +20,10 @@ void SetTip(PPRODUS Produs, char* Tip)
 {
     int lenTip = strlen(Tip) + 1;
     char* newTip = (char*)malloc(lenTip * sizeof(char));
-    if (newTip == NULL)
+    /*if (newTip == NULL)
     {
         return;
-    }
+    }*/
     strcpy(newTip, Tip);
 
     free(Produs->Tip);
@@ -39,10 +39,10 @@ void SetProducator(PPRODUS Produs, char* Producator)
 {
     int lenProducator = strlen(Producator) + 1;
     char* newProducator = (char*)malloc(lenProducator * sizeof(char));
-    if (newProducator == NULL)
+    /*if (newProducator == NULL)
     {
         return;
-    }
+    }*/
     strcpy(newProducator, Producator);
 
     free(Produs->Producator);
@@ -58,10 +58,10 @@ void SetModel(PPRODUS Produs, char* Model)
 {
     int lenModel = strlen(Model) + 1;
     char* newModel = (char*)malloc(lenModel * sizeof(char));
-    if (newModel == NULL)
+    /*if (newModel == NULL)
     {
         return;
-    }
+    }*/
     strcpy(newModel, Model);
 
     free(Produs->Model);
@@ -88,10 +88,10 @@ void SetCantitate(PPRODUS Produs, int Cantitate)
     Produs->Cantitate = Cantitate;
 }
 
-void PrintFormat(PRODUS Produs)
+/*int PrintFormat(PRODUS Produs)
 {
     printf("Tip: %s\nProducator: %s\nModel: %s\nPret: %f\nCantitate: %d\n\n", Produs.Tip, Produs.Producator, Produs.Model, Produs.Pret, Produs.Cantitate);
-}
+}*/
 
 int ProdusEqual(PRODUS Produs1, PRODUS Produs2)
 {
@@ -119,7 +119,7 @@ int ProdusEqual(PRODUS Produs1, PRODUS Produs2)
     return 1;
 }
 
-int CompareProduseIncreasing(const void* Produs1, const void* Produs2)
+int CompareProduseIncreasing(const PRODUS* Produs1, const void* Produs2)
 {
     if (Produs1 == NULL || Produs2 == NULL)
     {
@@ -193,43 +193,43 @@ int CreateProdus(PPRODUS* Produs, int Id, char* Tip, char* Producator, char* Mod
     }
 
     PPRODUS produs = (PPRODUS)malloc(sizeof(PRODUS));
-    if (produs == NULL)
+    /*if (produs == NULL)
     {
         return -1;
-    }
+    }*/
 
     produs->Id = Id;
 
     int tipLength = strlen(Tip);
     char* tip = (char*)malloc(sizeof(char) * (tipLength + 1));
-    if (tip == NULL)
+    /*if (tip == NULL)
     {
         free(produs);
         return -1;
-    }
+    }*/
     strcpy(tip, Tip);
     produs->Tip = tip;
 
     int producatorLength = strlen(Producator);
     char* producator = (char*)malloc(sizeof(char) * (producatorLength + 1));
-    if (producator == NULL)
+    /*if (producator == NULL)
     {
         free(tip);
         free(produs);
         return -1;
-    }
+    }*/
     strcpy(producator, Producator);
     produs->Producator = producator;
 
     int modelLength = strlen(Model);
     char* model = (char*)malloc(sizeof(char) * (modelLength + 1));
-    if (model == NULL)
+    /*if (model == NULL)
     {
         free(tip);
         free(producator);
         free(produs);
         return -1;
-    }
+    }*/
     strcpy(model, Model);
     produs->Model = model;
 
@@ -263,6 +263,7 @@ static void testCreateAndDestroy()
 
     assert(CreateProdus(NULL, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == -1);
 
+    assert(DestroyProdus(NULL) == -1);
     assert(DestroyProdus(&Produs) == 0);
     assert(Produs == NULL);
 }
@@ -315,9 +316,6 @@ static void testGetAndSet()
 
     assert(DestroyProdus(&Produs) == 0);
     assert(Produs == NULL);
-
-
-    //free(Produs);
 }
 
 static void testCompare()
@@ -328,28 +326,47 @@ static void testCompare()
     PRODUS ProdusIdentic = *Produs;
     assert(ProdusEqual(*Produs, ProdusIdentic) == 1);
 
-    PRODUS ProdusDiferit = { 6, "televizor", "Dell", "IE 652", 3299.99, 5 };
-    assert(ProdusEqual(*Produs, ProdusDiferit) == 0);
+    PPRODUS ProdusDiferit;
+    assert(CreateProdus(&ProdusDiferit, 6, "televizor", "Dell", "IE 652", 3299.99, 5) == 0);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
 
-    ProdusDiferit = *Produs;
-    SetPret(&ProdusDiferit, 3299.98);
-    assert(ProdusEqual(*Produs, ProdusDiferit) == 0);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == 1);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == -1);
+    SetTip(ProdusDiferit, "laptop");
+    SetProducator(ProdusDiferit, "Lenovo");
+    SetTip(ProdusDiferit, "IE 652");
+    SetCantitate(ProdusDiferit, 10);
+    SetPret(ProdusDiferit, 3299.98);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == 1);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == -1);
+    assert(CompareProduseIncreasing(ProdusDiferit, Produs) == -1);
+    assert(CompareProduseDecreasing(ProdusDiferit, Produs) == 1);
 
-    SetPret(&ProdusDiferit, 3299.99);
-    SetCantitate(&ProdusDiferit, 10);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == 0);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 0);
+    SetPret(ProdusDiferit, 3299.99);
+    SetCantitate(ProdusDiferit, 10);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == 0);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == 0);
 
     SetCantitate(Produs, 5);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == -1);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 1);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == -1);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == 1);
+    assert(CompareProduseIncreasing(ProdusDiferit, Produs)  == 1);
+    assert(CompareProduseDecreasing(ProdusDiferit, Produs) == -1);
+
+    SetTip(ProdusDiferit, "laptop");
+    SetProducator(ProdusDiferit, "Dell");
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    SetProducator(ProdusDiferit, "Lenovo");
+    SetModel(ProdusDiferit, "altceva");
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    SetModel(ProdusDiferit, "IE 652");
+    SetPret(ProdusDiferit, 20.65);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
 
     assert(CompareProduseIncreasing(Produs, NULL) == -1);
-    assert(CompareProduseDecreasing(NULL, &ProdusDiferit) == -1);
+    assert(CompareProduseDecreasing(NULL, ProdusDiferit) == -1);
 
     assert(DestroyProdus(&Produs) == 0);
+    assert(DestroyProdus(&ProdusDiferit) == 0);
 }
 
 static testValidate()

@@ -8,16 +8,16 @@ int CreateRepository(PREPOSITORY_PRODUSE* Repository)
     }
 
     PREPOSITORY_PRODUSE Repo = (PREPOSITORY_PRODUSE)malloc(sizeof(REPOSITORY_PRODUSE));
-    if (Repo == NULL)
+    /*if (Repo == NULL)
     {
         return -1;
-    }
+    }*/
 
     PPRODUS* Array = (PPRODUS*)malloc(INITIAL_SIZE * sizeof(PPRODUS));
-    if (Array == NULL)
+    /*if (Array == NULL)
     {
         return -1;
-    }
+    }*/
 
     Repo->Array = Array;
     Repo->Count = 0;
@@ -42,6 +42,25 @@ int SearchProdus(PREPOSITORY_PRODUSE Repository, int Id, PPRODUS Result)
     return -1;
 }
 
+static void MainntainRepositoryAbove(PREPOSITORY_PRODUSE Repository)
+{
+    if (Repository->Count == Repository->Size)
+    {
+        Repository->Size = Repository->Size * 2;
+        PPRODUS* temporary = (PPRODUS *)malloc(sizeof(PRODUS*) * Repository->Size);
+        /*if (temporary == NULL)
+        {
+            return 0;
+        }*/
+        for (int i = 0; i < Repository->Count; ++i)
+        {
+            temporary[i] = Repository->Array[i];
+        }
+        free(Repository->Array);
+        Repository->Array = temporary;
+    }
+}
+
 int InsertProdus(PREPOSITORY_PRODUSE Repository, PPRODUS Produs)
 {
     for (int i = 0; i < Repository->Count; ++i)
@@ -59,21 +78,32 @@ int InsertProdus(PREPOSITORY_PRODUSE Repository, PPRODUS Produs)
         }
     }
 
-    if (Repository->Count == Repository->Size)
-    {
-        Repository->Size = Repository->Size * 2;
-        PPRODUS* temporary = realloc(Repository->Array, sizeof(PRODUS*) * Repository->Size);
-        if (temporary == NULL)
-        {
-            return 0;
-        }
-        Repository->Array = temporary;
-    }
+    MainntainRepositoryAbove(Repository);
 
     Repository->Array[Repository->Count] = Produs;
     Repository->Count = Repository->Count + 1;
 
     return 0;
+}
+
+static void MainntainRepositoryBelow(PREPOSITORY_PRODUSE Repository)
+{
+    if (Repository->Size > INITIAL_SIZE && Repository->Size / Repository->Count > RM)
+    {
+        Repository->Size = Repository->Size / RM;
+        PPRODUS* temporary = (PPRODUS*)malloc(sizeof(PRODUS*) * Repository->Size);
+        /*if (temporary == NULL)
+        {
+            perror("The repository could not be alocated");
+            exit(1);
+        }*/
+        for(int i = 0; i < Repository->Count; ++i)
+        {
+            temporary[i] = Repository->Array[i];
+        }
+        free(Repository->Array);
+        Repository->Array = temporary;
+    }
 }
 
 int DeleteProdus(PREPOSITORY_PRODUSE Repository, int Id)
@@ -83,10 +113,11 @@ int DeleteProdus(PREPOSITORY_PRODUSE Repository, int Id)
     {
         if (GetId(*(Repository->Array[i])) == Id)
         {
-            if (DestroyProdus(&(Repository->Array[i])) != 0)
+            /*if (DestroyProdus(&(Repository->Array[i])) != 0)
             {
                 return -1;
-            }
+            }*/
+            DestroyProdus(&(Repository->Array[i]));
             for (int j = i; j < Repository->Count - 1; ++j)
                 Repository->Array[j] = Repository->Array[j + 1];
             returnValue = 0;
@@ -95,17 +126,7 @@ int DeleteProdus(PREPOSITORY_PRODUSE Repository, int Id)
         }
     }
 
-    if (Repository->Size > INITIAL_SIZE && Repository->Size / Repository->Count > RM)
-    {
-        Repository->Size = Repository->Size / RM;
-        PPRODUS* temporary = realloc(Repository->Array, sizeof(PRODUS*) * Repository->Size);
-        if (temporary == NULL)
-        {
-            perror("The repository could not be alocated");
-            exit(1);
-        }
-        Repository->Array = temporary;
-    }
+    MainntainRepositoryBelow(Repository);
 
     return returnValue;
 }
@@ -138,10 +159,11 @@ int ClearRepository(PREPOSITORY_PRODUSE Repository)
     while (GetLength(Repository) > 0)
     {
         int id = GetId(*(Repository->Array[0]));
-        if (DeleteProdus(Repository, id) != 0)
+        /*if (DeleteProdus(Repository, id) != 0)
         {
             return -1;
-        }
+        }*/
+        DeleteProdus(Repository, id);
     }
 
     return 0;
@@ -156,10 +178,10 @@ int GetAll(PREPOSITORY_PRODUSE Repository, PPRODUS* Array)
 
     int length = GetLength(Repository);
     PPRODUS newArray = (PPRODUS)malloc(sizeof(PRODUS) * length);
-    if (newArray == NULL)
+    /*if (newArray == NULL)
     {
         return -1;
-    }
+    }*/
 
     for (int i = 0; i < length; ++i)
     {
@@ -178,10 +200,11 @@ int DestroyRepository(PREPOSITORY_PRODUSE* Repository)
         return -1;
     }
 
-    if (ClearRepository(*Repository) != 0)
+    /*if (ClearRepository(*Repository) != 0)
     {
         return -1;
-    }
+    }*/
+    ClearRepository(*Repository);
 
     free((*Repository)->Array);
     free(*Repository);
@@ -198,6 +221,8 @@ int GetLength(PREPOSITORY_PRODUSE Repository)
 static void testCreateDestroy()
 {
     PREPOSITORY_PRODUSE Repo = NULL;
+
+    assert(CreateRepository(NULL) == -1);
     assert(CreateRepository(&Repo) == 0);
     assert(GetLength(Repo) == 0);
 
@@ -288,6 +313,7 @@ static void testModify()
     assert(InsertProdus(Repo, Produs) == 0);
 
     assert(ModifyProdus(NULL, 6, 150, 6) == -1);
+    assert(ModifyProdus(Repo, 8, 150, 6) == -1);
     assert(ModifyProdus(Repo, 6, 150, 6) == 0);
 
     PRODUS Result;
@@ -348,6 +374,7 @@ static void testClear()
         assert(InsertProdus(Repo, Produs) == 0);
     }
     assert(GetLength(Repo) == 120);
+    assert(ClearRepository(NULL) == -1);
 
     assert(ClearRepository(Repo) == 0);
     assert(GetLength(Repo) == 0);
@@ -372,6 +399,9 @@ static void testGetAll()
     assert(InsertProdus(Repo, ProdusNou) == 0);
 
     PPRODUS Array;
+    assert(GetAll(NULL, &Array) == -1);
+    assert(GetAll(Repo, NULL) == -1);
+
     assert(GetAll(Repo, &Array) == 0);
     assert(SearchProdus(Repo, 6, Result) == 0);
     assert(ProdusEqual(*Result, Array[0]) == 1);

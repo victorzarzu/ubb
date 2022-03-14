@@ -102,7 +102,7 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
         return -1;
     }
     printf("Type: ");
-    if (scanf("%20s", tip) != 1)
+    if (scanf_s("%s", tip, 20) != 1)
     {
         free(tip);
         free(producator);
@@ -111,7 +111,7 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
         return -1;
     }
     printf("Manufacturer: ");
-    if (scanf("%20s", producator) != 1)
+    if (scanf_s("%s", producator, 20) != 1)
     {
         free(tip);
         free(producator);
@@ -120,7 +120,7 @@ int consoleAddProdus(PCONSOLE Console, char* errors)
         return -1;
     }
     printf("Model: ");
-    if (scanf("%20s", model) != 1)
+    if (scanf_s("%s", model, 20) != 1)
     {
         free(tip);
         free(producator);
@@ -270,7 +270,7 @@ int consoleViewProduse(PCONSOLE Console, char* errors)
     int count = GetLength(Console->ServiceProduse->Repository);
     for (int i = 0; i < count; ++i)
     {
-        PrintFormat(Array[i]);
+        printf("Tip: %s\nProducator: %s\nModel: %s\nPret: %f\nCantitate: %d\n\n", Array[i].Tip, Array[i].Producator, Array[i].Model, Array[i].Pret, Array[i].Cantitate);
     }
 
     free(Array);
@@ -293,7 +293,7 @@ int consoleFilterProduse(PCONSOLE Console, char* errors)
     printf("For every filter type -1 if you do not want to filter by it\n");
 
     printf("Manufacturer: ");
-    if (scanf("%20s", producator) != 1)
+    if (scanf_s("%s", producator, 20) != 1)
     {
         free(producator);
         strcat(errors, "Could not read the mode!\n");
@@ -323,7 +323,7 @@ int consoleFilterProduse(PCONSOLE Console, char* errors)
 
     for (int i = 0; i < number; ++i)
     {
-        PrintFormat(Array[i]);
+        printf("Tip: %s\nProducator: %s\nModel: %s\nPret: %f\nCantitate: %d\n\n", Array[i].Tip, Array[i].Producator, Array[i].Model, Array[i].Pret, Array[i].Cantitate);
     }
 
     free(Array);

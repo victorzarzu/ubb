@@ -4,6 +4,7 @@
 #include "domain.h"
 #include "infrastructure.h"
 #include "validation.h"
+#include "utils.h"
 #include <string.h>
 
 #define oo 0x3f3f3f3f
@@ -38,7 +39,7 @@ int CreateService(PSERVICE_PRODUCTS* Service, PREPOSITORY_PRODUSE Repository, Va
 *          errors - pointer to a char
 * 
 * @return: 0 - if the storing is successful
-*         -1 - otherwise and the errors are in errors
+*         -1 - otherwise and the errors are in errors variable
 */
 int StoreProdus(PSERVICE_PRODUCTS Service, int Id, char* Tip, char* Producator, char* Model, double Pret, int Cantitate, char* errors);
 
@@ -72,9 +73,12 @@ int ChangeProdus(PSERVICE_PRODUCTS Service, int Id, double Pret, int Cantitate, 
 * Function that returns all the products sorted in Mode mode
 *
 * @params: Service - pointer to  a service for products
-*          Mode - an integer
+*          Mode - an integer representing the sorting mode
 *          Array - a pointer to an array of products
 *          errors - pointer to a char
+* 
+* @return: 0 - if the viewing was succesful
+*         -1 - if not or if there are not products in the repository
 */
 int ViewProduse(PSERVICE_PRODUCTS Service, int Mode, PPRODUS* Array, char* errors);
 
@@ -88,6 +92,9 @@ int ViewProduse(PSERVICE_PRODUCTS Service, int Mode, PPRODUS* Array, char* error
 *          Array - a pointer to an array of products
 *          Number - a pointer to integer
 *          errors - pointer to a char
+* 
+* @return: 0 - if the viewing was succesful
+*         -1 - if not or if there are not products in the repository
 */
 int FilterProduse(PSERVICE_PRODUCTS Service, char* Producator, double Pret, int Cantitate, PPRODUS* Array, int* Number, char* errors);
 
@@ -97,6 +104,7 @@ int FilterProduse(PSERVICE_PRODUCTS Service, char* Producator, double Pret, int 
 * @params: Service - pointer to a pointer to a service for products
 * 
 * @return: 0 - if the destruction was successful
+*         -1 - if there was an error
 */
 int DestroyService(PSERVICE_PRODUCTS* Service);
 
