@@ -1,8 +1,11 @@
+#define _CRTDBG_MAP_ALLOC
+
 #include "presentation.h"
 #include "validation.h"
 #include "infrastructure.h"
 #include "service.h"
 #include "testing.h"
+#include <crtdbg.h>
 
 int main()
 {
@@ -54,6 +57,7 @@ int main()
         }
         exit(-1);
     }
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

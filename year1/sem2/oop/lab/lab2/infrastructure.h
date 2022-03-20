@@ -28,14 +28,14 @@ typedef struct _REPOSITORY_PRODUSE
 int CreateRepository(PREPOSITORY_PRODUSE* Repository);
 
 /**
-* Function that searches for a product and returns the answer via Produs pointer
+* Function that searches for a product by its id and returns the answer via Produs pointer
 *
 * @params: Repository - a pointer to a Repository for products
 *          Id - an integer
 *          Produs - a pointer to a product
 *
-* @return: 1 - if the search is successful and Produs will reference the searched product
-*          0 - if the product does not exist
+* @return: 0 - if the search is successful and Produs will reference the searched product
+*         -1 - if the product does not exist
 */
 int SearchProdus(PREPOSITORY_PRODUSE Repository, int Id, PPRODUS Produs);
 
@@ -110,6 +110,7 @@ int GetLength(PREPOSITORY_PRODUSE Repository);
 * @params: Service - pointer to a pointer to a service for products
 *
 * @return: 0 - if the destruction was successful
+*         -1 - if the there was a problem
 */
 int DestroyRepository(PREPOSITORY_PRODUSE* Repository);
 

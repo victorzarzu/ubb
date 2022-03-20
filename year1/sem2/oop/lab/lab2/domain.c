@@ -18,7 +18,16 @@ char* GetTip(PRODUS Produs)
 
 void SetTip(PPRODUS Produs, char* Tip)
 {
-    Produs->Tip = Tip;
+    int lenTip = strlen(Tip) + 1;
+    char* newTip = (char*)malloc(lenTip * sizeof(char));
+    /*if (newTip == NULL)
+    {
+        return;
+    }*/
+    strcpy(newTip, Tip);
+
+    free(Produs->Tip);
+    Produs->Tip = newTip;
 }
 
 char* GetProducator(PRODUS Produs)
@@ -28,7 +37,16 @@ char* GetProducator(PRODUS Produs)
 
 void SetProducator(PPRODUS Produs, char* Producator)
 {
-    Produs->Producator = Producator;
+    int lenProducator = strlen(Producator) + 1;
+    char* newProducator = (char*)malloc(lenProducator * sizeof(char));
+    /*if (newProducator == NULL)
+    {
+        return;
+    }*/
+    strcpy(newProducator, Producator);
+
+    free(Produs->Producator);
+    Produs->Producator = newProducator;
 }
 
 char* GetModel(PRODUS Produs)
@@ -38,7 +56,16 @@ char* GetModel(PRODUS Produs)
 
 void SetModel(PPRODUS Produs, char* Model)
 {
-    Produs->Model = Model;
+    int lenModel = strlen(Model) + 1;
+    char* newModel = (char*)malloc(lenModel * sizeof(char));
+    /*if (newModel == NULL)
+    {
+        return;
+    }*/
+    strcpy(newModel, Model);
+
+    free(Produs->Model);
+    Produs->Model = newModel;
 }
 
 double GetPret(PRODUS Produs)
@@ -61,10 +88,10 @@ void SetCantitate(PPRODUS Produs, int Cantitate)
     Produs->Cantitate = Cantitate;
 }
 
-void PrintFormat(PRODUS Produs)
+/*int PrintFormat(PRODUS Produs)
 {
     printf("Tip: %s\nProducator: %s\nModel: %s\nPret: %f\nCantitate: %d\n\n", Produs.Tip, Produs.Producator, Produs.Model, Produs.Pret, Produs.Cantitate);
-}
+}*/
 
 int ProdusEqual(PRODUS Produs1, PRODUS Produs2)
 {
@@ -92,7 +119,7 @@ int ProdusEqual(PRODUS Produs1, PRODUS Produs2)
     return 1;
 }
 
-int CompareProduseIncreasing(const void* Produs1, const void* Produs2)
+int CompareProduseIncreasing(const PRODUS* Produs1, const void* Produs2)
 {
     if (Produs1 == NULL || Produs2 == NULL)
     {
@@ -166,40 +193,43 @@ int CreateProdus(PPRODUS* Produs, int Id, char* Tip, char* Producator, char* Mod
     }
 
     PPRODUS produs = (PPRODUS)malloc(sizeof(PRODUS));
-    if (produs == NULL)
+    /*if (produs == NULL)
     {
         return -1;
-    }
+    }*/
 
     produs->Id = Id;
 
     int tipLength = strlen(Tip);
-    char* tip = (char *)malloc(sizeof(char) * (tipLength + 1));
-    if(tip == NULL)
+    char* tip = (char*)malloc(sizeof(char) * (tipLength + 1));
+    /*if (tip == NULL)
     {
+        free(produs);
         return -1;
-    }
+    }*/
     strcpy(tip, Tip);
     produs->Tip = tip;
 
     int producatorLength = strlen(Producator);
     char* producator = (char*)malloc(sizeof(char) * (producatorLength + 1));
-    if(producator == NULL)
+    /*if (producator == NULL)
     {
         free(tip);
+        free(produs);
         return -1;
-    }
+    }*/
     strcpy(producator, Producator);
     produs->Producator = producator;
 
     int modelLength = strlen(Model);
     char* model = (char*)malloc(sizeof(char) * (modelLength + 1));
-    if(model == NULL)
+    /*if (model == NULL)
     {
         free(tip);
         free(producator);
+        free(produs);
         return -1;
-    }
+    }*/
     strcpy(model, Model);
     produs->Model = model;
 
@@ -226,13 +256,24 @@ int DestroyProdus(PPRODUS* Produs)
     return 0;
 }
 
+static void testCreateAndDestroy()
+{
+    PPRODUS Produs;
+    assert(CreateProdus(&Produs, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
+
+    assert(CreateProdus(NULL, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == -1);
+
+    assert(DestroyProdus(NULL) == -1);
+    assert(DestroyProdus(&Produs) == 0);
+    assert(Produs == NULL);
+}
+
 static void testGetAndSet()
 {
-    PPRODUS Produs = (PPRODUS)malloc(sizeof(PRODUS));
+    PPRODUS Produs;
+    assert(CreateProdus(&Produs, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
     SetId(Produs, 6);
     assert(GetId(*Produs) == 6);
-    char* errors = (char *)malloc(100 * sizeof(char));
-    errors[0] = NULL;
 
     SetId(Produs, 6);
     assert(GetId(*Produs) == 6);
@@ -252,32 +293,88 @@ static void testGetAndSet()
     SetCantitate(Produs, 10);
     assert(GetCantitate(*Produs) == 10);
 
+    SetModel(Produs, "new model");
+    assert(strcmp(GetModel(*Produs), "new model") == 0);
+
+    SetPret(Produs, 567.98);
+    assert(fabs(GetPret(*Produs) - 567.98) <= epsilon);
+
+    SetCantitate(Produs, 7);
+    assert(GetCantitate(*Produs) == 7);
+
+    PPRODUS ProdusCreat = NULL;
+    assert(CreateProdus(&ProdusCreat, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
+    assert(GetId(*ProdusCreat) == 6);
+    assert(strcmp(GetTip(*ProdusCreat), "laptop") == 0);
+    assert(strcmp(GetProducator(*ProdusCreat), "Lenovo") == 0);
+    assert(strcmp(GetModel(*ProdusCreat), "IE 652") == 0);
+    assert(fabs(GetPret(*ProdusCreat) - 3299.99) <= epsilon);
+    assert(GetCantitate(*ProdusCreat) == 10);
+
+    assert(DestroyProdus(&ProdusCreat) == 0);
+    assert(ProdusCreat == NULL);
+
+    assert(DestroyProdus(&Produs) == 0);
+    assert(Produs == NULL);
+}
+
+static void testCompare()
+{
+    PPRODUS Produs;
+    assert(CreateProdus(&Produs, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
+
     PRODUS ProdusIdentic = *Produs;
     assert(ProdusEqual(*Produs, ProdusIdentic) == 1);
 
-    PRODUS ProdusDiferit = { 6, "televizor", "Dell", "IE 652", 3299.99, 5 };
-    assert(ProdusEqual(*Produs, ProdusDiferit) == 0);
+    PPRODUS ProdusDiferit;
+    assert(CreateProdus(&ProdusDiferit, 6, "televizor", "Dell", "IE 652", 3299.99, 5) == 0);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
 
-    ProdusDiferit = *Produs;
-    SetPret(&ProdusDiferit, 3299.98);
-    assert(ProdusEqual(*Produs, ProdusDiferit) == 0);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == 1);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == -1);
+    SetTip(ProdusDiferit, "laptop");
+    SetProducator(ProdusDiferit, "Lenovo");
+    SetTip(ProdusDiferit, "IE 652");
+    SetCantitate(ProdusDiferit, 10);
+    SetPret(ProdusDiferit, 3299.98);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == 1);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == -1);
+    assert(CompareProduseIncreasing(ProdusDiferit, Produs) == -1);
+    assert(CompareProduseDecreasing(ProdusDiferit, Produs) == 1);
 
-    SetPret(&ProdusDiferit, 3299.99);
-    SetCantitate(Produs, 10);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == 0);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 0);
-    assert(CompareProduseDecreasing(NULL, Produs) == -1);
-    assert(CompareProduseDecreasing(Produs, NULL) == -1);
-    assert(CompareProduseDecreasing(NULL, NULL) == -1);
+    SetPret(ProdusDiferit, 3299.99);
+    SetCantitate(ProdusDiferit, 10);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == 0);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == 0);
 
-    SetPret(Produs, 100);
-    assert(CompareProduseIncreasing(Produs, &ProdusDiferit) == -1);
-    assert(CompareProduseDecreasing(Produs, &ProdusDiferit) == 1);
-    assert(CompareProduseIncreasing(NULL, Produs) == -1);
+    SetCantitate(Produs, 5);
+    assert(CompareProduseIncreasing(Produs, ProdusDiferit) == -1);
+    assert(CompareProduseDecreasing(Produs, ProdusDiferit) == 1);
+    assert(CompareProduseIncreasing(ProdusDiferit, Produs)  == 1);
+    assert(CompareProduseDecreasing(ProdusDiferit, Produs) == -1);
+
+    SetTip(ProdusDiferit, "laptop");
+    SetProducator(ProdusDiferit, "Dell");
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    SetProducator(ProdusDiferit, "Lenovo");
+    SetModel(ProdusDiferit, "altceva");
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+    SetModel(ProdusDiferit, "IE 652");
+    SetPret(ProdusDiferit, 20.65);
+    assert(ProdusEqual(*Produs, *ProdusDiferit) == 0);
+
     assert(CompareProduseIncreasing(Produs, NULL) == -1);
-    assert(CompareProduseIncreasing(NULL, NULL) == -1);
+    assert(CompareProduseDecreasing(NULL, ProdusDiferit) == -1);
+
+    assert(DestroyProdus(&Produs) == 0);
+    assert(DestroyProdus(&ProdusDiferit) == 0);
+}
+
+static testValidate()
+{
+    PPRODUS Produs;
+    assert(CreateProdus(&Produs, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
+    char* errors = (char*)malloc(100 * sizeof(char));
+    errors[0] = NULL;
 
     SetModel(Produs, "new model");
     assert(strcmp(GetModel(*Produs), "new model") == 0);
@@ -290,13 +387,8 @@ static void testGetAndSet()
 
     assert(ValidateProdus(*Produs, errors) == 0);
 
-    PPRODUS ProdusInvalid = (PPRODUS)malloc(sizeof(PRODUS));
-    SetId(ProdusInvalid, -1);
-    SetTip(ProdusInvalid, "ceva");
-    SetProducator(ProdusInvalid, "Dell");
-    SetModel(ProdusInvalid, "a");
-    SetPret(ProdusInvalid, -15.9);
-    SetCantitate(ProdusInvalid, 4);
+    PPRODUS ProdusInvalid;
+    assert(CreateProdus(&ProdusInvalid, -1, "ceva", "Dell", "a", -15.9, 4) == 0);
 
     assert(ValidateProdus(*ProdusInvalid, errors) == -1);
     assert(strcmp(errors, "Invalid id!\nInvalid price!\n") == 0);
@@ -308,28 +400,16 @@ static void testGetAndSet()
     assert(ValidateProdus(*ProdusInvalid, errors) == -1);
     assert(strcmp(errors, "Invalid id!\nInvalid type!\nInvalid manufacturer!\nInvalid model!\nInvalid price!\nInvalid quantity!\n") == 0);
 
-    PPRODUS ProdusCreat = NULL;
-    assert(CreateProdus(&ProdusCreat, 6, "laptop", "Lenovo", "IE 652", 3299.99, 10) == 0);
-    assert(GetId(*ProdusCreat) == 6);
-    assert(strcmp(GetTip(*ProdusCreat), "laptop") == 0);
-    assert(strcmp(GetProducator(*ProdusCreat), "Lenovo") == 0);
-    assert(strcmp(GetModel(*ProdusCreat), "IE 652") == 0);
-    assert(fabs(GetPret(*ProdusCreat) - 3299.99) <= epsilon);
-    assert(GetCantitate(*ProdusCreat) == 10);
-
-    assert(CreateProdus(NULL, 5, "fad", "fda", "fad", 10, 5) == -1);
-    assert(DestroyProdus(NULL) == -1);
-    assert(DestroyProdus(&ProdusCreat) == 0);
-    assert(ProdusCreat == NULL);
-
-
-
+    assert(DestroyProdus(&Produs) == 0);
+    assert(DestroyProdus(&ProdusInvalid) == 0);
 
     free(errors);
-    free(Produs);
 }
 
 void testDomain()
 {
+    testCreateAndDestroy();
     testGetAndSet();
+    testCompare();
+    testValidate();
 }
