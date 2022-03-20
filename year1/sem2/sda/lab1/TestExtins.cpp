@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <algorithm>
 #include <vector>
+#include <iostream>
 #include "Iterator.h"
 #include "DO.h"
 #include "TestExtins.h"

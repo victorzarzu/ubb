@@ -4,24 +4,52 @@
 
 using namespace std;
 
-Iterator::Iterator(const DO& d) : dict(d){
+/*
+Caz favorabil = Caz defavorabil = Caz mediu
+Complexitate: constanta - θ(1)
+*/
+Iterator::Iterator(const DO& d) : dict{d}, position{0}{ //este theta(1)
+  //position = 0;
+}
+
+/*
+Caz favorabil = Caz defavorabil = Caz mediu
+Complexitate: constanta - θ(1)
+*/
+void Iterator::prim(){ 
   position = 0;
 }
 
-void Iterator::prim(){
-  position = 0;
-}
-
-void Iterator::urmator(){
+/*
+Caz favorabil = Caz defavorabil = Caz mediu
+Complexitate: constanta - θ(1)
+*/
+void Iterator::urmator(){ 
+  if(!valid())
+  {
+    throw exception();
+  }
   position = position + 1;
 }
 
-bool Iterator::valid() const{
+/*
+Caz favorabil = Caz defavorabil = Caz mediu
+Complexitate: constanta - θ(1)
+*/
+bool Iterator::valid() const{ 
   return (position < dict.Size);
 }
 
-TElem Iterator::element() const{
+/*
+Caz favorabil = Caz defavorabil = Caz mediu
+Complexitate: constanta - θ(1)
+*/
+TElem Iterator::element() const{   
+  if(!valid())
+  {
+    throw exception();
+  }
+
   return dict.Array[position];
 }
-
 

@@ -20,6 +20,9 @@ class DO {
       int Capacity;
       Relatie Order;
 
+  //returneaza pozitia pe care se afla sau trebuie inserata cheia in dictionar
+  int pozitie(TCheie c) const;
+
     public:
 
 	// constructorul implicit al dictionarului
@@ -52,5 +55,6 @@ class DO {
 	// destructorul dictionarului
 	~DO();
 
+  
 };
 
