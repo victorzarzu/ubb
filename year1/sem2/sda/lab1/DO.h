@@ -8,6 +8,13 @@ typedef int TValoare;
 #include <utility>
 typedef std::pair<TCheie, TValoare> TElem;
 
+#define INITIAL_CAPACITY 2
+#define RC 2
+#define RM 2
+
+#define Cheie first
+#define Valoare second
+
 class Iterator;
 
 typedef bool(*Relatie)(TCheie, TCheie);
@@ -20,8 +27,14 @@ class DO {
       int Capacity;
       Relatie Order;
 
-  //returneaza pozitia pe care se afla sau trebuie inserata cheia in dictionar
-  int pozitie(TCheie c) const;
+	  //returneaza pozitia pe care se afla sau trebuie inserata cheia in dictionar
+	  int pozitie(TCheie c) const;
+
+	  //redimensioneaza vectorul dinamic daca se depaseste capacitatea curenta
+	  void holdUp();
+
+	  //redimensioneaza vectorul dinamic daca capactitatea sa este mult mai mare decat lungimea efectiva
+	  void holdDown();
 
     public:
 

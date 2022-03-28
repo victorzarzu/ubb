@@ -5,13 +5,6 @@
 #include <exception>
 using namespace std;
 
-#define INITIAL_CAPACITY 64
-#define RC 2
-#define RM 2
-
-#define Cheie first
-#define Valoare second
-
 
 /*
 Caz favorabil = Caz defavorabil = Caz mediu
@@ -21,6 +14,31 @@ DO::DO(Relatie r) :Order{r}{
   Array = (TElem*)malloc(INITIAL_CAPACITY * sizeof(TElem));
   Size = 0;
   Capacity = INITIAL_CAPACITY;
+}
+
+void DO::holdUp() { //theta(1) amortizat
+    if (this->Size == this->Capacity)
+    {
+        Capacity *= RC;
+        TElem* newArray = new (nothrow) TElem[Capacity];
+        for (int i = 0; i < Size; ++i)
+            newArray[i] = Array[i];
+        delete[] Array;
+
+        this->Array = newArray;
+    }
+}
+
+void DO::holdDown() { //theta(1) amortizat
+    if (Capacity > INITIAL_CAPACITY && Capacity / Size >= RM)
+    {
+        Capacity /= RM;
+        TElem* newArray = new (nothrow) TElem[Capacity];
+        for (int i = 0; i < Size; ++i)
+            newArray[i] = Array[i];
+        delete[] Array;
+        this->Array = newArray;
+    }
 }
 
 //returneaza pozitia pe care se afla sau trebuie inserata cheia in dictionar cheia in dictionar
@@ -94,16 +112,7 @@ TValoare DO::adauga(TCheie c, TValoare v) { //este O(n)
     return value;
   }
 
-  if(this->Size == this->Capacity)
-  {
-    Capacity *= RC;
-    TElem* newArray = new (nothrow) TElem[Capacity];
-    for(int i = 0;i < Size;++i)
-      newArray[i] = Array[i];
-    delete Array;
-
-    this->Array = newArray;
-  }
+  holdUp();
 
   position = pozitie(c);
   for(int i = Size;i > position;--i)
@@ -146,30 +155,23 @@ Complexitate caz mediu: T(n) = logn + Σ(i = 1,n)i/n => T(n) apartine θ(n)
 Complexitate totala: O(n)
 */
 TValoare DO::sterge(TCheie c) { //este O(n)
-  if(Size == 0)
-    return NULL_TVALOARE;
+    if (Size == 0) {
+        return NULL_TVALOARE;
+    }
 
-  TValoare value = NULL_TVALOARE;
-  int position = pozitie(c);
-  if(position < Size && this->Array[position].Cheie == c)
-  {
-    value = this->Array[position].Valoare;
-    Size--;
-    for(int i = position;i < Size;++i)
-      Array[i] = Array[i + 1];
-  }
+    TValoare value = NULL_TVALOARE;
+    int position = pozitie(c);
+    if(position < Size && this->Array[position].Cheie == c) {
+        value = this->Array[position].Valoare;
+        Size--;
+        for (int i = position; i < Size; ++i) {
+            Array[i] = Array[i + 1];
+        }
+    }
 
-  if(Capacity > INITIAL_CAPACITY && Capacity / Size >= RM)
-  {
-    Capacity /= RM;
-    TElem* newArray = new (nothrow) TElem[Capacity];
-    for(int i = 0;i < Size;++i)
-      newArray[i] = Array[i];
-    delete[] Array;
-    this->Array = newArray;
-  }
+    holdDown();
 
-	return value;
+    return value;
 }
 
 //returneaza numarul de perechi (cheie, valoare) din dictionar
@@ -206,7 +208,7 @@ Complexitate: constanta - θ(1)
 DO::~DO() { //este theta(1)
   if(this->Array != NULL)
   {
-    delete Array;
+    delete[] Array;
   }
 }
 
