@@ -6,7 +6,7 @@ using namespace std;
 /*
 * Complexitate constanta: theta(1)
 */
-IteratorDictionar::IteratorDictionar(const Dictionar& d) : dict(d), current{d.Prim}{
+IteratorDictionar::IteratorDictionar(const Dictionar& d) : dict(d), current{ d.Prim }{
 	/* de adaugat */
 }
 
@@ -44,5 +44,23 @@ TElem IteratorDictionar::element() const{
 */
 bool IteratorDictionar::valid() const {
 	return (this->current != NULL);
+}
+
+void IteratorDictionar::anterior() {
+	if (!valid()) {
+		throw exception();
+	}
+
+	if (this->current == dict.Prim) {
+		this->current = NULL;
+		return;
+	}
+	else {
+		NodLSI* curr = this->dict.Prim;
+		while (curr->GetUrm() != this->current) {
+			curr = curr->GetUrm();
+		}
+		this->current = curr;
+	}
 }
 

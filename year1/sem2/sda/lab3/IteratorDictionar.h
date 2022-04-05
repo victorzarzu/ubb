@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Dictionar.h"
 #include <exception>
 #include <utility>
@@ -32,4 +32,8 @@ public:
 		//returneaza valoarea elementului din container referit de iterator
 		//arunca exceptie daca iteratorul nu e valid
 		TElem element() const;
+
+		// modifică elementul curent referit de iterator la elementul anterior, sau, în cazul în care elementul curent a fost primul, transformă iteratorul în unul nevalid
+		// aruncă excepție în cazul în care iteratorul nu este valid
+		void anterior();
 };
