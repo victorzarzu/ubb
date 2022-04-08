@@ -96,6 +96,10 @@ bool Matrice::rel(Celula c1, Celula c2) const {
 	return get<1>(c1) <= get<1>(c2);
 }
 
+bool Matrice::eq(Celula c1, Celula c2) const {
+	return get<0>(c1) == get<0>(c2) && get<1>(c1) == get<1>(c2);
+}
+
 /**
 * Caz favorabil = Caz defavorabil = Caz Mediu
 * Complexitate: theta(cp)
@@ -164,19 +168,7 @@ TElem Matrice::element(int i, int j) const{
 	return NULL_TELEMENT;
 }
 
-
-/**
-* Caz favorabil: elementul are linia si coloana mai mici sau egale decat a primului element din lista
-* Complexitate caz favorabil: theta(1)
-* Caz defavorabil: elementul are linia si coloana mai mari sau egale decat a ultimului element din lista
-* Complexitate caz favorabil: theta(n), n - numarul de elemente din lista
-*
-* Caz mediu: elementul trebuie inserat pe pe 1-a, a 2-a, ..., a n-a pozitie
-* Complexitate caz mediu: theta(n)
-*
-* Complexitate totala: O(n)
-*/
-TElem Matrice::modifica(int i, int j, TElem e) {
+TElem Matrice::adauga(int i, int j, TElem e) {
 	if (i < 0 || j < 0 || i >= this->nrL || j >= this->nrC) {
 		throw exception();
 	}
@@ -187,7 +179,6 @@ TElem Matrice::modifica(int i, int j, TElem e) {
 		int pozitie = creeazaNod(myElem);
 		this->prim = pozitie;
 	}
-
 	else {
 		int current = -1;
 
@@ -198,14 +189,19 @@ TElem Matrice::modifica(int i, int j, TElem e) {
 			}
 		}
 
-		if (get<0>(this->e[current]) == i && get<1>(this->e[current]) == j) {
+		if (eq(this->e[this->prim], myElem)) {
+			TElem value = get<2>(this->e[this->prim]);
+			this->e[this->prim] = myElem;
+
+			return value;
+		}
+		else if (current != -1 && eq(this->e[current], myElem)) {
 			TElem value = get<2>(this->e[current]);
 			this->e[current] = myElem;
 
 			return value;
 		}
 		else {
-
 			int pozitie = creeazaNod(myElem);
 
 			if (current == -1) {
@@ -220,9 +216,73 @@ TElem Matrice::modifica(int i, int j, TElem e) {
 			return NULL_TELEMENT;
 		}
 	}
+}
+
+TElem Matrice::sterge(int i, int j) {
+	if (i < 0 || j < 0 || i >= this->nrL || j >= this->nrC) {
+		throw exception();
+	}
+
+	Celula myElem = { i, j, -1};
+
+	if (this->prim == -1) {
+		return NULL_TELEMENT;
+	}
+	else {
+		int current = -1;
+
+		if (!rel(myElem, this->e[this->prim])) {
+			current = this->prim;
+			while (this->urm[current] != -1  && rel(this->e[this->urm[current]], myElem)) {
+				if (eq(this->e[this->urm[current]], myElem)) {
+					break;
+				}
+				current = this->urm[current];
+			}
+		}
+
+		if ((current == -1 && !eq(this->e[this->prim], myElem)) || (current != -1 && !eq(this->e[this->urm[current]], myElem))) {
+			return NULL_TELEMENT;
+		}
+
+		if (current == -1) {
+			TElem value = get<2>(this->e[this->prim]);
+			int pozitie = this->prim;
+			this->prim = this->urm[this->prim];
+			
+			dealoca(pozitie);
+			return value;
+		}
+		else {
+			TElem value = get<2>(this->e[current]);
+			int pozitie = this->urm[current];
+			this->urm[current] = this->urm[this->urm[current]];
+
+			dealoca(pozitie);
+			return value;
+		}
+	}
+}
 
 
-	return NULL_TELEMENT;
+/**
+* Caz favorabil: elementul are linia si coloana mai mici sau egale decat a primului element din lista
+* Complexitate caz favorabil: theta(1)
+* Caz defavorabil: elementul are linia si coloana mai mari sau egale decat a ultimului element din lista
+* Complexitate caz favorabil: theta(n), n - numarul de elemente din lista
+*
+* Caz mediu: elementul trebuie inserat pe pe 1-a, a 2-a, ..., a n-a pozitie
+* Complexitate caz mediu: theta(n)
+*
+* Complexitate totala: O(n)
+*/
+TElem Matrice::modifica(int i, int j, TElem e) {
+	if (e != NULL_TELEMENT) {
+		return adauga(i, j, e);
+	}
+	else {
+		return sterge(i, j);
+	}
 }
 
 

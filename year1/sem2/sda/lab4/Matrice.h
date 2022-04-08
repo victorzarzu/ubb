@@ -44,6 +44,15 @@ private:
 	//verifica daca doua elemente din lista se afla in relatie, returneaza true daca c1relc2 si false altfel
 	bool rel(Celula c1, Celula c2) const;
 
+	//verifica daca doua celule sunt pe aceeasi pozitie
+	bool eq(Celula c1, Celula c2) const;
+
+	//functie care adauga un element in matrice
+	TElem adauga(int i, int j, TElem e);
+
+	//functie care sterge un element in matrice
+	TElem sterge(int i, int j);
+
 public:
 
 	//constructor
