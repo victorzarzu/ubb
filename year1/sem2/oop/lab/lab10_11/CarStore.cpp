@@ -78,6 +78,10 @@ vector<Masina> CarStore::filterByTip(string tip) {
 	return result;
 }
 
+unsigned int CarStore::getStoreSize() const noexcept {
+	return this->repo.getLength();
+}
+
 size_t CarStore::getListSize() const noexcept {
 	return lista.size();
 }
@@ -137,4 +141,48 @@ void CarStore::Undo() {
 
 const vector<Masina> CarStore::getAllSpalate() const {
 	return this->lista.getAll();
+}
+
+void CarStore::adaugaCos(const string& NrInmatriculare) {
+	auto masina = this->findMasina(NrInmatriculare);
+
+	this->cosMasini.adaugaMasina(masina);
+}
+
+void CarStore::stergeCos(const string& NrInmatriculare) {
+	auto masina = this->findMasina(NrInmatriculare);
+
+	this->cosMasini.stergeMasina(masina);
+}
+
+size_t CarStore::sizeCos() const noexcept {
+	return this->cosMasini.size();
+}
+
+const vector<Masina> CarStore::getAllCos() const noexcept {
+	return this->cosMasini.getAll();
+}
+
+void CarStore::golesteCos() noexcept {
+	this->cosMasini.clear();
+}
+
+void CarStore::genereazaCos(const int& number) {
+	if (number > this->repo.getLength()) {
+		throw CarStoreException("Numar prea mare!\n");
+	}
+
+	this->cosMasini.clear();
+	auto all = this->repo.getAll();
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(all.begin(), all.end(), std::default_random_engine(seed));
+
+	all.resize(number);
+	for (const auto& masina : all) {
+		this->cosMasini.adaugaMasina(masina);
+	}
+}
+
+CosMasini& CarStore::getCosMasini() {
+	return this->cosMasini;
 }

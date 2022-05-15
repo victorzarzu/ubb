@@ -1,6 +1,7 @@
 #pragma once
 #include "Masina.h"
 #include "MasiniSpalate.h"
+#include "CosMasini.h"
 #include <assert.h>
 
 class TestMasiniSpalate

@@ -336,6 +336,100 @@ void TestStore::testUndo() const {
 	assert(masinaGasita.GetTip() == "break");
 }
 
+void testCosAdauga() {
+	CarRepo repo{};
+	ValidatorMasina const validator{};
+	CarStore service{ repo, validator };
+
+	service.addMasina("BC34ABC", "Dacia", "Logan", "break");
+	service.addMasina("BC34ABD", "Renault", "Logan", "berlina");
+	service.addMasina("BC34ABF", "Renault", "Logan", "berlina");
+
+	assert(service.sizeCos() == 0);
+
+	service.adaugaCos("BC34ABC");
+	assert(service.sizeCos() == 1);
+
+	try {
+		service.adaugaCos("BC34ABC");
+		assert(false);
+	}
+	catch (const CosException& ce) {
+		assert(ce.toString() == "Masina deja adaugata in cos!\n");
+		assert(true);
+	}
+
+	try {
+		service.adaugaCos("BC24AAA");
+		assert(false);
+	}
+	catch (const CarRepoException& ce) {
+		assert(ce.toString() == "Masina inexistenta!\n");
+	}
+
+	service.adaugaCos("BC34ABF");
+	assert(service.sizeCos() == 2);
+
+	auto all = service.getAllCos();
+	assert(all.at(0).GetNrInmatriculare() == "BC34ABC");
+	assert(all.at(1).GetNrInmatriculare() == "BC34ABF");
+}
+
+void testCosSterge() {
+	CarRepo repo{};
+	ValidatorMasina const validator{};
+	CarStore service{ repo, validator };
+
+	service.addMasina("BC34ABC", "Dacia", "Logan", "break");
+	service.addMasina("BC34ABD", "Renault", "Logan", "berlina");
+	service.addMasina("BC34ABF", "Renault", "Logan", "berlina");
+
+	service.adaugaCos("BC34ABC");
+	service.adaugaCos("BC34ABD");
+	
+	try {
+		service.stergeCos("BC34ABF");
+		assert(false);
+	}
+	catch (const CosException& ce) {
+		assert(ce.toString() == "Masina nu exista in cos!\n");
+		assert(true);
+	}
+	service.adaugaCos("BC34ABF");
+	assert(service.sizeCos() == 3);
+	service.stergeCos("BC34ABD");
+	assert(service.sizeCos() == 2);
+
+
+	service.golesteCos();
+	assert(service.sizeCos() == 0);
+}
+
+void testCosGenerare() {
+	CarRepo repo{};
+	ValidatorMasina const validator{};
+	CarStore service{ repo, validator };
+
+	service.addMasina("BC34ABC", "Dacia", "Logan", "break");
+	service.addMasina("BC34ABD", "Renault", "Logan", "berlina");
+	service.addMasina("BC34ABF", "Renault", "Logan", "berlina");
+
+	try {
+		service.genereazaCos(5);
+		assert(false);
+	}
+	catch (const CarStoreException& ce) {
+		assert(ce.toString() == "Numar prea mare!\n");
+		assert(true);
+	}
+
+	service.genereazaCos(2);
+	assert(service.sizeCos() == 2);
+
+	service.genereazaCos(3);
+	assert(service.sizeCos() == 3);
+}
+
 void TestStore::runAllTests() const {
 	testAddMasina();
 	testGetAll();
@@ -348,4 +442,7 @@ void TestStore::runAllTests() const {
 	testSpalate();
 	testRaport();
 	testUndo();
+	testCosAdauga();
+	testCosSterge();
+	testCosGenerare();
 }

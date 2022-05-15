@@ -1,6 +1,7 @@
 #pragma once
 #include "CarRepo.h"
 #include "MasiniSpalate.h"
+#include "CosMasini.h"
 #include "Masina.h"
 #include "ValidatorMasina.h"
 #include "RaportItem.h"
@@ -20,6 +21,7 @@ class CarStore
 private:
 	CarRepo& repo;
 	MasiniSpalate lista;
+	CosMasini cosMasini;
 	const ValidatorMasina& validator;
 	vector<std::unique_ptr<ActiuneUndo>> undoActions;
 
@@ -129,6 +131,15 @@ public:
 	const vector<Masina>& getAll() const noexcept;
 
 	/**
+	* Functie care retuneaza numarul de masini
+	*
+	* @params: -
+	*
+	* @return: unsigned int
+	*/
+	unsigned int getStoreSize() const noexcept;
+
+	/**
 	* Functie care returneaza numarul de masini din lista pentru masini spalate
 	* 
 	* @params:
@@ -193,7 +204,74 @@ public:
 	*/
 	const vector<Masina> getAllSpalate() const;
 
+	/**
+	* Functie care adauga o masina in cos
+	*
+	* @params: nrInmatriculare - o referinta constanta la string
+	*
+	* @return: -
+	*/
+	void adaugaCos(const string& NrInmatriculare);
+
+	/**
+	* Functie care sterge o masina din cos
+	*
+	* @params: nrInmatriculare - o referinta constanta la string
+	*
+	* @return: -
+	*/
+	void stergeCos(const string& NrInmatriculare);
+
+	/**
+	* Functie care returneaza toate masinile din cos
+	*
+	* @params:
+	*
+	* @return: un vector de masini
+	*/
+	const vector<Masina> getAllCos() const noexcept;
+
+	/**
+	* Functie care goleste cosul
+	*
+	* @params:-
+	*
+	* @return: -
+	*/
+	void golesteCos() noexcept;
+
+	/**
+	* Functie care genereaza cosul
+	*
+	* @params: number - intreg
+	*
+	* @return: -
+	* 
+	* @exceptii: CarStoreException daca number este mai mare decat numarul de masini existente
+	*/
+	void genereazaCos(const int& number);
+
+	/**
+	* Functie care retuneza numarul de elemente din cos
+	*
+	* @params: size_t
+	*
+	* @return: -
+	*/
+	size_t sizeCos() const noexcept;
+
+	/**
+	* Functie care retuneza cosul de masini
+	*
+	* @params: o referinta la cosul de masini
+	*
+	* @return: -
+	*/
+	CosMasini& getCosMasini();
+
 	const RaportItem raportTip(const string& tip);
+
+	virtual ~CarStore() {};
 };
 
 class CarStoreException : public StringException {

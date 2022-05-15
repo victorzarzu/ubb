@@ -3,145 +3,275 @@
 GUI::GUI(CarStore& service, const ValidatorMasina& validator, QWidget* parent) : service{ service }, validator{ validator }, QMainWindow(parent) {
     ui.setupUi(this);
 
-	QVBoxLayout* vLayout = new QVBoxLayout;
+	this->initComponents();
+	this->connectSignalSlots();
 
-	QHBoxLayout* hLayout1 = new QHBoxLayout;
-	QHBoxLayout* hLayout2 = new QHBoxLayout;
-	QHBoxLayout* hLayout3 = new QHBoxLayout;
+	this->initAdaugaComponents();
+	this->initStergeComponents();
+	this->initModificaComponents();
+	
+	this->initStatsComponents();
+	this->connectStatsSignalSlots();
 
-	QWidget* widget1 = new QWidget;
-	QPushButton* adauga = new QPushButton("Adauga");
-	QObject::connect(adauga, &QPushButton::clicked, [=]() { this->adaugaUI(); });
+	this->masiniSpalateWindow = new MasiniSpalateGUI(this->service);
 
-	QPushButton* sterge = new QPushButton("Sterge");
-	QObject::connect(sterge, &QPushButton::clicked, [=]() { this->stergeUI(); });
-	hLayout1->addWidget(adauga);
-	hLayout1->addWidget(sterge);
-	widget1->setLayout(hLayout1);
-	vLayout->addWidget(widget1);
+	this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+}
 
-	QWidget* widget2 = new QWidget;
-	QPushButton* modifica = new QPushButton("Modifica");
-	QObject::connect(modifica, &QPushButton::clicked, [this]() { this->modificaUI(); });
+void GUI::initComponents() {
+	mainLayout = new QHBoxLayout;
+	QVBoxLayout* buttonsLayout = new QVBoxLayout;
+	QWidget* buttonsWidget = new QWidget;
+	mainList = new QListWidget;
+	mainList->setSelectionMode(QListWidget::SingleSelection);
 
-	QPushButton* stats = new QPushButton("Stats");
-	QObject::connect(stats, &QPushButton::clicked, [this]() { this->statsUI(); });
-	hLayout2->addWidget(modifica);
-	hLayout2->addWidget(stats);
-	widget2->setLayout(hLayout2);
-	vLayout->addWidget(widget2);
+	adaugaUIButton = new QPushButton("Adauga");
+	stergeUIButton = new QPushButton("Sterge");
+	buttonsLayout->addWidget(adaugaUIButton);
+	buttonsLayout->addWidget(stergeUIButton);
 
-	QWidget* widget3 = new QWidget;
-	QPushButton* masiniSpalate = new QPushButton("Masini spalate");
-	QObject::connect(masiniSpalate, &QPushButton::clicked, [this]() {this->runMasiniSpalateUI(); });
+	modificaUIButton = new QPushButton("Modifica");
+	statsUIButton = new QPushButton("Stats");
+	buttonsLayout->addWidget(modificaUIButton);
+	buttonsLayout->addWidget(statsUIButton);
 
-	QPushButton* undo = new QPushButton("Undo");
-	QObject::connect(undo, &QPushButton::clicked, [&]() {
+	masiniSpalateUIButton = new QPushButton("Masini spalate");
+	undoButton = new QPushButton("Undo");
+	buttonsLayout->addWidget(masiniSpalateUIButton);
+	buttonsLayout->addWidget(undoButton);
+
+	CosReadOnlyButton = new QPushButton("Cos Read Only");
+	CosCRUDButton = new QPushButton("Cos CRUD");
+	buttonsLayout->addWidget(CosReadOnlyButton);
+	buttonsLayout->addWidget(CosCRUDButton);
+	
+	inchideButton = new QPushButton("Inchide");
+	buttonsLayout->addWidget(inchideButton);
+
+	buttonsWidget->setLayout(buttonsLayout);
+	mainLayout->addWidget(buttonsWidget);
+
+	QVBoxLayout* rightLayout = new QVBoxLayout;
+	QWidget* rightWidget = new QWidget;
+	rightLayout->addWidget(mainList);
+
+	rightWidget->setLayout(rightLayout);
+	mainLayout->addWidget(rightWidget);
+
+	QFormLayout* cosLayout = new QFormLayout;
+	QWidget* cosWidget= new QWidget;
+	cosWidget->setLayout(cosLayout);
+
+	adaugaCosLine = new QLineEdit;
+	adaugaCosButton = new QPushButton("Adauga in cos");
+	cosLayout->addRow(adaugaCosLine, adaugaCosButton);
+
+	stergeCosLine = new QLineEdit;
+	stergeCosButton = new QPushButton("Sterge din cos");
+	cosLayout->addRow(stergeCosLine, stergeCosButton);
+
+	genereazaCosLine = new QLineEdit;
+	genereazaCosButton = new QPushButton("Generaza cos");
+	cosLayout->addRow(genereazaCosLine, genereazaCosButton);
+
+	rightLayout->addWidget(cosWidget);
+
+	this->mainWindow->setLayout(mainLayout);
+	this->setCentralWidget(this->mainWindow);
+	
+	this->mainWindow->setLayout(mainLayout);
+	this->setCentralWidget(this->mainWindow);
+}
+
+void GUI::connectSignalSlots() {
+	QObject::connect(adaugaUIButton, &QPushButton::clicked, this, &GUI::adaugaUI);
+	QObject::connect(stergeUIButton, &QPushButton::clicked, this, &GUI::stergeUI);
+	QObject::connect(modificaUIButton, &QPushButton::clicked, this, &GUI::modificaUI);
+	QObject::connect(statsUIButton, &QPushButton::clicked, this, &GUI::statsUI);
+	QObject::connect(masiniSpalateUIButton, &QPushButton::clicked, this, &GUI::runMasiniSpalateUI);
+
+	QObject::connect(undoButton, &QPushButton::clicked, [&]() {
 		try {
 			service.Undo();
+			this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 		}
 		catch (const CarStoreException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare undo");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
+			QMessageBox::warning(this, "Undo Warning", QString::fromStdString(se.toString()));
+		}
+		});
+	QObject::connect(inchideButton, &QPushButton::clicked, this, &GUI::close);
+	QObject::connect(CosReadOnlyButton, &QPushButton::clicked, [this]() {
+		auto cosReadOnly = new CosReadOnlyGUI(this->service.getCosMasini());
+		cosReadOnly->show();
+		});
+	QObject::connect(CosCRUDButton, &QPushButton::clicked, [this]() {
+		auto cosCRUD = new CosCRUDGUI(this->service.getCosMasini(), this->service);
+		cosCRUD->show();
+		});
+
+	QObject::connect(adaugaCosButton, &QPushButton::clicked, [this]() {
+		try {
+			this->service.adaugaCos(adaugaCosLine->text().toStdString());
+			adaugaCosLine->clear();
+		}
+		catch (const CarRepoException& se) {
+			QMessageBox::warning(this, "Repo Warning", QString::fromStdString(se.toString()));
+		}
+		catch (const CosException& ce) {
+			QMessageBox::warning(this, "Cos Warning", QString::fromStdString(ce.toString()));
 		}
 		});
 
-	hLayout3->addWidget(masiniSpalate);
-	hLayout3->addWidget(undo);
-	widget3->setLayout(hLayout3);
-	vLayout->addWidget(widget3);
+	QObject::connect(stergeCosButton, &QPushButton::clicked, [this]() {
+		try {
+			this->service.stergeCos(stergeCosLine->text().toStdString());
+			stergeCosLine->clear();
+		}
+		catch (const CarRepoException& se) {
+			QMessageBox::warning(this, "Repo Warning", QString::fromStdString(se.toString()));
+		}
+		catch (const CosException& ce) {
+			QMessageBox::warning(this, "Cos Warning", QString::fromStdString(ce.toString()));
+		}
+		});
 
-	QPushButton* inchide = new QPushButton("Inchide");
-	QObject::connect(inchide, &QPushButton::clicked, [=]() {this->close(); });
-	vLayout->addWidget(inchide);
+	QObject::connect(genereazaCosButton, &QPushButton::clicked, [this]() {
+		try {
+			bool ok = true;
+			int number = genereazaCosLine->text().toInt(&ok);
+			if (!ok) {
+				QMessageBox::warning(this, "Valoare Warning", "Valoare invalida!");
+				return;
+			}
 
-	QWidget* window = new QWidget;
-	window->setLayout(vLayout);
+			this->service.genereazaCos(number);
+			genereazaCosLine->clear();
+		}
+		catch (const CarStoreException& se) {
+			QMessageBox::warning(this, "Repo Warning", QString::fromStdString(se.toString()));
+		}
+		});
 
-	this->setCentralWidget(window);
+	QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+S"), this);
+	QObject::connect(shortcut, &QShortcut::activated, this->adaugaCosButton, &QPushButton::click);
 }
 
-void GUI::adaugaUI() {
-	QWidget* adaugaWindow = new QWidget;
-
+void GUI::initAdaugaComponents() {
 	QWidget* formWidget = new QWidget;
 	QFormLayout* formLayout = new QFormLayout;
 
 	QLabel* nrLabel = new QLabel("Numar inmatriculare: ");
-	QLineEdit* nrLine = new QLineEdit;
-	formLayout->addRow(nrLabel, nrLine);
+	adaugaNrInmatriculareLine = new QLineEdit;
+	formLayout->addRow(nrLabel, adaugaNrInmatriculareLine);
 
 	QLabel* producatorLabel = new QLabel("Producator: ");
-	QLineEdit* producatorLine = new QLineEdit;
-	formLayout->addRow(producatorLabel, producatorLine);
+	adaugaProducatorLine = new QLineEdit;
+	formLayout->addRow(producatorLabel, adaugaProducatorLine);
 
 	QLabel* modelLabel = new QLabel("Model: ");
-	QLineEdit* modelLine = new QLineEdit;
-	formLayout->addRow(modelLabel, modelLine);
+	adaugaModelLine = new QLineEdit;
+	formLayout->addRow(modelLabel, adaugaModelLine);
 
 	QLabel* tipLabel = new QLabel("Tip: ");
-	QLineEdit* tipLine = new QLineEdit;
-	formLayout->addRow(tipLabel, tipLine);
+	adaugaTipLine = new QLineEdit;
+	formLayout->addRow(tipLabel, adaugaTipLine);
 
 	formWidget->setLayout(formLayout);
 
 	QVBoxLayout* vLayout = new QVBoxLayout;
 	vLayout->addWidget(formWidget);
 
-	QPushButton* adauga = new QPushButton("&Adauga");
-	QObject::connect(adauga, &QPushButton::clicked, [=]() {
-		try {
-			this->service.addMasina(nrLine->text().toStdString(), producatorLine->text().toStdString(), modelLine->text().toStdString(), tipLine->text().toStdString());
-			adaugaWindow->close();
-		}
-		catch (const ValidateException& ve) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare validare");
-			msgBox.setText(QString::fromUtf8(ve.toString()));
-			msgBox.exec();
-		}
-		catch (const CarRepoException& re) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare repo");
-			msgBox.setText(QString::fromUtf8(re.toString()));
-			msgBox.exec();
-		}
-		catch (const CarStoreException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare store");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		});
-	vLayout->addWidget(adauga);
+	adaugaButton = new QPushButton("&Adauga");
+	QObject::connect(adaugaButton, &QPushButton::clicked, this, &GUI::adaugaMasina);
+
+	vLayout->addWidget(adaugaButton);
 
 	adaugaWindow->setLayout(vLayout);
+}
+
+void GUI::adaugaMasina() {
+	try {
+		this->service.addMasina(adaugaNrInmatriculareLine->text().toStdString(), adaugaProducatorLine->text().toStdString(), adaugaModelLine->text().toStdString(), adaugaTipLine->text().toStdString());
+		adaugaNrInmatriculareLine->clear();
+		adaugaProducatorLine->clear();
+		adaugaModelLine->clear();
+		adaugaTipLine->clear();
+		adaugaWindow->close();
+		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+	}
+	catch (const ValidateException& ve) {
+		QMessageBox::warning(this, "Validation Warning", QString::fromStdString(ve.toString()));
+	}
+	catch (const CarRepoException& re) {
+		QMessageBox::warning(this, "Repository Warning", QString::fromStdString(re.toString()));
+	}
+	catch (const CarStoreException& se) {
+		QMessageBox::warning(this, "Service Warning", QString::fromStdString(se.toString()));
+	}
+}
+
+void GUI::adaugaUI() {
 	adaugaWindow->show();
 }
 
-void GUI::modificaUI() {
-	QWidget* modificaWindow = new QWidget;
+void GUI::initStergeComponents() {
 
 	QWidget* formWidget = new QWidget;
 	QFormLayout* formLayout = new QFormLayout;
 
 	QLabel* nrLabel = new QLabel("Numar inmatriculare: ");
-	QLineEdit* nrLine = new QLineEdit;
-	formLayout->addRow(nrLabel, nrLine);
+	stergeNrInmatriculareLine = new QLineEdit;
+	formLayout->addRow(nrLabel, stergeNrInmatriculareLine);
+
+	formWidget->setLayout(formLayout);
+
+	QVBoxLayout* vLayout = new QVBoxLayout;
+	vLayout->addWidget(formWidget);
+
+	stergeButton = new QPushButton("&Sterge");
+	QObject::connect(stergeButton, &QPushButton::clicked, this, &GUI::stergeMasina);
+
+	vLayout->addWidget(stergeButton);
+
+	stergeWindow->setLayout(vLayout);
+}
+
+void GUI::stergeMasina() {
+	try {
+		this->service.eraseMasina(stergeNrInmatriculareLine->text().toStdString());
+		stergeNrInmatriculareLine->clear();
+		stergeWindow->close();
+		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+	}
+	catch (const CarRepoException& re) {
+		QMessageBox::warning(this, "Repository Warining", QString::fromStdString(re.toString()));
+	}
+}
+
+void GUI::stergeUI() {
+	stergeWindow->show();
+}
+
+void GUI::initModificaComponents() {
+
+	QWidget* formWidget = new QWidget;
+	QFormLayout* formLayout = new QFormLayout;
+
+	QLabel* nrLabel = new QLabel("Numar inmatriculare: ");
+	modificaNrInmatriculareLine = new QLineEdit;
+	formLayout->addRow(nrLabel, modificaNrInmatriculareLine);
 
 	QLabel* producatorLabel = new QLabel("Producator: ");
-	QLineEdit* producatorLine = new QLineEdit;
-	formLayout->addRow(producatorLabel, producatorLine);
+	modificaProducatorLine = new QLineEdit;
+	formLayout->addRow(producatorLabel, modificaProducatorLine);
 
 	QLabel* modelLabel = new QLabel("Model: ");
-	QLineEdit* modelLine = new QLineEdit;
-	formLayout->addRow(modelLabel, modelLine);
+	modificaModelLine = new QLineEdit;
+	formLayout->addRow(modelLabel, modificaModelLine);
 
 	QLabel* tipLabel = new QLabel("Tip: ");
-	QLineEdit* tipLine = new QLineEdit;
-	formLayout->addRow(tipLabel, tipLine);
+	modificaTipLine = new QLineEdit;
+	formLayout->addRow(tipLabel, modificaTipLine);
 
 	formWidget->setLayout(formLayout);
 
@@ -149,106 +279,59 @@ void GUI::modificaUI() {
 	vLayout->addWidget(formWidget);
 
 	QPushButton* adauga = new QPushButton("&Modifica");
-	QObject::connect(adauga, &QPushButton::clicked, [=]() {
-		try {
-			this->service.modifyMasina(nrLine->text().toStdString(), producatorLine->text().toStdString(), modelLine->text().toStdString(), tipLine->text().toStdString());
-			modificaWindow->close();
-		}
-		catch (const ValidateException& ve) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare validare");
-			msgBox.setText(QString::fromUtf8(ve.toString()));
-			msgBox.exec();
-		}
-		catch (const CarRepoException& re) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare repo");
-			msgBox.setText(QString::fromUtf8(re.toString()));
-			msgBox.exec();
-		}
-		catch (const CarStoreException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare store");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		});
+	QObject::connect(adauga, &QPushButton::clicked, this, &GUI::modificaMasina);
 	vLayout->addWidget(adauga);
 
 	modificaWindow->setLayout(vLayout);
+}
+
+void GUI::modificaMasina() {
+	try {
+		this->service.modifyMasina(modificaNrInmatriculareLine->text().toStdString(), modificaProducatorLine->text().toStdString(), modificaModelLine->text().toStdString(), modificaTipLine->text().toStdString());
+		modificaNrInmatriculareLine->clear();
+		modificaProducatorLine->clear();
+		modificaModelLine->clear();
+		modificaTipLine->clear();
+		modificaWindow->close();
+		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+	}
+	catch (const ValidateException& ve) {
+		QMessageBox::warning(this, "Validation Warining", QString::fromStdString(ve.toString()));
+	}
+	catch (const CarRepoException& re) {
+		QMessageBox::warning(this, "Repository Warining", QString::fromStdString(re.toString()));
+	}
+	catch (const CarStoreException& se) {
+		QMessageBox::warning(this, "Service Warining", QString::fromStdString(se.toString()));
+	}
+}
+
+void GUI::modificaUI() {
 	modificaWindow->show();
 }
 
-void GUI::stergeUI() {
-	QWidget* stergeWindow = new QWidget;
-
-	QWidget* formWidget = new QWidget;
-	QFormLayout* formLayout = new QFormLayout;
-
-	QLabel* nrLabel = new QLabel("Numar inmatriculare: ");
-	QLineEdit* nrLine = new QLineEdit;
-	formLayout->addRow(nrLabel, nrLine);
-
-	formWidget->setLayout(formLayout);
-
-	QVBoxLayout* vLayout = new QVBoxLayout;
-	vLayout->addWidget(formWidget);
-
-	QPushButton* sterge = new QPushButton("&Sterge");
-	QObject::connect(sterge, &QPushButton::clicked, [=]() {
-		try {
-			this->service.eraseMasina(nrLine->text().toStdString());
-			stergeWindow->close();
-		}
-		catch (const CarRepoException& re) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare repo");
-			msgBox.setText(QString::fromUtf8(re.toString()));
-			msgBox.exec();
-		}
-		catch (const CarStoreException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare store");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		});
-	vLayout->addWidget(sterge);
-
-	stergeWindow->setLayout(vLayout);
-	stergeWindow->show();
-}
-
-void GUI::statsUI() {
-	QWidget* statsWindow = new QWidget;
-
+void GUI::initStatsComponents() {
 	//Lista
 	QHBoxLayout* topLayout = new QHBoxLayout;
-	QListWidget* list = new QListWidget;
-	topLayout->addWidget(list);
+	statsList = new QTableWidget(1, 4);
+	statsList->setItem(0, 0, new QTableWidgetItem("Numar inmatriculare"));
+	statsList->setItem(0, 1, new QTableWidgetItem("Producator"));
+	statsList->setItem(0, 2, new QTableWidgetItem("Model"));
+	statsList->setItem(0, 3, new QTableWidgetItem("Tip"));
+
+	topLayout->addWidget(statsList);
 
 	QVBoxLayout* buttonsLayout = new QVBoxLayout;
 
 	//Buton filtrare
 	QMenu* filterMenu = new QMenu;
+	filterLine = new QLineEdit;
 
-	QLineEdit* filterLine = new QLineEdit;
+	filterProducatorAction = new QAction("Producator");
+	filterMenu->addAction(filterProducatorAction);
 
-	QAction* filterProducatorA = new QAction("Producator");
-	QObject::connect(filterProducatorA, &QAction::triggered, [this, list, filterLine]() {
-		const string producator = filterLine->text().toStdString();
-		auto masini = this->service.filterByProducator(producator);
-		this->populateList(list, masini);
-		});
-	filterMenu->addAction(filterProducatorA);
-
-	QAction* filterTipA = new QAction("Tip");
-	QObject::connect(filterTipA, &QAction::triggered, [this, list, filterLine]() {
-		const string tip = filterLine->text().toStdString();
-		auto masini = this->service.filterByTip(tip);
-		this->populateList(list, masini);
-		});
-	filterMenu->addAction(filterTipA);
+	filterTipAction = new QAction("Tip");
+	filterMenu->addAction(filterTipAction);
 
 	QPushButton* filterButton = new QPushButton("Filtrare");
 	filterButton->setMenu(filterMenu);
@@ -263,38 +346,22 @@ void GUI::statsUI() {
 	//Buton sortare
 	QMenu* sortMenu = new QMenu;
 
-	QAction* sortnrA = new QAction("Numar");
-	QObject::connect(sortnrA, &QAction::triggered, [this, list]() {
-		auto masini = this->service.sortByNtInmatriculare();
-		this->populateList(list, masini);
-		});
-	sortMenu->addAction(sortnrA);
+	sortNrAction = new QAction("Numar");
+	sortMenu->addAction(sortNrAction);
 
-	QAction* sortTipA = new QAction("Tip");
-	QObject::connect(sortTipA, &QAction::triggered, [this, list]() {
-		auto masini = this->service.sortByTip();
-		this->populateList(list, masini);
-		});
-	sortMenu->addAction(sortTipA);
+	sortTipAction = new QAction("Tip");
+	sortMenu->addAction(sortTipAction);
 
-	QAction* sortProducatorAndModelA = new QAction("Producator si model");
-	QObject::connect(sortProducatorAndModelA, &QAction::triggered, [this, list]() {
-		auto masini = this->service.sortByProducatorAndModel();
-		this->populateList(list, masini);
-		});
-	sortMenu->addAction(sortProducatorAndModelA);
+	sortProducatorAndModelAction = new QAction("Producator si model");
+	sortMenu->addAction(sortProducatorAndModelAction);
 
 	QPushButton* sortButton = new QPushButton("Sortare");
 	sortButton->setMenu(sortMenu);
 	buttonsLayout->addWidget(sortButton);
 
 	//Buton afisare
-	QPushButton* showButton = new QPushButton("Afisare");
-	QObject::connect(showButton, &QPushButton::clicked, [this, list]() {
-			auto masini = this->service.getAll();
-			this->populateList(list, masini);
-		});
-	buttonsLayout->addWidget(showButton);
+	afisareButton = new QPushButton("Afisare");
+	buttonsLayout->addWidget(afisareButton);
 
 	QWidget* buttonsWidget = new QWidget;
 	buttonsWidget->setLayout(buttonsLayout);
@@ -306,22 +373,11 @@ void GUI::statsUI() {
 
 	QWidget* searchWidget = new QWidget;
 	QFormLayout* searchLayout = new QFormLayout;
-	QLineEdit* searchLine = new QLineEdit;
-	QPushButton* searchButton = new QPushButton("&Cauta");
-	QObject::connect(searchButton, &QPushButton::clicked, [this, list, searchLine]() {
-		try {
-			auto masina = this->service.findMasina(searchLine->text().toStdString());
-			this->populateList(list, vector<Masina>(1, masina));
-		}
-		catch (const CarRepoException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare repo");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		});
-	
-	searchLayout->addRow(searchLine, searchButton);
+	cautaLine = new QLineEdit;
+	cautaButton = new QPushButton("&Cauta");
+
+
+	searchLayout->addRow(cautaLine, cautaButton);
 	searchWidget->setLayout(searchLayout);
 
 	QVBoxLayout* statsLayout = new QVBoxLayout;
@@ -329,8 +385,76 @@ void GUI::statsUI() {
 	statsLayout->addWidget(searchWidget);
 
 	statsWindow->setLayout(statsLayout);
+}
+
+void GUI::connectStatsSignalSlots() {
+	QObject::connect(filterProducatorAction, &QAction::triggered, [this]() {
+		auto masini = this->service.filterByProducator(this->filterLine->text().toStdString());
+		this->filterLine->clear();
+		this->populateTable(this->statsList, masini);
+		});
+	QObject::connect(filterTipAction, &QAction::triggered, [this]() {
+		auto masini = this->service.filterByTip(this->filterLine->text().toStdString());
+		this->filterLine->clear();
+		this->populateTable(this->statsList, masini);
+		});
+
+	QObject::connect(sortNrAction, &QAction::triggered, [this]() {
+		auto masini = this->service.sortByNtInmatriculare();
+		this->populateTable(this->statsList, masini);
+		});
+	QObject::connect(sortTipAction, &QAction::triggered, [this]() {
+		auto masini = this->service.sortByTip();
+		this->populateTable(this->statsList, masini);
+		});
+	QObject::connect(sortProducatorAndModelAction, &QAction::triggered, [this]() {
+		auto masini = this->service.sortByProducatorAndModel();
+		this->populateTable(this->statsList, masini);
+		});
+
+	QObject::connect(afisareButton, &QPushButton::clicked, [this]() {
+		auto masini = this->service.getAll();
+		this->populateTable(this->statsList, masini);
+		});
+
+	QObject::connect(cautaButton, &QPushButton::clicked, [this]() {
+		try {
+			auto masina = this->service.findMasina(this->cautaLine->text().toStdString());
+			this->populateTable(this->statsList, vector<Masina>(1, masina));
+		}
+		catch (const CarRepoException& se) {
+			QMessageBox::warning(this, "Repository Warning", QString::fromStdString(se.toString()));
+		}
+		});
+}
+
+void GUI::statsUI() {
 	statsWindow->show();
 }
+
+void GUI::populateListNrInmatriculare(QListWidget* list, const vector<Masina>& masini) {
+	list->clear();
+
+	for (const auto& masina : masini) {
+		new QListWidgetItem(QString::fromStdString(masina.GetNrInmatriculare()), list);
+	}
+}
+
+void GUI::populateTable(QTableWidget* table, const vector<Masina>& masini) {
+	table->setRowCount(1);
+
+	for (const auto& masina : masini) {
+		std::stringstream stream;
+		stream << masina;
+		int const rows = table->rowCount();
+		table->insertRow(rows);
+		statsList->setItem(rows, 0, new QTableWidgetItem(QString::fromStdString(masina.GetNrInmatriculare())));
+		statsList->setItem(rows, 1, new QTableWidgetItem(QString::fromStdString(masina.GetProducator())));
+		statsList->setItem(rows, 2, new QTableWidgetItem(QString::fromStdString(masina.GetModel())));
+		statsList->setItem(rows, 3, new QTableWidgetItem(QString::fromStdString(masina.GetTip())));
+	}
+}
+
 
 void GUI::populateList(QListWidget* list, const vector<Masina>& masini) {
 	list->clear();
@@ -343,80 +467,7 @@ void GUI::populateList(QListWidget* list, const vector<Masina>& masini) {
 }
 
 void GUI::runMasiniSpalateUI() {
-	QHBoxLayout* spalateLayout = new QHBoxLayout;
-	QListWidget* list = new QListWidget;
-	spalateLayout->addWidget(list);
-
-	QWidget* formWidget = new QWidget;
-	QFormLayout* formLayout = new QFormLayout;
-
-	QLineEdit* nrInmatriculareLine = new QLineEdit;
-	QPushButton* nrInmatriculareButton = new QPushButton("Adauga");
-	QObject::connect(nrInmatriculareButton, &QPushButton::clicked, [this, nrInmatriculareLine, list]() {
-		try {
-			this->service.adaugaMasinaSpalate(nrInmatriculareLine->text().toStdString());
-			nrInmatriculareLine->clear();
-			auto masini = this->service.getAllSpalate();
-			this->populateList(list, masini);
-		}
-		catch (const SpalateException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare masini spalate");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		catch (const CarRepoException& ce) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare repo");
-			msgBox.setText(QString::fromUtf8(ce.toString()));
-			msgBox.exec();
-		}
-		});
-	formLayout->addRow(nrInmatriculareLine, nrInmatriculareButton);
-
-	QLineEdit* nrLine = new QLineEdit;
-	QPushButton* nrButton = new QPushButton("Random");
-	QObject::connect(nrButton, &QPushButton::clicked, [this, nrLine, list]() {
-		try {
-			this->service.populeazaMasiniSpalate(nrLine->text().toInt());
-			auto masini = this->service.getAllSpalate();
-			this->populateList(list, masini);
-		}
-		catch (const SpalateException& se) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare masini spalate");
-			msgBox.setText(QString::fromUtf8(se.toString()));
-			msgBox.exec();
-		}
-		});
-	formLayout->addRow(nrLine, nrButton);
-
-	QLineEdit* exportLine = new QLineEdit;
-	QPushButton* exportButton = new QPushButton("Export");
-	QObject::connect(exportButton, &QPushButton::clicked, [this, exportLine, list]() {
-		string fisier = exportLine->text().toStdString();
-		if (fisier.length() <= 4 || (fisier.find(".html") == string::npos && fisier.find(".csv") == string::npos)) {
-			QMessageBox msgBox;
-			msgBox.setWindowTitle("Eroare fisier");
-			msgBox.setText("Fisierul trebuie sa fie CSV sau HTML");
-			msgBox.exec();
-		}
-		this->service.exportMasiniSpalate(fisier);
-		});
-	formLayout->addRow(exportLine, exportButton);
-
-	QPushButton* golesteButton = new QPushButton("Goleste");
-	QObject::connect(golesteButton, &QPushButton::clicked, [this, list]() {
-		this->populateList(list, vector<Masina>());
-		});
-	formLayout->addRow(golesteButton);
-
-	formWidget->setLayout(formLayout);
-	spalateLayout->addWidget(formWidget);
-	
-	QWidget* spalateWindow = new QWidget;
-	spalateWindow->setLayout(spalateLayout);
-	spalateWindow->show();
+	masiniSpalateWindow->show();
 }
 
 void GUI::run() {
