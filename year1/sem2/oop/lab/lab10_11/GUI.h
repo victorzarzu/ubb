@@ -9,6 +9,8 @@
 #include "MasiniSpalateGUI.h"
 #include "CosReadOnlyGUI.h"
 #include "CosCRUDGUI.h"
+#include "MainListModel.h"
+
 #include <qkeysequence.h>
 #include <qshortcut.h>
 #include <qpushbutton.h>
@@ -22,6 +24,7 @@
 #include <qaction.h>
 #include <sstream>
 #include <qtablewidget.h>
+#include <qabstractitemview.h>
 
 class GUI : public QMainWindow
 {
@@ -36,6 +39,9 @@ private:
     Ui::GUIClass ui;
     CarStore& service;
     const ValidatorMasina& validator;
+
+    MainListModel* mainListModel;
+    QListView* mainListView = new QListView;
 
     QWidget* mainWindow = new QWidget;
     QHBoxLayout* mainLayout = new QHBoxLayout;
@@ -118,4 +124,6 @@ private:
     void populateTable(QTableWidget* list, const vector<Masina>& masini);
     void populateList(QListWidget* list, const vector<Masina>& masini);
     void populateListNrInmatriculare(QListWidget* list, const vector<Masina>& masini);
+
+    void reloadList(const vector<Masina>& masini);
 };

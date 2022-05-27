@@ -14,7 +14,6 @@ using std::vector;
 
 class CosCRUDGUI : public QWidget, public Observer {
 private:
-	CosMasini& cos;
 	CarStore& service;
 
 	QTableWidget* table;
@@ -28,12 +27,12 @@ private:
 	void populateTable(QTableWidget* table, const vector<Masina>& all);
 
 public:
-	CosCRUDGUI(CosMasini& cos, CarStore& service);
+	CosCRUDGUI(CarStore& service);
 
 	void update() override;
 
 	~CosCRUDGUI() {
-		this->cos.removeObserver(this);
+		this->service.getCosMasini().removeObserver(this);
 	}
 };
 

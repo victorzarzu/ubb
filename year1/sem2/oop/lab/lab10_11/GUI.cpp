@@ -3,6 +3,8 @@
 GUI::GUI(CarStore& service, const ValidatorMasina& validator, QWidget* parent) : service{ service }, validator{ validator }, QMainWindow(parent) {
     ui.setupUi(this);
 
+	this->masiniSpalateWindow = new MasiniSpalateGUI(this->service);
+
 	this->initComponents();
 	this->connectSignalSlots();
 
@@ -13,17 +15,15 @@ GUI::GUI(CarStore& service, const ValidatorMasina& validator, QWidget* parent) :
 	this->initStatsComponents();
 	this->connectStatsSignalSlots();
 
-	this->masiniSpalateWindow = new MasiniSpalateGUI(this->service);
-
-	this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+	//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 }
 
 void GUI::initComponents() {
 	mainLayout = new QHBoxLayout;
 	QVBoxLayout* buttonsLayout = new QVBoxLayout;
 	QWidget* buttonsWidget = new QWidget;
-	mainList = new QListWidget;
-	mainList->setSelectionMode(QListWidget::SingleSelection);
+	//mainList = new QListWidget;
+	//mainList->setSelectionMode(QListWidget::SingleSelection);
 
 	adaugaUIButton = new QPushButton("Adauga");
 	stergeUIButton = new QPushButton("Sterge");
@@ -53,7 +53,12 @@ void GUI::initComponents() {
 
 	QVBoxLayout* rightLayout = new QVBoxLayout;
 	QWidget* rightWidget = new QWidget;
-	rightLayout->addWidget(mainList);
+	
+	mainListModel = new MainListModel{ this->service.getAll() };
+	mainListView->setModel(mainListModel);
+	mainListView->setUniformItemSizes(true);
+
+	rightLayout->addWidget(mainListView);
 
 	rightWidget->setLayout(rightLayout);
 	mainLayout->addWidget(rightWidget);
@@ -93,7 +98,8 @@ void GUI::connectSignalSlots() {
 	QObject::connect(undoButton, &QPushButton::clicked, [&]() {
 		try {
 			service.Undo();
-			this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+			mainListModel->setMasini(service.getAll());
+			//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 		}
 		catch (const CarStoreException& se) {
 			QMessageBox::warning(this, "Undo Warning", QString::fromStdString(se.toString()));
@@ -105,7 +111,7 @@ void GUI::connectSignalSlots() {
 		cosReadOnly->show();
 		});
 	QObject::connect(CosCRUDButton, &QPushButton::clicked, [this]() {
-		auto cosCRUD = new CosCRUDGUI(this->service.getCosMasini(), this->service);
+		auto cosCRUD = new CosCRUDGUI(this->service);
 		cosCRUD->show();
 		});
 
@@ -197,7 +203,8 @@ void GUI::adaugaMasina() {
 		adaugaModelLine->clear();
 		adaugaTipLine->clear();
 		adaugaWindow->close();
-		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+		reloadList(service.getAll());		
+		//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 	}
 	catch (const ValidateException& ve) {
 		QMessageBox::warning(this, "Validation Warning", QString::fromStdString(ve.toString()));
@@ -241,7 +248,8 @@ void GUI::stergeMasina() {
 		this->service.eraseMasina(stergeNrInmatriculareLine->text().toStdString());
 		stergeNrInmatriculareLine->clear();
 		stergeWindow->close();
-		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+		reloadList(service.getAll());
+		//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 	}
 	catch (const CarRepoException& re) {
 		QMessageBox::warning(this, "Repository Warining", QString::fromStdString(re.toString()));
@@ -293,7 +301,8 @@ void GUI::modificaMasina() {
 		modificaModelLine->clear();
 		modificaTipLine->clear();
 		modificaWindow->close();
-		this->populateListNrInmatriculare(this->mainList, this->service.getAll());
+		mainListModel->setMasini(service.getAll());
+		//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
 	}
 	catch (const ValidateException& ve) {
 		QMessageBox::warning(this, "Validation Warining", QString::fromStdString(ve.toString()));
@@ -472,4 +481,8 @@ void GUI::runMasiniSpalateUI() {
 
 void GUI::run() {
 	this->show();
+}
+
+void GUI::reloadList(const vector<Masina>& masini) {
+	this->mainListModel->setMasini(masini);
 }

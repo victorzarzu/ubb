@@ -1,7 +1,7 @@
 #include "CosCRUDGUI.h"
 
-CosCRUDGUI::CosCRUDGUI(CosMasini& cos, CarStore& service) : cos{ cos }, service{ service } {
-	this->cos.addObserver(this);
+CosCRUDGUI::CosCRUDGUI( CarStore& service) : service{ service } {
+	this->service.getCosMasini().addObserver(this);
 
 	this->initComponents();
 	this->connectSignals();
@@ -34,16 +34,17 @@ void CosCRUDGUI::connectSignals() {
 	QObject::connect(genereazaButton, &QPushButton::clicked, [this]() {
 		int number = slider->value();
 		this->service.genereazaCos(number);
-		cos.notify();
+		this->service.getCosMasini().notify();
 		});
 	QObject::connect(golireButton, &QPushButton::clicked, [this]() {
-		cos.clear();
-		cos.notify();
+		this->service.getCosMasini().clear();
+		this->service.getCosMasini().notify();
 		});
 }
 
 void CosCRUDGUI::populateTable(QTableWidget* table, const vector<Masina>& all) {
 	table->clear();
+	table->setRowCount(0);
 	int nr = 0;
 
 	for (const auto& masina : all) {
@@ -57,5 +58,5 @@ void CosCRUDGUI::populateTable(QTableWidget* table, const vector<Masina>& all) {
 }
 
 void CosCRUDGUI::update() {
-	this->populateTable(table, this->cos.getAll());
+	this->populateTable(table, this->service.getCosMasini().getAll());
 }
