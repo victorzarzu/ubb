@@ -3,6 +3,8 @@
 MasiniSpalateGUI::MasiniSpalateGUI(CarStore& service, QWidget* parent) : service{ service }, QWidget(parent) {
 
 	this->initMasiniSpalateComponents();
+	tableModel = new GeneralTableModel{ this->service.getAllSpalate() };
+	tableView->setModel(tableModel);
 	this->connectMasiniSpalateSignalSlots();
 
 	//this->populateListNrInmatriculare(this->mainList, this->service.getAll());
@@ -21,7 +23,9 @@ void MasiniSpalateGUI::populateList(QListWidget* list, const vector<Masina>& mas
 void MasiniSpalateGUI::initMasiniSpalateComponents() {
 	QHBoxLayout* masiniSpalateLayout = new QHBoxLayout;
 	masiniSpalateList = new QListWidget;
-	masiniSpalateLayout->addWidget(masiniSpalateList);
+	//masiniSpalateLayout->addWidget(masiniSpalateList);
+
+	masiniSpalateLayout->addWidget(tableView);
 
 	QWidget* formWidget = new QWidget;
 	QFormLayout* formLayout = new QFormLayout;
@@ -40,7 +44,8 @@ void MasiniSpalateGUI::initMasiniSpalateComponents() {
 
 	masiniSpalateGolesteButton = new QPushButton("Goleste");
 	QObject::connect(masiniSpalateGolesteButton, &QPushButton::clicked, [this]() {
-		this->populateList(masiniSpalateList, vector<Masina>());
+		service.clearMasiniSpalate();
+		reloadTable(service.getAllSpalate());
 		});
 	formLayout->addRow(masiniSpalateGolesteButton);
 
@@ -56,7 +61,8 @@ void MasiniSpalateGUI::connectMasiniSpalateSignalSlots() {
 			this->service.adaugaMasinaSpalate(masiniSpalateNrInmatriculareLine->text().toStdString());
 			masiniSpalateNrInmatriculareLine->clear();
 			auto masini = this->service.getAllSpalate();
-			this->populateList(masiniSpalateList, masini);
+			//this->populateList(masiniSpalateList, masini);
+			reloadTable(masini);
 		}
 		catch (const SpalateException& se) {
 			QMessageBox::warning(this, "Spalate Warning", QString::fromStdString(se.toString()));
@@ -70,7 +76,8 @@ void MasiniSpalateGUI::connectMasiniSpalateSignalSlots() {
 		try {
 			this->service.populeazaMasiniSpalate(masiniSpalateNrLine->text().toInt());
 			auto masini = this->service.getAllSpalate();
-			this->populateList(masiniSpalateList, masini);
+			//this->populateList(masiniSpalateList, masini);
+			reloadTable(masini);
 			masiniSpalateNrLine->clear();
 		}
 		catch (const SpalateException& se) {
@@ -86,4 +93,8 @@ void MasiniSpalateGUI::connectMasiniSpalateSignalSlots() {
 		this->service.exportMasiniSpalate(fisier);
 		masiniSpalateExportLine->clear();
 		});
+}
+
+void MasiniSpalateGUI::reloadTable(const vector<Masina>& masini) {
+	this->tableModel->setMasini(masini);
 }
