@@ -1,22 +1,22 @@
-package lab1.logic.expression;
+package lab1.logic;
 
-import lab1.models.ComplexNumber;
+import lab1.models.NumarComplex;
 import lab1.enums.Operation;
 
 public abstract class ComplexExpression {
 
     private Operation operation;
-    private ComplexNumber[] args;
+    private NumarComplex[] args;
 
-    ComplexExpression(ComplexNumber[] args, Operation operation) {
+    ComplexExpression(NumarComplex[] args, Operation operation) {
         this.args = args;
         this.operation = operation;
     }
 
-    abstract ComplexNumber executeOneOperation(ComplexNumber complexNumber, ComplexNumber result);
+    abstract NumarComplex executeOneOperation(NumarComplex numarComplex, NumarComplex result);
 
-    public ComplexNumber execute() {
-        ComplexNumber result = args[0];
+    public NumarComplex execute() {
+        NumarComplex result = args[0];
         for(int i = 1;i < args.length;++i) {
             result = executeOneOperation(args[i], result);
         }

@@ -1,21 +1,24 @@
-package lab1.logic.factory;
+package Logic;
 
-import lab1.enums.Operation;
-import lab1.logic.expression.*;
-import lab1.models.ComplexNumber;
+import Enums.Operation;
+import Models.NumarComplex;
 
 public class ExpressionFactory {
-    private static final ExpressionFactory instance = new ExpressionFactory();
+    private static ExpressionFactory instance = new ExpressionFactory();
 
-    private ExpressionFactory() {}
+    private ExpressionFactory() {};
 
-    public ComplexExpression createExpression(Operation operation, ComplexNumber[] args) {
-        return switch (operation) {
-            case ADDITION -> new ComplexExpressionAddition(args, operation);
-            case SUBSTRACTION -> new ComplexExpressionSubstraction(args, operation);
-            case MULTIPLICATION -> new ComplexExpressionMultiplication(args, operation);
-            default -> new ComplexExpressionDivision(args, operation);
-        };
+    public ComplexExpression createExpression(Operation operation, NumarComplex[] args) {
+        switch (operation) {
+            case ADDITION:
+                return new ComplexExpressionAddition(args, operation);
+            case SUBSTRACTION:
+                return new ComplexExpressionSubstraction(args, operation);
+            case MULTIPLICATION:
+                return new ComplexExpressionMultiplication(args, operation);
+            default:
+                return new ComplexExpressionDivision(args, operation);
+        }
     }
 
     public static ExpressionFactory getInstance() {

@@ -1,4 +1,4 @@
-package lab2.utils.runner;
+package utils.runner;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,11 +11,7 @@ public class PrinterTaskRunner extends AbstractTaskRunner {
 
     @Override
     public void executeOneTask() {
-        super.executeOneTask();
-        decorate();
-    }
-
-    private void decorate() {
         System.out.println("Time: " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        super.executeOneTask();
     }
 }

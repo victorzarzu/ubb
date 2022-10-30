@@ -1,5 +1,2 @@
-package ToySocialNetwork.presentation;
-
-public interface Presenter {
-    public void run();
+package ToySocialNetwork.presentation;public interface Presenter {
 }

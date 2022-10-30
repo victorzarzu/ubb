@@ -1,4 +1,4 @@
-package lab1.exceptions;
+package Exceptions;
 
 public class NumarComplexInvalidException extends Exception {
     public NumarComplexInvalidException() {

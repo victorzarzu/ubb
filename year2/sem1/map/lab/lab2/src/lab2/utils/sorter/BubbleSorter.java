@@ -1,4 +1,4 @@
-package lab2.utils.sorter;
+package utils.sorter;
 
 public class BubbleSorter extends AbstractSorter {
     public int[] sort(int[] array) {

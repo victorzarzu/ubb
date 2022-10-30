@@ -1,4 +1,2 @@
-package ToySocialNetwork.service;
-
-public interface Service {
+package ToySocialNetwork.service;public interface Service {
 }

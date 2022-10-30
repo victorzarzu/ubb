@@ -1,14 +1,14 @@
 package lab1.logic.parser;
 
-import lab1.models.ComplexNumber;
+import lab1.models.NumarComplex;
 
-public class ComplexNumberParser {
+public class NumarComplexParser {
     static private boolean isDigit(char character) {
         return character >= '0' && character <= '9';
     }
 
-    public static ComplexNumber parse(String numarComplex) {
-        int position = 0, sign;
+    public static NumarComplex parse(String numarComplex) {
+        int position = 0, sign = 1;
         double real = 0, imaginar = 0, number;
         while(position < numarComplex.length()) {
             number = 0; sign = 1;
@@ -32,6 +32,6 @@ public class ComplexNumberParser {
             }
         }
 
-        return new ComplexNumber(real, imaginar);
+        return new NumarComplex(real, imaginar);
     }
 }

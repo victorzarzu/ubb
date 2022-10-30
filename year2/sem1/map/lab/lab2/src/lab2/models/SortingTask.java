@@ -1,8 +1,8 @@
-package lab2.models;
+package models;
 
-import lab2.logic.factory.SorterFactory;
-import lab2.utils.sorter.AbstractSorter;
-import lab2.utils.sorter.SortingStrategy;
+import logic.factory.SorterFactory;
+import utils.sorter.AbstractSorter;
+import utils.sorter.SortingStrategy;
 
 import java.util.Arrays;
 

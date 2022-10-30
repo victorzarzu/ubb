@@ -1,9 +1,9 @@
-package lab2.logic.factory;
+package logic.factory;
 
-import lab2.utils.sorter.AbstractSorter;
-import lab2.utils.sorter.BubbleSorter;
-import lab2.utils.sorter.QuickSorter;
-import lab2.utils.sorter.SortingStrategy;
+import utils.sorter.AbstractSorter;
+import utils.sorter.BubbleSorter;
+import utils.sorter.QuickSorter;
+import utils.sorter.SortingStrategy;
 
 public class SorterFactory {
 

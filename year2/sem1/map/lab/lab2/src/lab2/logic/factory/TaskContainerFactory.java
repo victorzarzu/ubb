@@ -1,9 +1,9 @@
-package lab2.logic.factory;
+package logic.factory;
 
-import lab2.logic.container.Strategy;
-import lab2.logic.container.Container;
-import lab2.logic.container.QueueContainer;
-import lab2.logic.container.StackContainer;
+import logic.container.Strategy;
+import logic.container.Container;
+import logic.container.QueueContainer;
+import logic.container.StackContainer;
 
 public class TaskContainerFactory implements Factory {
     private static TaskContainerFactory instance = new TaskContainerFactory();
@@ -13,14 +13,12 @@ public class TaskContainerFactory implements Factory {
         switch (strategy) {
             case LIFO:
                 return new StackContainer();
-            case FIFO:
-                return new QueueContainer();
             default:
-                return null;
+                return new QueueContainer();
         }
     }
 
-    private TaskContainerFactory() {};
+    private TaskContainerFactory(){};
 
     public static TaskContainerFactory getInstance() {
         return instance;

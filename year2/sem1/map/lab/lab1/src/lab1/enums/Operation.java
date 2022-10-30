@@ -1,8 +1,6 @@
-package lab1.enums;
+package Enums;
 
 public enum Operation {
-    ADDITION,
-    SUBSTRACTION,
-    MULTIPLICATION,
-    DIVISION
+    ADDITION, SUBSTRACTION, MULTIPLICATION, DIVISION
 }
+

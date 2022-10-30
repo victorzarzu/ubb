@@ -1,4 +1,4 @@
-package lab2.logic.container;
+package logic.container;
 
 public enum Strategy {
     FIFO, LIFO

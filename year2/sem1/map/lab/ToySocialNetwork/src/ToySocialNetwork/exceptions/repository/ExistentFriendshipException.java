@@ -4,8 +4,8 @@ import ToySocialNetwork.exceptions.MultiMessageException;
 
 import java.util.List;
 
-public class ExistentFriendshipException extends ExistentEntityException {
-    public ExistentFriendshipException(String errorMessage) {
-        super(errorMessage);
+public class ExistingFriendshipException extends MultiMessageException {
+    public ExistingFriendshipException(List<String> errorMessages) {
+        super(errorMessages);
     }
 }

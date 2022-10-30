@@ -2,11 +2,11 @@ package lab1.models;
 
 import java.util.Objects;
 
-public class ComplexNumber {
+public class NumarComplex {
     private double re;
     private double im;
 
-    public ComplexNumber(double re, double im) {
+    public NumarComplex(double re, double im) {
         this.re = re;
         this.im = im;
     }
@@ -16,40 +16,41 @@ public class ComplexNumber {
         if(object == this) {
             return true;
         }
-        if(!(object instanceof ComplexNumber complexNumber)) {
+        if(!(object instanceof NumarComplex)) {
             return false;
         }
+        NumarComplex numarComplex = (NumarComplex)object;
 
-        return Objects.equals(this.re, complexNumber.re) && Objects.equals(this.im, complexNumber.im);
+        return Objects.equals(this.re, numarComplex.re) && Objects.equals(this.im, numarComplex.im);
     }
 
-    public ComplexNumber adunare(ComplexNumber complexNumber) {
-        this.setRe(this.getRe() + complexNumber.getRe());
-        this.setIm(this.getIm() + complexNumber.getIm());
+    public NumarComplex adunare(NumarComplex numarComplex) {
+        this.setRe(this.getRe() + numarComplex.getRe());
+        this.setIm(this.getIm() + numarComplex.getIm());
         return this;
     }
 
-    public ComplexNumber scadere(ComplexNumber complexNumber) {
-        this.setRe(this.getRe() - complexNumber.getRe());
-        this.setIm(this.getIm() - complexNumber.getIm());
+    public NumarComplex scadere(NumarComplex numarComplex) {
+        this.setRe(this.getRe() - numarComplex.getRe());
+        this.setIm(this.getIm() - numarComplex.getIm());
         return this;
     }
 
-    public ComplexNumber inmultire(ComplexNumber complexNumber) {
-        this.setRe(this.getRe() * complexNumber.getRe() - this.getIm() * complexNumber.getIm());
-        this.setIm(this.getRe() * complexNumber.getIm() + this.getIm() * complexNumber.getRe());
+    public NumarComplex inmultire(NumarComplex numarComplex) {
+        this.setRe(this.getRe() * numarComplex.getRe() - this.getIm() * numarComplex.getIm());
+        this.setIm(this.getRe() * numarComplex.getIm() + this.getIm() * numarComplex.getRe());
         return this;
     }
 
-    public ComplexNumber impartire(ComplexNumber complexNumber) {
+    public NumarComplex impartire(NumarComplex numarComplex) {
         this.inmultire(this.conjugatul());
-        this.setRe( this.getRe() / (this.getRe() * this.getRe() + complexNumber.getRe() * complexNumber.getRe()));
-        this.setIm( this.getIm() / (this.getRe() * this.getRe() + complexNumber.getRe() * complexNumber.getRe()));
+        this.setRe( this.getRe() / (this.getRe() * this.getRe() + numarComplex.getRe() * numarComplex.getRe()));
+        this.setIm( this.getIm() / (this.getRe() * this.getRe() + numarComplex.getRe() * numarComplex.getRe()));
         return this;
     }
 
-    public ComplexNumber conjugatul() {
-        return new ComplexNumber(this.getRe(), -this.getIm());
+    public NumarComplex conjugatul() {
+        return new NumarComplex(this.getRe(), -this.getIm());
     }
 
     public double getRe() {
