@@ -1,9 +1,9 @@
-package utils.runner;
+package lab2.utils.runner;
 
-import logic.container.Strategy;
-import logic.factory.TaskContainerFactory;
-import models.Task;
-import logic.container.Container;
+import lab2.logic.container.Strategy;
+import lab2.logic.factory.TaskContainerFactory;
+import lab2.models.Task;
+import lab2.logic.container.Container;
 
 public class StrategyTaskRunner implements TaskRunner {
     private Container container;

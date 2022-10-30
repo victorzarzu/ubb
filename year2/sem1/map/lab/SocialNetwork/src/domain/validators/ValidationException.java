@@ -1,2 +1,4 @@
-package domain.validators;public class ValidationException {
+package domain.validators;
+
+public class ValidationException {
 }

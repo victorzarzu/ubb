@@ -1,6 +1,6 @@
-package Logic.Validation;
+package lab1.logic.validation;
 
-import Exceptions.NumarComplexInvalidException;
+import lab1.exceptions.NumarComplexInvalidException;
 
 public class NumarComplexValidator {
 
@@ -14,13 +14,13 @@ public class NumarComplexValidator {
         }
         int position = 0;
         while(position < numarComplex.length()) {
-            if(numarComplex.charAt(position) == '-') {
+            if("+-".contains(String.valueOf(numarComplex.charAt(position)))) {
                 ++position;
             }
             while(position < numarComplex.length() && isDigit(numarComplex.charAt(position))) {
                 position++;
             }
-            if(position == numarComplex.length() - 1) {
+            if(position >= numarComplex.length() - 1) {
                 break;
             }
             if(numarComplex.charAt(position) == 'i') {

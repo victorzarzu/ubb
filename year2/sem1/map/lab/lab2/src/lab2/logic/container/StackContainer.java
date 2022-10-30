@@ -1,20 +1,8 @@
-package logic.container;
+package lab2.logic.container;
 
-import models.Task;
-
-import java.util.Arrays;
+import lab2.models.Task;
 
 public class StackContainer extends AbstractContainer {
-
-    @Override
-    public Task remove() {
-        if(!isEmpty()) {
-            size--;
-            return this.tasks[size];
-        }
-
-        return null;
-    }
 
     @Override
     public void add(Task task) {

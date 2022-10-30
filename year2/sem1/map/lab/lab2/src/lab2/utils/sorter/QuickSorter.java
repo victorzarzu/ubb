@@ -1,4 +1,4 @@
-package utils.sorter;
+package lab2.utils.sorter;
 
 public class QuickSorter extends AbstractSorter {
 

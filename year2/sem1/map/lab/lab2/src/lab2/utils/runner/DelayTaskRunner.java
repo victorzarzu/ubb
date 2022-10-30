@@ -1,4 +1,4 @@
-package utils.runner;
+package lab2.utils.runner;
 
 public class DelayTaskRunner extends AbstractTaskRunner {
 
@@ -8,9 +8,13 @@ public class DelayTaskRunner extends AbstractTaskRunner {
 
     @Override
     public void executeOneTask() {
+        decorate();
+        super.executeOneTask();
+    }
+
+    private void decorate() {
         try{
             Thread.sleep(1000);
-            super.executeOneTask();
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }

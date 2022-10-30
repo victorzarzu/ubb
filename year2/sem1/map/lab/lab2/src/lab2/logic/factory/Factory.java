@@ -1,7 +1,7 @@
-package logic.factory;
+package lab2.logic.factory;
 
-import logic.container.Strategy;
-import logic.container.Container;
+import lab2.logic.container.Strategy;
+import lab2.logic.container.Container;
 
 public interface Factory {
     Container createContainer(Strategy strategy);

@@ -1,7 +1,7 @@
-package logic.container;
+package lab2.logic.container;
 
-import constants.Constants;
-import models.Task;
+import lab2.constants.Constants;
+import lab2.models.Task;
 
 import java.util.Arrays;
 
@@ -16,9 +16,20 @@ public abstract class AbstractContainer implements Container {
     }
 
     public AbstractContainer() {
-        this.tasks = new Task[Constants.CONTAINER_INIT_LENGTH];
+        this.tasks = new Task[CONTAINER_INIT_LENGTH];
         size = 0;
     };
+
+    @Override
+    public Task remove() {
+        if(!isEmpty()) {
+            Task result = this.tasks[size - 1];
+            --size;
+
+            return result;
+        }
+        return null;
+    }
 
     @Override
     public int size() {

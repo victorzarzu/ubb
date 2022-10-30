@@ -1,6 +1,6 @@
-package utils.runner;
+package lab2.utils.runner;
 
-import models.Task;
+import lab2.models.Task;
 
 public interface TaskRunner {
     void executeOneTask();

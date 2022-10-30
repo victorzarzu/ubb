@@ -1,6 +1,6 @@
-package utils.runner;
+package lab2.utils.runner;
 
-import models.Task;
+import lab2.models.Task;
 
 public abstract class AbstractTaskRunner implements TaskRunner {
     private TaskRunner taskRunner;
@@ -20,7 +20,6 @@ public abstract class AbstractTaskRunner implements TaskRunner {
             this.executeOneTask();
         }
     }
-
     @Override
     public boolean hasTask() {
         return taskRunner.hasTask();

@@ -1,16 +1,16 @@
-package lab1.logic;
+package lab1.logic.expression;
 
-import lab1.models.NumarComplex;
+import lab1.models.ComplexNumber;
 import lab1.enums.Operation;
 
 public class ComplexExpressionAddition extends ComplexExpression {
 
-    public ComplexExpressionAddition(NumarComplex[] args, Operation operation) {
+    public ComplexExpressionAddition(ComplexNumber[] args, Operation operation) {
         super(args, operation);
     }
     @Override
-    NumarComplex executeOneOperation(NumarComplex numarComplex, NumarComplex result) {
-        result.adunare(numarComplex);
+    ComplexNumber executeOneOperation(ComplexNumber complexNumber, ComplexNumber result) {
+        result.adunare(complexNumber);
         return result;
     }
 }
