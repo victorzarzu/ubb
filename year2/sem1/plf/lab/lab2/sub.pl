@@ -1,0 +1,2 @@
+#
+% sub([], Sub, [Sub|Rez]).
