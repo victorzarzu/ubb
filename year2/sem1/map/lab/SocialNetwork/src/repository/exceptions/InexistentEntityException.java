@@ -1,5 +1,8 @@
 package repository.exceptions;
 
+/**
+ * Exception to be thrown when the entity is not contained by the storage object
+ */
 public class InexistentEntityException extends RuntimeException {
     public InexistentEntityException() {
     }

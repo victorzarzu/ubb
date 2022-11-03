@@ -8,13 +8,29 @@ import repository.exceptions.InexistentEntityException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class for modelling a repository with persistence in memory
+ * @param <ID> - generic type
+ * @param <E> - generic type
+ */
 public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<ID, E> {
     Map<ID, E> entities;
 
+    /**
+     * Constructor for the repository
+     */
     public InMemoryRepository() {
         entities = new HashMap<>();
     }
 
+    /**
+     * Method that returns the entity with the given ID
+     * @param id ID - the id of the entity to be returned
+     *           id must not be null
+     * @return E
+     * @exception IllegalArgumentException if id is null
+     * @exception InexistentEntityException if there is no entity with the given id
+     */
     @Override
     public E find(ID id) {
         if(id == null) {
@@ -26,6 +42,11 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         throw new InexistentEntityException(id + " does not exist!");
     }
 
+    /**
+     * Method that adds an entity to the repo
+     * @param entity E - the entity that needs to be added
+     * @exception ExistentEntityException if the entity is already in the repo
+     */
     public void add(E entity) {
         if(entity == null) {
             throw new IllegalArgumentException("Id must be not null!");
@@ -36,6 +57,12 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         entities.put(entity.getId(), entity);
     }
 
+    /**
+     * Method that removes an entity from repo
+     * @param id ID - the id of the entity that needs to be removes
+     * @exception IllegalArgumentException if id is null
+     * @exception InexistentEntityException if there is no entity with the given id
+     */
     public void remove(ID id) {
         if(id == null) {
             throw new IllegalArgumentException("Id must be not null!");
@@ -46,10 +73,17 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         entities.remove(id);
     }
 
+    /**
+     * Metod that returns an iterable object of all entities from the repo
+     * @return a iterable object with all entities from the repository
+     */
     public Iterable<E> getAll() {
         return entities.values();
     }
 
+    /**
+     * Method that clears the repo
+     */
     public void clear() {
         entities.clear();
     }

@@ -9,6 +9,8 @@ import domain.exceptions.InexistentUserException;
 import domain.validators.ValidationException;
 import domain.validators.Validator;
 import repository.Repository;
+import repository.exceptions.ExistentEntityException;
+import repository.exceptions.InexistentEntityException;
 import repository.file.UserFileRepository;
 import repository.memory.InMemoryAllNetwork;
 
@@ -20,6 +22,12 @@ public class UserService implements Service {
     private Repository<String, User> userRepository;
     private Validator userValidator;
 
+    /**
+     * Constructor for creating a service for users
+     * @param userRepository - a repository of users
+     * @param userValidator - a validator for users
+     * @param network - a network for the users
+     */
     public UserService(Repository userRepository, Validator userValidator, InMemoryAllNetwork network) {
         this.userRepository = userRepository;
         this.allNetwork = network;
@@ -34,7 +42,7 @@ public class UserService implements Service {
      * @param firstName String
      * @param lastName String
      * @param gender String
-     * @throws ExistentUserException if the user already exists
+     * @throws ExistentEntityException if the user already exists
      * @throws ValidationException if the given data is not valid for a user to be created
      */
     public void addUser(String username, String password, String email,
@@ -50,7 +58,7 @@ public class UserService implements Service {
     /**
      * Method that removes a user based on its username
      * @param username String
-     * @throws InexistentUserException if the user does not exist
+     * @throws InexistentEntityException if the user does not exist
      */
     public void removeUser(String username) {
         User user = userRepository.find(username);
@@ -62,8 +70,8 @@ public class UserService implements Service {
      * Method that creates the friendship between 2 users based on their usernames
      * @param username1 String
      * @param username2 String
-     * @throws ExistentFriendshipException if the 2 users are already friends
-     * @throws InexistentUserException if at least one of the usernames does not correspond to a user
+     * @throws ExistentEntityException if the 2 users are already friends
+     * @throws InexistentEntityException if at least one of the usernames does not correspond to a user
      */
     public void addFriendship(String username1, String username2) {
         User user1 = userRepository.find(username1);
@@ -75,8 +83,8 @@ public class UserService implements Service {
      * Method that removes the friendship between 2 users based on their usernames
      * @param username1 String
      * @param username2 String
-     * @throws InexistentFriendshipException if the 2 users are not friends
-     * @throws InexistentUserException if at least one of the usernames does not correspond to a user
+     * @throws InexistentEntityException if the 2 users are not friends
+     * @throws InexistentEntityException if at least one of the usernames does not correspond to a user
      */
     public void removeFriendShip(String username1, String username2) {
         User user1 = userRepository.find(username1);
@@ -88,7 +96,7 @@ public class UserService implements Service {
      * Method that returns the user with the given username
      * @param username String
      * @return User
-     * @throws InexistentUserException if there is not user with the given username
+     * @throws InexistentEntityException if there is not user with the given username
      */
     public User findUser(String username) {
         return this.userRepository.find(username);

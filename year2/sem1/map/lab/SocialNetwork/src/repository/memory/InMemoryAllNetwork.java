@@ -6,7 +6,7 @@ import repository.exceptions.ExistentEntityException;
 import repository.exceptions.InexistentEntityException;
 
 public class InMemoryAllNetwork {
-    private Network network;
+    protected Network network;
 
     /**
      * Constructor for the AllNetwork class

@@ -1,5 +1,8 @@
 package repository.exceptions;
 
+/**
+ * Exception to be thrown when there is already the same entity in the storage object
+ */
 public class ExistentEntityException extends RuntimeException {
     public ExistentEntityException() {
     }

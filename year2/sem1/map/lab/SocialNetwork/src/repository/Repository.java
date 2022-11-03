@@ -22,8 +22,8 @@ public interface Repository<ID, E extends Entity<ID>> {
     E find(ID id) throws IllegalArgumentException, InexistentEntityException;
 
     /**
-     * Returns all entities
-     * @return Iterable<E>
+     * Returns all entities in the repository
+     * @return - an iterable object that contains all entities
      */
     Iterable<E> getAll();
 
