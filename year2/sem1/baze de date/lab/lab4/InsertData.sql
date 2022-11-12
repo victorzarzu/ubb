@@ -68,6 +68,24 @@ INSERT INTO Piese(Nume, TimpProductie, LinieAsamblareID) VALUES('Buton mouse', 1
 INSERT INTO Piese(Nume, TimpProductie, LinieAsamblareID) VALUES('Rotita mouse', 2, 1);
 INSERT INTO Piese(Nume, TimpProductie, LinieAsamblareID) VALUES('Conector USB', 1, 5);
 
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(1, 1, 0.005);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(2, 1, 0.02);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(2, 2, 0.1);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(2, 8, 0.0002);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(3, 8, 0.0004);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(4, 12, 0.01);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(5, 3, 0.02);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(5, 4, 0.0004);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(5, 5, 0.0003);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(5, 9, 0.002);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(5, 12, 0.02);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 1, 0.012);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 3, 0.1);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 4, 0.002);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 9, 0.6);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 10, 0.3);
+INSERT INTO MaterialePiese(MaterialID, PiesaID, Cantitate) VALUES(6, 11, 0.2);
+
 INSERT INTO Produse(Nume) VALUES('Placa de baza RTY 23');
 INSERT INTO Produse(Nume) VALUES('Placa video RVG 45');
 INSERT INTO Produse(Nume) VALUES('Mouse cu fir H6');
@@ -100,3 +118,5 @@ INSERT INTO ProprietatiPiese(ProprietateID, PiesaID, Valoare) VALUES (2, 4, 4.95
 INSERT INTO ProprietatiPiese(ProprietateID, PiesaID, Valoare) VALUES (2, 5, 3.56);
 INSERT INTO ProprietatiPiese(ProprietateID, PiesaID, Valoare) VALUES (3, 1, 0.8);
 INSERT INTO ProprietatiPiese(ProprietateID, PiesaID, Valoare) VALUES (4, 8, 300000);
+
+INSERT INTO Versiune(Versiune) VALUES (0);
