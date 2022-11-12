@@ -1,7 +1,9 @@
 package testing.service;
 
+import domain.Friendship;
 import domain.Network;
 import domain.User;
+import domain.validators.FriendshipValidator;
 import domain.validators.UserValidator;
 import domain.validators.ValidationException;
 import domain.validators.Validator;
@@ -11,18 +13,22 @@ import org.junit.jupiter.api.Test;
 import repository.Repository;
 import repository.exceptions.ExistentEntityException;
 import repository.exceptions.InexistentEntityException;
-import repository.memory.InMemoryAllNetwork;
 import repository.memory.InMemoryRepository;
 import service.UserService;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestUserService {
     private static final Repository<String, User> userRepository = new InMemoryRepository<>();
+    private static final Repository<Set<String>, Friendship> friendshipRepositoryrRepository = new InMemoryRepository<>();
     private static final Validator<User> userValidator = new UserValidator();
-    private static final InMemoryAllNetwork allNetwork = new InMemoryAllNetwork();
-    private static UserService service = new UserService(userRepository, userValidator, allNetwork);
+    private static final Validator<Friendship> friendshipValidator = new FriendshipValidator();
+    private static UserService service = new UserService(userRepository, userValidator, friendshipRepositoryrRepository, friendshipValidator);
 
 
     @BeforeEach
@@ -32,7 +38,7 @@ public class TestUserService {
 
     @Test
     @DisplayName("Test user adding service")
-    public void testAdd() throws Exception {
+    public void testAddUser() throws Exception {
         try {
             service.addUser("victor.zarzu", "dada", "dafafdasf.com", "Victor", "Zarzu", "Man");
             fail();
@@ -51,7 +57,7 @@ public class TestUserService {
 
     @Test
     @DisplayName("Test user removing service")
-    public void testRemove() throws Exception {
+    public void testRemoveUser() throws Exception {
         service.addUser("victor.zarzu", "dada", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
         service.removeUser("victor.zarzu");
 
@@ -60,6 +66,32 @@ public class TestUserService {
             fail();
         } catch (InexistentEntityException exception) {
             assertEquals(exception.getMessage(), "victor.zarzu does not exist!");
+        }
+    }
+
+    @Test
+    @DisplayName("Test user modifying service")
+    public void testModifyUser() throws Exception {
+        service.addUser("victor.zarzu", "dada", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
+        service.modifyUser("victor.zarzu", "nunu", "victorzarzu@gmail.com", "Eugen", "Zarzu", "Man");
+
+        User userFound = service.findUser("victor.zarzu");
+        assertEquals(userFound.getPassword(), "nunu");
+        assertEquals(userFound.getFirstName(), "Eugen");
+
+        try {
+            service.modifyUser("victor", "nunu", "victorzarzu@gmail.com", "Eugen", "Zarzu", "Man");
+
+            fail();
+        } catch (InexistentEntityException exception) {
+            assertEquals(exception.getMessage(), "victor does not exist!");
+        }
+
+        try {
+            service.modifyUser("victor.zarzu", "dada", "dafafdasf.com", "Victor", "Zarzu", "Man");
+            fail();
+        } catch (ValidationException exception) {
+            assertEquals(exception.getMessage(), "Invalid email!\n");
         }
     }
 
@@ -75,7 +107,7 @@ public class TestUserService {
             service.addFriendship("victor.zarzu", "andrei.ol");
             fail();
         } catch (ExistentEntityException exception) {
-            assertEquals(exception.getMessage(), "victor.zarzu and andrei.ol are already friends!");
+            assertEquals(exception.getMessage(), "[andrei.ol, victor.zarzu] already exists!");
         }
 
         try {
@@ -84,10 +116,17 @@ public class TestUserService {
         } catch (InexistentEntityException exception) {
             assertEquals(exception.getMessage(), "andre.ol does not exist!");
         }
+
+        try {
+            service.addFriendship("victor.zarzu", "victor.zarzu");
+            fail();
+        } catch (ValidationException exception) {
+            assertEquals(exception.getMessage(), "victor.zarzu cannot be friend to itself!");
+        }
     }
 
     @Test
-    @DisplayName("Test removing friendship adding service")
+    @DisplayName("Test removing friendship service")
     public void testRemoveFriendship() throws Exception {
         service.addUser("victor.zarzu", "dada", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
         service.addUser("andrei.ol", "ceva", "andrei.ol@gmail.com", "Andrei", "Ol", "Man");
@@ -99,7 +138,7 @@ public class TestUserService {
             service.removeFriendShip("victor.zarzu", "andrei.ol");
             fail();
         } catch (InexistentEntityException exception) {
-            assertEquals(exception.getMessage(), "victor.zarzu and andrei.ol are not friends!");
+            assertEquals(exception.getMessage(), "[victor.zarzu, andrei.ol] does not exist!");
         }
 
         try {
@@ -107,6 +146,51 @@ public class TestUserService {
             fail();
         } catch (InexistentEntityException exception) {
             assertEquals(exception.getMessage(), "andre.ol does not exist!");
+        }
+    }
+
+    @Test
+    @DisplayName("Test finding friendship service")
+    public void testFindFriendship() throws Exception {
+        service.addUser("victor.zarzu", "dada", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
+        service.addUser("andrei.ol", "ceva", "andrei.ol@gmail.com", "Andrei", "Ol", "Man");
+
+        service.addFriendship("victor.zarzu", "andrei.ol");
+        Friendship friendshipFound = service.findFriendship("victor.zarzu", "andrei.ol");
+        assertEquals(friendshipFound.getFirstUsername(), "andrei.ol");
+        assertEquals(friendshipFound.getSecondUsername(), "victor.zarzu");
+
+        try {
+            service.removeFriendShip("victor", "andrei.ol");
+            fail();
+        } catch (InexistentEntityException exception) {
+            assertEquals(exception.getMessage(), "victor does not exist!");
+        }
+    }
+
+    @Test
+    @DisplayName("Test modifying friendship service")
+    public void testModifyFriendship() throws Exception {
+        service.addUser("victor.zarzu", "dada", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
+        service.addUser("andrei.ol", "ceva", "andrei.ol@gmail.com", "Andrei", "Ol", "Man");
+
+        service.addFriendship("victor.zarzu", "andrei.ol");
+        service.modifyFriendshipDate("victor.zarzu", "andrei.ol", LocalDateTime.now().minusYears(10));
+
+        Friendship friendshipFound = service.findFriendship("victor.zarzu", "andrei.ol");
+        assertEquals(friendshipFound.getFriendshipDate().getYear(), LocalDateTime.now().minusYears(10).getYear());
+
+        try {
+            service.modifyFriendshipDate("victor", "andrei.ol", LocalDateTime.now().minusYears(10));
+        } catch (InexistentEntityException exception) {
+            assertEquals(exception.getMessage(), "victor does not exist!");
+        }
+
+        try {
+            service.modifyFriendshipDate("victor.zarzu", "andrei.ol", LocalDateTime.now().plusYears(10));
+            fail();
+        } catch (ValidationException exception) {
+            assertEquals(exception.getMessage(), "Friendship date cannot be in the future!");
         }
     }
 
