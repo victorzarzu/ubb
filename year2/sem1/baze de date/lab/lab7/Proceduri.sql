@@ -9,7 +9,7 @@ BEGIN
 	UPDATE Versiune
 	SET Versiune = 1;
 
-	PRINT 'S-a schimbat cantitatea de materiale de la piese de la tipul real la decimal'
+	PRINT 'S-a schimbat cantitatea de materiale de la piese de la tipul real la decimal si baza de date este acum la versiunea 1'
 END;
 GO
 
@@ -24,7 +24,7 @@ BEGIN
 	UPDATE Versiune
 	SET Versiune = 0;
 
-	PRINT 'S-a dat undo la schimbarea cantitatii de materiale de la tipul real la decimal'
+	PRINT 'S-a dat undo la schimbarea cantitatii de materiale de la tipul real la decimal si baza de date este acum la versiunea 0'
 END;
 GO
 
@@ -44,7 +44,7 @@ AS
 		UPDATE Versiune
 		SET Versiune = 2;
 
-		PRINT 'S-a adaugat o valoarea default pentru campul AnRenovare din tabela Linii Asamblare'
+		PRINT 'S-a adaugat o valoarea default pentru campul AnRenovare din tabela Linii Asamblare si baza de date este acum la versiunea 2'
 		END
 GO
 
@@ -64,7 +64,7 @@ AS
 		UPDATE Versiune
 		SET Versiune = 1;
 
-		PRINT 'S-a dat undo la adaugarea de o valoarea default pentru campul AnRenovare din tabela Linii Asamblare'
+		PRINT 'S-a dat undo la adaugarea de o valoarea default pentru campul AnRenovare din tabela Linii Asamblare si baza de date este acum la versiunea 1'
 	END
 GO
 
@@ -88,7 +88,7 @@ AS
 		UPDATE Versiune
 		SET Versiune = 3;
 
-		PRINT 'S-a adaugat tabela angajati'
+		PRINT 'S-a adaugat tabela angajati si baza de date este acum la versiunea 3'
 	END
 GO
 
@@ -107,7 +107,7 @@ AS
 		UPDATE Versiune
 		SET Versiune = 2;
 
-		PRINT 'S-a dat undo la agaugarea tabelei de angajati'
+		PRINT 'S-a dat undo la agaugarea tabelei de angajati si baza de date este acum la versiunea 2'
 	END
 GO
 
@@ -131,7 +131,7 @@ AS
 		UPDATE Versiune
 		SET Versiune = 4;
 
-		PRINT 'S-a adaugat campul LinieAsamblareID in tabela Angajati'
+		PRINT 'S-a adaugat campul LinieAsamblareID in tabela Angajati  si baza de date este acum la versiunea 4'
 	END
 GO
 
@@ -155,13 +155,17 @@ AS
 			UPDATE Versiune
 			SET Versiune = 3;
 
-		PRINT 'S-a dat undo la adaugarea campului LinieAsamblareID in tabela Angajati'
+		PRINT 'S-a dat undo la adaugarea campului LinieAsamblareID in tabela Angajati si baza de date este acum la versiunea 3'
 		END
 GO
 
 CREATE PROCEDURE UpdateVersiune5
 AS
-	IF EXISTS(SELECT * FROM sys.foreign_keys WHERE NAME = 'FK_Angajati')
+	IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Angajati')
+	BEGIN
+		PRINT 'Nu exista tabela Angajati.'
+	END
+	ELSE IF EXISTS(SELECT * FROM sys.foreign_keys WHERE NAME = 'FK_Angajati')
 	BEGIN
 		PRINT 'Exista constrangerea de cheie straina pe tabela angajati';
 	END
@@ -175,23 +179,29 @@ AS
 			UPDATE Versiune
 			SET Versiune = 5;
 
-			PRINT 'S-a adaugat o constrangere de cheie straina pe campul LinieAsamblareID din tabela Angajati'
+			PRINT 'S-a adaugat o constrangere de cheie straina pe campul LinieAsamblareID din tabela Angajati si baza de date este acum la versiunea 5'
 		END
 GO
 
 CREATE PROCEDURE DownVersiune5
-AS
-	IF NOT EXISTS(SELECT * FROM sys.foreign_keys WHERE NAME = 'FK_Angajati')
+AS	
+	IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Angajati')
+	BEGIN
+		PRINT 'Nu exista tabela Angajati.'
+	END
+	ELSE IF NOT EXISTS(SELECT * FROM sys.foreign_keys WHERE NAME = 'FK_Angajati')
 		PRINT 'Nu exista constrangerea de cheie straina pe tabela angajati';
 	ELSE
 		BEGIN
+			SET NOCOUNT ON;
+
 			ALTER TABLE Angajati
 			DROP CONSTRAINT FK_Angajati;
 
 			UPDATE Versiune
 			SET Versiune = 4;
 
-			PRINT 'S-a dat undo la adaugarea constrangerii de cheie straina pe campul LinieAsamblareID din tabela Angajati'
+			PRINT 'S-a dat undo la adaugarea constrangerii de cheie straina pe campul LinieAsamblareID din tabela Angajati si baza de date este acum la versiunea 4'
 		END
 GO
 
