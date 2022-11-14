@@ -34,7 +34,7 @@ public class UserFileRepository extends AbstractFileRepository<String, User> {
      */
     @Override
     protected String entityEntityToString(User user) {
-        return user.getId() + ";" + user.getPassword() + ";" + user.getEmail() +
-                ";" + user.getFirstName() + ";" + user.getLastName() + ";" + user.getGender() + "\n";
+        return user.getId() + ";" + user.getPassword() + ";"  + user.getEmail() + ";" + user.getFirstName() + ";" +
+                user.getLastName() + ";" + user.getGender() + "\n";
     }
 }

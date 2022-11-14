@@ -49,6 +49,7 @@ public class TestUserRepository {
         }
     }
 
+
     @Test
     @DisplayName("Test clear user repository")
     public void testClear() throws Exception {
@@ -94,6 +95,28 @@ public class TestUserRepository {
             fail();
         } catch (InexistentEntityException exception) {
             assertEquals(exception.getMessage(), "andrei.ol does not exist!");
+        }
+    }
+
+    @Test
+    @DisplayName("Test modify user repository")
+    public void testModify() throws Exception {
+        User user = new User("victor.zarzu", "ceva", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
+        repository.add(user);
+
+        User userNew = new User("victor.zarzu", "altceva", "victor@gmail.com", "Victor", "Zarzu", "Man");
+        repository.modify(userNew);
+        User userFound = repository.find(user.getId());
+        assertEquals(userFound.getPassword(), "altceva");
+        assertEquals(userFound.getEmail(), "victor@gmail.com");
+
+        User userInexistent = new User("victor.zau", "altceva", "victor@gmail.com", "Victor", "Zarzu", "Man");
+
+        try{
+            repository.modify(userInexistent);
+            fail();
+        } catch (InexistentEntityException exception) {
+            assertEquals(exception.getMessage(), "victor.zau does not exist!");
         }
     }
 }

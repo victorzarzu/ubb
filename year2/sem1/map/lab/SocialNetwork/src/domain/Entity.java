@@ -43,7 +43,7 @@ public class Entity<ID> implements Serializable {
         if(obj == this) {
             return true;
         }
-        if(!(obj instanceof User)) {
+        if(!(obj instanceof Entity<?>)) {
             return false;
         }
 

@@ -4,6 +4,8 @@ import domain.Entity;
 import repository.exceptions.ExistentEntityException;
 import repository.exceptions.InexistentEntityException;
 
+import java.util.Map;
+
 /**
  * CRUD operations repository interface
  * @param <ID> - type E must have an attribute of type ID
@@ -19,7 +21,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      * @throws IllegalArgumentException if the id is null.
      * @throws InexistentEntityException if there is no entity with the given id
      */
-    E find(ID id) throws IllegalArgumentException, InexistentEntityException;
+    E find(ID id) throws IllegalArgumentException;
 
     /**
      * Returns all entities in the repository
@@ -28,18 +30,31 @@ public interface Repository<ID, E extends Entity<ID>> {
     Iterable<E> getAll();
 
     /**
+     * Method that returns the map of the objects
+     * @return a map object with all entities from the repository
+     */
+    public Map<ID, E> getMap();
+
+    /**
      * Adds an entity in the repo
      * @param entity E - the entity that needs to be added
      * @throws ExistentEntityException if there is already an entity that has the same id with the give one
      */
-    void add(E entity) throws ExistentEntityException;
+    void add(E entity);
 
     /**
      * Adds an entity in the repo
      * @param id ID - the id of the entity that needs to be removes
-     * @throws ExistentEntityException if there is no entity that has the given id
+     * @throws InexistentEntityException if there is no entity that has the given id
      */
-    void remove(ID id) throws InexistentEntityException;
+    void remove(ID id);
+
+    /**
+     * Method that modifies an entity in the repo
+     * @param entity entity that will replace the one with the same id
+     * @throws InexistentEntityException if there is no entity that has the same id as the given entity
+     */
+    void modify(E entity);
 
     /**
      * Clears the repository's data

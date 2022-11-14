@@ -74,11 +74,35 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     }
 
     /**
-     * Metod that returns an iterable object of all entities from the repo
+     * Method that modifies an entity in the repo
+     * @param entity entity that will replace the one with the same id
+     * @exception IllegalArgumentException if id is null
+     * @throws InexistentEntityException if there is no entity that has the same id as the given entity
+     */
+    public void modify(E entity) {
+        if(entity == null) {
+            throw new IllegalArgumentException("Id must be not null!");
+        }
+        if(!entities.containsKey(entity.getId())) {
+            throw  new InexistentEntityException(entity.getId() + " does not exist!");
+        }
+        entities.replace(entity.getId(), entity);
+    }
+
+    /**
+     * Method that returns an iterable object of all entities from the repo
      * @return a iterable object with all entities from the repository
      */
     public Iterable<E> getAll() {
         return entities.values();
+    }
+
+    /**
+     * Method that returns the map of the objects
+     * @return a map object with all entities from the repository
+     */
+    public Map<ID, E> getMap() {
+        return entities;
     }
 
     /**

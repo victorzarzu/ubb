@@ -5,5 +5,5 @@ package domain.validators;
  * @param <E>
  */
 public interface Validator<E> {
-    void validate(E entity) throws ValidationException;
+    void validate(E entity);
 }

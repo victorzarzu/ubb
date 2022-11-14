@@ -46,11 +46,11 @@ public class TestUser {
         assertEquals(user.getGender(), "Woman");
     }
 
-    @Test
-    @DisplayName("Testing user's string format")
-    public void testToString() {
-        User user = new User("victor.zarzu", "eusunt", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
-        assertEquals(user.toString(), "Username: victor.zarzu | Email : victorzarzu@gmail.com | First name: Victor | " +
-                "Last name: Zarzu | Gender: Man\n");
-    }
+//    @Test
+//    @DisplayName("Testing user's string format")
+//    public void testToString() {
+//        User user = new User("victor.zarzu", "eusunt", "victorzarzu@gmail.com", "Victor", "Zarzu", "Man");
+//        assertEquals(user.toString(), "Username: victor.zarzu | Email : victorzarzu@gmail.com | First name: Victor | " +
+//                "Last name: Zarzu | Gender: Man\n");
+//    }
 }

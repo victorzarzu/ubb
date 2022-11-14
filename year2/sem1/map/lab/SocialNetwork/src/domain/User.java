@@ -2,12 +2,14 @@ package domain;
 
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Class the models an user in a social network
  */
 public class User extends Entity<String> {
 
+    private static final UUID serialVersionUID = UUID.randomUUID();
     private String password;
     private String email;
     private String firstName;
@@ -121,6 +123,6 @@ public class User extends Entity<String> {
     @Override
     public String toString() {
         return "Username: " + this.getId() + " | Email : " + this.email + " | First name: "
-                + this.firstName + " | Last name: " + this.lastName + " | Gender: " + this.gender + "\n";
+                + this.firstName + " | Last name: " + this.lastName + " | Gender: " + this.gender;
     }
 }

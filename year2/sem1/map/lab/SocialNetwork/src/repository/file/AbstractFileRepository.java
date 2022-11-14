@@ -91,4 +91,15 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
         super.remove(id);
         this.saveData();
     }
+
+    /**
+     * Method that modifies an entity in the repo
+     * @param entity entity that will replace the one with the same id
+     * @exception IllegalArgumentException if id is null
+     * @throws InexistentEntityException if there is no entity that has the same id as the given entity
+     */
+    public void modify(E entity) {
+        super.modify(entity);
+        this.saveData();
+    }
 }

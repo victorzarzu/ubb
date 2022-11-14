@@ -24,7 +24,7 @@ public class UserValidator implements Validator<User> {
             return false;
         }
         for(int i = 1;i < name.length();++i) {
-            if(Character.isUpperCase(name.charAt(i)) || !Character.isAlphabetic(name.charAt(i))) {
+            if(!Character.isAlphabetic(name.charAt(i)) || Character.isUpperCase(name.charAt(i))) {
                 return false;
             }
         }
@@ -101,24 +101,24 @@ public class UserValidator implements Validator<User> {
 
         Iterable<String> usernameErrors = this.validateUsername(user.getId());
         for(String message : usernameErrors) {
-            errorMessages += message + "\n";
+            errorMessages.concat(message + "\n");
         }
 
         Iterable<String> passwordErrors = this.validatePassword(user.getPassword());
         for(String message : passwordErrors) {
-            errorMessages += message + "\n";
+            errorMessages.concat(message + "\n");
         }
         if(!isEmailValid(user.getEmail())) {
-            errorMessages += "Invalid email!\n";
+            errorMessages.concat("Invalid email!\n");
         }
         if(!isNameValid(user.getFirstName())) {
-            errorMessages += "Invalid first name!\n";
+            errorMessages.concat("Invalid first name!\n");
         }
         if(!isNameValid(user.getLastName())) {
-            errorMessages += "Invalid last name!\n";
+            errorMessages.concat("Invalid last name!\n");
         }
         if(!isGenderValid(user.getGender())) {
-            errorMessages += "Invalid gender!\n";
+            errorMessages.concat("Invalid gender!\n");
         }
 
         if(errorMessages.length() > 0) {

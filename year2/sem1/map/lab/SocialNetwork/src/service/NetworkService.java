@@ -3,27 +3,21 @@ package service;
 import domain.Friendship;
 import domain.Network;
 import domain.User;
-import domain.exceptions.ExistentFriendshipException;
-import domain.exceptions.ExistentUserException;
-import domain.exceptions.InexistentFriendshipException;
-import domain.exceptions.InexistentUserException;
 import domain.validators.ValidationException;
 import domain.validators.Validator;
 import repository.Repository;
 import repository.exceptions.ExistentEntityException;
 import repository.exceptions.InexistentEntityException;
-import repository.file.UserFileRepository;
-import repository.memory.InMemoryAllNetwork;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Class that models a service for users
  */
-public class UserService implements Service {
+public class NetworkService implements Service {
     private Repository<String, User> userRepository;
     private Repository<Set<String>, Friendship> friendshipRepository;
     private Validator userValidator;
@@ -36,8 +30,8 @@ public class UserService implements Service {
      * @param  friendshipRepository - a repository of friendships
      * @param friendshipValidator - a validator for users
      */
-    public UserService(Repository userRepository, Validator userValidator,
-                       Repository friendshipRepository, Validator friendshipValidator) {
+    public NetworkService(Repository userRepository, Validator userValidator,
+                          Repository friendshipRepository, Validator friendshipValidator) {
         this.userRepository = userRepository;
         this.userValidator = userValidator;
         this.friendshipRepository = friendshipRepository;
@@ -115,10 +109,10 @@ public class UserService implements Service {
      * @throws InexistentEntityException if the 2 users are not friends
      * @throws InexistentEntityException if at least one of the usernames does not correspond to a user
      */
-    public void removeFriendShip(String username1, String username2) {
+    public void removeFriendship(String username1, String username2) {
         User user1 = userRepository.find(username1);
         User user2 = userRepository.find(username2);
-        friendshipRepository.remove(new HashSet<>(Arrays.asList(username1, username2)));
+        friendshipRepository.remove(new TreeSet<>(Arrays.asList(username1, username2)));
     }
 
     /**
@@ -156,7 +150,7 @@ public class UserService implements Service {
      * @throws InexistentEntityException if there is no friendship between the given users
      */
     public Friendship findFriendship(String username1, String username2) {
-        return this.friendshipRepository.find(new HashSet<>(Arrays.asList(username1, username2)));
+        return this.friendshipRepository.find(new TreeSet<>(Arrays.asList(username1, username2)));
     }
 
     /**
@@ -189,7 +183,7 @@ public class UserService implements Service {
      * Method that clears the data
      */
     public void clear() {
-        userRepository.clear();
         friendshipRepository.clear();
+        userRepository.clear();
     }
 }

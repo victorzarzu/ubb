@@ -20,6 +20,16 @@ public class Network {
         network = new HashMap<>();
     }
 
+    public Network(Map<String, User> userMap, Iterable<Friendship> friendships) {
+        this();
+        for(Map.Entry<String, User> entry : userMap.entrySet()) {
+            this.addUser(entry.getValue());
+        }
+        for(Friendship friendship : friendships) {
+            this.addFriendship(userMap.get(friendship.getFirstUsername()), userMap.get(friendship.getSecondUsername()));
+        }
+    }
+
     /**
      * Test if 2 networks are equal
      * @param obj Network
@@ -49,17 +59,17 @@ public class Network {
 
         String result = "";
         for(Map.Entry<User, Set<User>> entry : network.entrySet()) {
-            result += entry.getKey().getId() + " ";
+            String userLine = entry.getKey().getId() + " ";
             if(entry.getValue().size() > 0) {
-                result += "is friend with ";
+                userLine.concat("is friend with ");
                 for (User friend : entry.getValue()) {
-                    result += friend.getId() + " ";
+                    userLine.concat(friend.getId() + " ");
                 }
             }
             else {
-                result += "does not have friends ";
+                userLine.concat("does not have friends ");
             }
-            result += "\n";
+            result.concat(userLine + "\n");
         }
 
         return result;
@@ -71,11 +81,11 @@ public class Network {
      * @throws ExistentEntityException if the user is already in the network
      */
     public void addUser(User user) {
-        if(!network.containsKey(user)) {
+//        if(!network.containsKey(user)) {
             network.put(user, new HashSet<>());
-            return;
-        }
-        throw new ExistentEntityException(user.getId() + " already exists!");
+//            return;
+//        }
+//        throw new ExistentEntityException(user.getId() + " already exists!");
     }
 
     /**
@@ -83,15 +93,15 @@ public class Network {
      * @param user User
      * @throws ExistentEntityException if the user does not exist in the network
      */
-    public void removeUser(User user) {
-        if(!network.containsKey(user)) {
-            throw new InexistentEntityException(user.getId() + " does not exist!");
-        }
-        network.remove(user);
-        for(Map.Entry<User, Set<User>> entries : network.entrySet()) {
-            entries.getValue().remove(user);
-        }
-    }
+//    public void removeUser(User user) {
+//        if(!network.containsKey(user)) {
+//            throw new InexistentEntityException(user.getId() + " does not exist!");
+//        }
+//        network.remove(user);
+//        for(Map.Entry<User, Set<User>> entries : network.entrySet()) {
+//            entries.getValue().remove(user);
+//        }
+//    }
 
     /**
      * Method that verifies if 2 users are in the network
@@ -99,18 +109,18 @@ public class Network {
      * @param user2 User
      * @exception InexistentEntityException if at least one of the users does not exist in the network
      */
-    private void existUsers(User user1, User user2) {
-        String errorMessage = "";
-        if(!network.containsKey(user1)) {
-            errorMessage += user1.getId() + " does not exist!";
-        }
-        if(!network.containsKey(user2)) {
-            errorMessage += (errorMessage.length() > 0 ? "\n" : "") + user2.getId() + " does not exist!";
-        }
-        if(errorMessage.length() > 0) {
-            throw new InexistentEntityException(errorMessage);
-        }
-    }
+//    private void existUsers(User user1, User user2) {
+//        String errorMessage = "";
+//        if(!network.containsKey(user1)) {
+//            errorMessage += user1.getId() + " does not exist!\n";
+//        }
+//        if(!network.containsKey(user2)) {
+//            errorMessage += user2.getId() + " does not exist!";
+//        }
+//        if(errorMessage.length() > 0) {
+//            throw new InexistentEntityException(errorMessage);
+//        }
+//    }
 
     /**
      * Method that adds a friendship in the network
@@ -120,11 +130,13 @@ public class Network {
      * @exception  InexistentEntityException if there is already a friendship between the users
      */
     public void addFriendship(User user1, User user2) {
-        this.existUsers(user1, user2);
-        if(this.areFriends(user1, user2)){
-            throw new ExistentFriendshipException(user1.getId() +
-                    " and " + user2.getId() + " are already friends!");
-        }
+//        this.existUsers(user1, user2);
+//        if(this.areFriends(user1, user2)){
+//            throw new ExistentFriendshipException(user1.getId() +
+//                    " and " + user2.getId() + " are already friends!");
+//        } else if(user1 == user2) {
+//            throw new ExistentFriendshipException("Cannot add yourself as a friend!");
+//        }
 
         network.get(user1).add(user2);
         network.get(user2).add(user1);
@@ -137,16 +149,16 @@ public class Network {
      * @exception  InexistentEntityException if at least one of the users does not exist in the network
      * @exception  ExistentEntityException if there is not friendship between the users with the given usernames
      */
-    public void removeFriendsShip(User user1, User user2) {
-        this.existUsers(user1, user2);
-        if(!this.areFriends(user1, user2)) {
-            throw new InexistentEntityException(user1.getId() +
-                    " and " + user2.getId() + " are not friends!");
-        }
-
-        network.get(user1).remove(user2);
-        network.get(user2).remove(user1);
-    }
+//    public void removeFriendsShip(User user1, User user2) {
+//        this.existUsers(user1, user2);
+//        if(!this.areFriends(user1, user2)) {
+//            throw new InexistentEntityException(user1.getId() +
+//                    " and " + user2.getId() + " are not friends!");
+//        }
+//
+//        network.get(user1).remove(user2);
+//        network.get(user2).remove(user1);
+//    }
 
     /**
      * Method that verifies a friendship between 2 users
@@ -156,7 +168,7 @@ public class Network {
      * @exception  InexistentEntityException if at least one of the users does not exist in the network
      */
     public boolean areFriends(User user1, User user2) {
-        this.existUsers(user1, user2);
+//        this.existUsers(user1, user2);
         return network.get(user1).contains(user2);
     }
 
@@ -202,14 +214,12 @@ public class Network {
     private Network generateSubNetwork(Set<User> users) {
         Network generatedNetwork = new Network();
         for(User user : users) {
-            try{
-                generatedNetwork.addUser(user);
-                for(User friend : network.get(user)) {
-                    if(!generatedNetwork.areFriends(user, friend)) {
-                        generatedNetwork.addFriendship(user, friend);
-                    }
+            generatedNetwork.addUser(user);
+            for(User friend : network.get(user)) {
+                if(!generatedNetwork.areFriends(user, friend)) {
+                    generatedNetwork.addFriendship(user, friend);
                 }
-            }catch (Exception exception){};
+            }
         }
 
         return generatedNetwork;
@@ -235,6 +245,7 @@ public class Network {
     public Network mostSocialCommunity() {
         Set<User> visitedUsers = new HashSet<>();
         Network mostSocialCommunity = new Network();
+
         for(User user : network.keySet()) {
             if(!visitedUsers.contains(user)) {
                 Set<User> componentUsers = new HashSet<>();
@@ -251,13 +262,6 @@ public class Network {
         return mostSocialCommunity;
     }
 
-    /**
-     * Method that returns a map of users and the associated friends in a set in the value field
-     * @return a map with users and their friends
-     */
-    public Map<User, Set<User>> getMap() {
-        return this.network;
-    }
     /**
      * Method that clears the network
      */
