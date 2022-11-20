@@ -210,12 +210,16 @@ CREATE PROCEDURE TransformaVersiune
 AS
 BEGIN
 	DECLARE @VersiuneCurenta INT;
-	SELECT @VersiuneCurenta = V.Versiune
+	SELECT TOP 1 @VersiuneCurenta = V.Versiune
 	FROM Versiune V;
 
 	IF @VersiuneDorita < 0 OR @VersiuneDorita > 5
 	BEGIN
 		PRINT 'Argument invalid'
+	END
+	ELSE IF @VersiuneDorita = @VersiuneCurenta
+	BEGIN
+		PRINT 'Baza de date este deja in versiunea dorita'
 	END
 	ELSE
 	BEGIN
@@ -228,7 +232,7 @@ BEGIN
 			SET @VersiuneCurenta = @VersiuneCurenta + 1
 			WHILE @VersiuneCurenta <= @VersiuneDorita
 			BEGIN
-				SET @Procedura = 'UpdateVersiune' + CONVERT(VARCHAR(2), @VersiuneCurenta);
+				SET @Procedura = 'UpdateVersiune' + CONVERT(VARCHAR(3), @VersiuneCurenta);
 				EXEC @Procedura
 				SET @VersiuneCurenta = @VersiuneCurenta + 1
 			END
@@ -237,7 +241,7 @@ BEGIN
 		BEGIN
 			WHILE @VersiuneCurenta > @VersiuneDorita
 			BEGIN
-				SET @Procedura = 'DownVersiune' + CONVERT(VARCHAR(2), @VersiuneCurenta);
+				SET @Procedura = 'DownVersiune' + CONVERT(VARCHAR(3), @VersiuneCurenta);
 				EXEC @Procedura
 				SET @VersiuneCurenta = @VersiuneCurenta - 1
 			END
@@ -246,4 +250,4 @@ BEGIN
 END
 GO
 
-EXEC TransformaVersiune @VersiuneDorita = 0;
+EXEC TransformaVersiune @VersiuneDorita = 3;
