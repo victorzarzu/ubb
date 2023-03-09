@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <title>Formular angajare</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form>
+            <img src="https://cdn.pixabay.com/photo/2020/08/08/02/56/hacker-5471975_960_720.png" width="400" height="300" alt="Imagine programator">
+            <table style="width:100%;">
+                <tr>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <th colspan="2">Informa&#355;ii personale</th>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <label for="nume">Nume</label><br>
+                                    <input type="text" name="nume" id="nume"><br>
+                                </td>
+                                <td colspan="1">
+                                    <label for="prenume">Prenume</label><br>
+                                    <input type="text" name="prenume" id="prenume"><br>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="1">
+                                    <label for="email">Email</label><br>
+                                    <input type="email" name="email" id="email" placeholder="exemplu@mail.com" ><br>
+                                </td>
+                                <td colspan="1">
+                                    <label for="telefon">Telefon</label><br>
+                                    <input type="tel" id="telefon" name="telefon" placeholder="0756328048" pattern="07[0-9]{8}" maxlength="10"><br>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="1">
+                                    <label for="varsta">Varst&#259;</label><br>
+                                    <input type="range" name="varsta" id="varsta" step="5" min="18" max="100" value="25">
+                                </td>
+                                <td colspan="1">
+                                    <a href="https://cariere.ro/">Site cariere</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <table>
+
+                            <tr>
+                                <td>
+                                    <label for="domeniu_principal">Domeniu principal de interes</label>
+                                    <select id="domeniu_principal" name="domeniu_principal">
+                                        <option value="ai">Inteligen&#355;&#259; artificial&#259;</option>
+                                        <option value="retele">Re&#355;ele</option>
+                                        <option value="db">Baze de date</option>
+                                        <option value="proiectare">Proiectare</option>
+                                        <option value="inginerie">Inginerie</option>
+                                        <option value="statistica">Statistic&#259;</option>
+                                    </select> <br>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="domenii_cunoscute">Alte domenii cunoscute</label>
+                                    <select id="domenii_cunoscute" name="domenii_cunoscute" style="width:60%" multiple>
+                                        <option value="ai">Inteligen&#355;&#259; artificial&#259;</option>
+                                        <option value="retele">Re&#355;ele</option>
+                                        <option value="db">Baze de date</option>
+                                        <option value="proiectare">Proiectare</option>
+                                        <option value="inginerie">Inginerie</option>
+                                        <option value="statistica">Statistic&#259;</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <table style="width:100%">
+                            <tr>
+                                <th colspan="2">Limbaje de programare</th>
+                            </tr>
+
+                            <tr>
+                                <td colspan="1">
+                                    <p>Limbaj de programare favorit</p>
+                                    <input type="radio" id="c++_fav" name="limbaj_favorit">
+                                    <label for="c++_fav">C++</label><br>
+                                    <input type="radio" id="python_fav" name="limbaj_favorit">
+                                    <label for="python_fav">Python</label><br>
+                                    <input type="radio" id="go_fav" name="limbaj_favorit">
+                                    <label for="go_fav">Go</label><br>
+                                    <input type="radio" id="c#_fav" name="limbaj_favorit">
+                                    <label for="c#_fav">C#</label><br>
+                                    <input type="radio" id="java_fav" name="limbaj_favorit">
+                                    <label for="java_fav">Java</label><br>
+                                    <input type="radio" id="typescript_fav" name="limbaj_favorit">
+                                    <label for="typescript_fav">TypeScript</label><br>
+                                    <input type="radio" id="rust_fav" name="limbaj_favorit">
+                                    <label for="rust_fav">Rust</label><br> 
+                                </td>
+
+                                <td colspan="1">
+                                    <p>Experien&#355;&#259; cu limbajul favorit</p>
+                                    <input type="radio" id="l1_fav" name="experienta_favorit">
+                                    <label for="l1_fav">&#60; 1 an</label><br>
+                                    <input type="radio" id="m1_fav" name="experienta_favorit">
+                                    <label for="m1_fav">&#62; 1 an</label><br>
+                                    <input type="radio" id="m3_fav" name="experienta_favorit">
+                                    <label for="m3_fav">&#62; 3 ani</label><br>
+                                    <input type="radio" id="m5_fav" name="experienta_favorit">
+                                    <label for="m5_fav">&#62; 5 ani</label><br>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="1">
+                                    <p>Al doilea limbaj de programare favorit</p>
+                                    <input type="radio" id="c++_fav2" name="limbaj_favorit2">
+                                    <label for="c++_fav2">C++</label><br>
+                                    <input type="radio" id="python_fav2" name="limbaj_favorit2">
+                                    <label for="python_fav2">Python</label><br>
+                                    <input type="radio" id="go_fav2" name="limbaj_favorit2">
+                                    <label for="go_fav2">Go</label><br>
+                                    <input type="radio" id="c#_fav2" name="limbaj_favorit2">
+                                    <label for="c#_fav2">C#</label><br>
+                                    <input type="radio" id="java_fav2" name="limbaj_favorit2">
+                                    <label for="java_fav2">Java</label><br>
+                                    <input type="radio" id="typescript_fav2" name="limbaj_favorit2">
+                                    <label for="typescript_fav2">TypeScript</label><br>
+                                    <input type="radio" id="rust_fav2" name="limbaj_favorit2">
+                                    <label for="rust_fav2">Rust</label><br>
+                                </td>
+                
+                                <td colspan="1">
+                                    <p>Experien&#355;&#259; cu al doilea limbaj favorit</p>
+                                    <input type="radio" id="l1_fav2" name="experienta_favorit2">
+                                    <label for="l1_fav2">&#60; 1 an</label><br>
+                                    <input type="radio" id="m1_fav2" name="experienta_favorit2">
+                                    <label for="m1_fav2">&#62; 1 an</label><br>
+                                    <input type="radio" id="m3_fav2" name="experienta_favorit2">
+                                    <label for="m3_fav2">&#62; 3 ani</label><br>
+                                    <input type="radio" id="m5_fav2" name="experienta_favorit2">
+                                    <label for="m5_fav2">&#62; 5 ani</label><br>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <p>Alte limbaje cunoscute</p>
+                                    <input type="checkbox" id="c++_alte" name="c++_alte">
+                                    <label for="c++_alte">C++</label><br>
+                                    <input type="checkbox" id="python_alte" name="python_alte">
+                                    <label for="python_alte">Python</label><br>
+                                    <input type="checkbox" id="go_alte" name="go_alte">
+                                    <label for="go_alte">Go</label><br>
+                                    <input type="checkbox" id="c#_alte" name="c#_alte">
+                                    <label for="c#_alte">C#</label><br>
+                                    <input type="checkbox" id="java_alte" name="java_alte">
+                                    <label for="java_alte">Java</label><br>
+                                    <input type="checkbox" id="typescript_alte" name="typescript_alte">
+                                    <label for="typescript_alte">TypeScript</label><br>
+                                    <input type="checkbox" id="rust_alte" name="rust_alte">
+                                    <label for="rust_alte">Rust</label><br>
+                                    <label for="altele_alte_text">
+                                        <input type="checkbox" id="altele_alte_text" name="altele_alte_text">
+                                        Altele...
+                                    </label>
+                                    <input type="text" id="altele_alte" name="altele_alte">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <table style="width:100%">
+                            <tr>
+                                <th colspan="2">Firme, posturi si loca&#355;ii</th>
+                            </tr>
+
+                            <tr>
+                                <td colspan="1">
+                                    <div>
+                                        <p>Firme &#351;i loca&#355;ii</p>
+                                        <ol type="A">
+                                            <li>Betfair
+                                                <ol type="i">
+                                                    <li>Cluj-Napoca</li>
+                                                    <li>Bucure&#351;ti</li>
+                                                </ol>
+                                            </li>
+                                            <li>Yardi</li>
+                                            <li>Automatify</li>
+                                            <li>Fme
+                                                <ol type="i">
+                                                    <li>Cluj-Napoca</li>
+                                                    <li>One&#351;i</li>
+                                                </ol>
+                                            </li>
+                                            <li>BitStone</li>
+                                        </ol>
+                                    </div>
+                                </td>
+
+                                <td colspan="1">
+                                    <div>
+                                        <p>Firme &#351;i posturi</p>
+                                        <ul>
+                                            <li>Betfair
+                                                <ul>
+                                                    <li>Statistician</li>
+                                                    <li>Proiectant</li>
+                                                </ul>
+                                            </li>
+                                            <li>Yardi
+                                                <ul>
+                                                    <li>Dezvoltator soft</li>
+                                                </ul>
+                                            </li>
+                                            <li>Automatify
+                                                <ul>
+                                                    <li>Specialist machine learning</li>
+                                                </ul>
+                                            </li>
+                                            <li>Fme</li>
+                                            <li>BitStone</li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="1">Loca&#355;ii in care ai putea lucra</td>
+                    <td colspan="1">
+                            <input type="checkbox" id="Bucuresti" name="Bucuresti">
+                            <label for="Bucuresti">Bucure&#351;ti</label><br>
+                            <input type="checkbox" id="Cluj-Napoca" name="Cluj-Napoca">
+                            <label for="Cluj-Napoca">Cluj-Napoca</label><br>
+                            <input type="checkbox" id="Iasi" name="Iasi">
+                            <label for="Iasi">Ia&#351;i</label><br>
+                            <input type="checkbox" id="Timisoara" name="Timisoara">
+                            <label for="Timisoara">Timi&#351;oara</label><br>
+                            <input type="checkbox" id="Onesti" name="Onesti">
+                            <label for="Onesti">One&#351;ti</label><br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="1">
+                        <p>De ce &#238;&#355;i dore&#351;ti s&#259; lucrezi in compania noastr&#259;?</p>
+                        <textarea id="motiv" name="motiv" rows="10" cols="40">
+                        </textarea>
+                    </td>
+
+                    <td colspan="1">
+                        <p>Descrie o situa&#355;ie &#238;n care ai &#238;nt&#226;mpinat o problem&#259; &#351;i modul &#238;n care ai trecut peste aceasta.</p>
+                        <textarea id="situatie" name="situatie" rows="10" cols="40">
+                        </textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <label for="cv">Incarc&#259; CV-ul t&#259;u: </label>
+                        <input type="file" id="cv" name="cv"><br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="1">
+                        <input type="submit" value="Trimite">
+                    </td>
+                    <td colspan="1">
+                        <input type="reset" value="Reset"> 
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

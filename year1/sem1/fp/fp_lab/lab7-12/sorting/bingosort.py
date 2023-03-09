@@ -11,7 +11,7 @@ def bingosort(iterable, key = lambda x : x, cmp = lambda x, y: x < y, reverse = 
   for i in range(last - 1, -1, -1):
     if reverse(cmp(key(iterable[i]), key(nextMax))):
       nextMax = iterable[i]
-
+      
   while last > 0 and iterable[last] == nextMax:
     last -= 1
   

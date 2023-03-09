@@ -1,0 +1,6 @@
+substantiv - candidat pentru a fi actor
+verb - candidat pentru a fi sistem
+
+SAO - Subiect Actiune Obiect 
+  1. Bibliotecara da click pe butonul adauga carte
+  2. Sistemul deschide o fereastra de adaugare a cartii

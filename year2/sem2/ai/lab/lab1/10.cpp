@@ -14,9 +14,9 @@ class Solution {
                row - vectorul in care se cauta primul 1
       @return: int - indicele unde se afla primul 1 in intervalul [1, one_start] daca exista un 1 in acest interval si m altfel
       Complexitate timp: O(logm)
-      Complexitate spatiu: O(1)
+      Complexitate spatiu: O(m)
     */
-    static int find_first_one(int m, int one_start, vector<bool>& row) {
+    static int find_first_one(int m, int one_start, const vector<bool>& row) {
       int left = 0, right = one_start - 1, mid, response = m;
 
       while(left <= right) {
@@ -41,16 +41,22 @@ class Solution {
                m - numarul de coloane din matrice
                matrix - matricea
       @return: int - numarul liniei care contine cele mai multe elemente de 1 sau -1 daca matricea nu are randuri
-      Complexitate timp: O(n*logm)
-      Complexitate spatiu: O(1)
+      Complexi
+      Complexitate timp: Caz favorabil: O(logm)
+                         Caz defavorabil: O(n * logm)
+                         Caz mediu: O(n * logm)
+      Complexitate spatiu: O(n * m)
     */
-    static int solve(int n, int m, vector<vector<bool> >& matrix) {
+    static int solve(int n, int m, const vector<vector<bool> >& matrix) {
       int response = -1;
       int one_start = m;
 
       for(int i = 0;i < n;++i) {
         if(one_start < m && !matrix[i][one_start]) {
           continue; 
+        }
+        if(one_start == 0) {
+          break;
         }
       
         int one = find_first_one(m, one_start, matrix[i]);
@@ -59,7 +65,6 @@ class Solution {
           one_start = one;
           response = i;
         }
-
       }
 
       return response + 1;
