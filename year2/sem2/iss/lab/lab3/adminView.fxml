@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="48.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Adauga" />
+      <Button layoutX="256.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Modifica" />
+      <Button layoutX="469.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Sterge" />
+      <TableView layoutX="14.0" layoutY="111.0" prefHeight="279.0" prefWidth="573.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Nume" />
+          <TableColumn prefWidth="75.0" text="Rang" />
+            <TableColumn prefWidth="75.0" text="Username" />
+            <TableColumn prefWidth="75.0" text="Password" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    display: block;
+}
+
+header {
+    background-color: red;
+    vertical-align: middle;
+    height: 10vh;
+}
+
+#middle {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    background-color: yellow;
+    height: 5vh;
+}
+
+li {
+    border-right: 1px solid black;
+    padding-left: 2px;
+    width: 20%;
+}
+
+li:last-child {
+    border: none;
+}
+
+#mainView {
+    margin: 0;
+    background-color: green;
+    height: 75vh;
+}
+
+footer {
+    background-color: beige;
+    vertical-align: center;
+    margin: 0;
+    height: 10vh;
+}

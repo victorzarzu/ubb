@@ -1,0 +1,1 @@
+se ia cel mai bun cromozom si se inlocuieste comunitatea unui nod obtinand un cromozom vecin (se face asta pentru fiecare nod). daca are fitness function-ul mai bun atunci el este noul cromozom cel mai bun (local search)

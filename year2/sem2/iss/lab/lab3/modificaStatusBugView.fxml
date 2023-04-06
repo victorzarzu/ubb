@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="24.0" layoutY="34.0" text="Nume" />
+      <TextField disable="true" layoutX="102.0" layoutY="30.0" prefHeight="26.0" prefWidth="172.0" promptText="Nume" />
+      <Label layoutX="24.0" layoutY="69.0" text="Descriere" />
+      <TextArea disable="true" layoutX="102.0" layoutY="69.0" prefHeight="76.0" prefWidth="493.0" promptText="Descriere" />
+      <Label layoutX="304.0" layoutY="34.0" text="Data adaugarii" />
+      <DatePicker disable="true" layoutX="410.0" layoutY="30.0" />
+      <Label layoutX="24.0" layoutY="163.0" text="Status" />
+      <Label layoutX="304.0" layoutY="163.0" text="Prioritate" />
+      <TextField disable="true" layoutX="410.0" layoutY="159.0" prefHeight="26.0" prefWidth="185.0" promptText="Prioritate" />
+      <Label layoutX="26.0" layoutY="210.0" text="Comentariu modificare status" />
+      <TextArea layoutX="26.0" layoutY="240.0" prefHeight="200.0" prefWidth="537.0" text="Bug rezolvat." />
+      <Button layoutX="420.0" layoutY="459.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Modificare status bug" />
+      <ComboBox layoutX="102.0" layoutY="160.0" prefWidth="150.0" />
+   </children>
+</Pane>

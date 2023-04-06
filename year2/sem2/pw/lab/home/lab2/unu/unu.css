@@ -1,0 +1,21 @@
+#parinte {
+    width: 400px;
+    height: auto;
+    border: 1px solid black;
+    display: flex; 
+    flex-direction: row;
+}
+
+div.copil {
+    width: 200px;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: auto;
+}
+
+
+img {
+    max-width: 200px;
+    height: auto;
+}

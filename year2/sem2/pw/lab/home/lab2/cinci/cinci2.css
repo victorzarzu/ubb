@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    columns: 2;
+    margin: auto;
+    padding: 0;
+}
+
+img {
+    width: 200px;
+    height: 240px;
+}
+
+figure {
+    padding: 5%;
+    background-color: blue;
+    min-width: fit-content;
+    min-height: fit-content;
+}
+
+figcaption {
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+}
+
+div {
+    border: 1px solid black;
+    width: 50%;
+    min-width: fit-content;
+    block-size: fit-content;
+    height: fit-content;
+}
+
+li {
+    padding: 5%;
+    width: fit-content;
+    height: fit-content;
+}

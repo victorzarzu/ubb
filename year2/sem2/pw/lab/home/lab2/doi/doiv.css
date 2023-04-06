@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+}
+
+header {
+    background-color: red;
+    vertical-align: middle;
+    height: 10vh;
+}
+
+#middle {
+    display: flex;
+    margin: 0;
+    height: 80vh;
+}
+
+#menu {
+    list-style-type: none;
+    background-color: yellow;
+    margin: 0;
+    width: 20%;
+    padding: 0;
+}
+
+li {
+    border-bottom: 1px solid black;
+    padding-left: 5%;
+    width: 100%
+}
+
+#mainView {
+    margin: 0;
+    background-color: green;
+    vertical-align: middle;
+    width: 80%;
+}
+
+footer {
+    background-color: beige;
+    vertical-align: center;
+    margin: 0;
+    height: 10vh;
+}

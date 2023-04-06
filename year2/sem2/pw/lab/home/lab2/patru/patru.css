@@ -1,0 +1,109 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+#menu {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    width: 84px;
+    height: 84px;
+}
+
+#fb {
+    background: url('icons.png') 0 -84px;
+}
+
+#pct {
+    background: url('icons.png') -84px -84px;
+}
+
+#ball {
+    background: url('icons.png') calc(-84px * 2) -84px;
+}
+
+#g {
+    background: url('icons.png') calc(-84px * 3) -84px;
+}
+
+#linkedin {
+    background: url('icons.png') calc(-84px * 4) -84px;
+}
+
+#pinterest {
+    background: url('icons.png') calc(-84px * 5) -84px;
+}
+ 
+#wifi {
+    background: url('icons.png') calc(-84px * 6) -84px;
+}
+
+#skype {
+    background: url('icons.png') calc(-84px * 7) -84px;
+}
+
+#twitter {
+    background: url('icons.png') calc(-84px * 8) -84px;
+}
+
+#vk {
+    background: url('icons.png') calc(-84px * 9) -84px;
+}
+
+#youtube {
+    background: url('icons.png') calc(-84px * 10) -84px;
+}
+
+
+#fb:hover {
+    background: url('icons.png') 0 0;
+}
+
+#pct:hover {
+    background: url('icons.png') -84px 0;
+}
+
+#ball:hover {
+    background: url('icons.png') calc(-84px * 2) 0;
+}
+
+#g:hover {
+    background: url('icons.png') calc(-84px * 3) 0;
+}
+
+#linkedin:hover {
+    background: url('icons.png') calc(-84px * 4) 0;
+}
+
+#pinterest:hover {
+    background: url('icons.png') calc(-84px * 5) 0;
+}
+ 
+#wifi:hover {
+    background: url('icons.png') calc(-84px * 6) 0;
+}
+
+#skype:hover {
+    background: url('icons.png') calc(-84px * 7) 0;
+}
+
+#twitter:hover {
+    background: url('icons.png') calc(-84px * 8) 0;
+}
+
+#vk:hover {
+    background: url('icons.png') calc(-84px * 9) 0;
+}
+
+#youtube:hover {
+    background: url('icons.png') calc(-84px * 10) 0;
+}

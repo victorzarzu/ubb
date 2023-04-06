@@ -1,0 +1,49 @@
+.dialog {
+    list-style-type: none;
+    padding-left: 5%;
+  }
+  
+  li {
+    position: relative;
+    width: fit-content;
+    text-align: center;
+    line-height: 1.4em;
+    background-color: #fff;
+    margin-bottom: 50px;
+    border: 5px solid black;
+    border-radius: 30px;
+    font-family: sans-serif;
+    padding: 20px;
+    font-size: large;
+  }
+  
+  .alice::before {
+    content: url('alice_resized.png');
+    position: absolute;
+    left: 10px;
+  }
+  
+  .bob::before {
+    content: url('bob_resized.png');
+    position: absolute;
+    left: 10px;
+  }
+  
+  
+  li::after {
+    content: '   ';
+    position: absolute;
+    width: 25px;
+    height: 35px;
+    transform: rotate(150deg) skewX(20deg);
+  }
+  
+  li::after {
+    background-color: white;
+    left: -17px;
+    bottom: 18px;
+    border-width: 5px;
+    border-radius: 0px 10px 0px 10px;
+    border-style: solid;
+    border-color: white black black white;
+  }

@@ -1,0 +1,68 @@
+.dialog {
+  list-style-type: none;
+  padding-left: 5%;
+  width: fit-content;
+}
+
+li {
+  position: relative;
+  width: fit-content;
+  text-align: center;
+  background-color: white;
+  margin-bottom: 30px;
+  margin-left: 50px;
+  border: 5px solid black;
+  border-radius: 30px;
+  padding: 20px;
+  font-size: large;
+  min-width: 200px;
+  min-height: 30px;
+  width: fit-content;
+  vertical-align: middle;
+}
+
+li::before {
+  position: absolute;
+  left: -100px;
+  bottom: 15px;
+  width: 40px;
+  height: 40px;
+}
+
+.alice::before {
+  content: ' ';
+  background: url('personaje.png') 0px 0px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 70px;
+}
+
+.bob::before {
+  content: ' ';
+  background: url('personaje.png') 0px -100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 70px;
+}
+
+
+li::after {
+  content: '   ';
+  text-indent: 1em;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  transform: rotate(180deg) skewX(45deg);
+}
+
+li::after {
+  background-color: white;
+  left: -17px;
+  bottom: 18px;
+  border-width: 5px;
+  border-radius: 0px 4px 7px 3px;
+  border-style: solid;
+  border-color: white black black white;
+}
