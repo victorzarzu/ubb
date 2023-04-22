@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Doi</title>
+    </head>
+    <body>
+        <div style="display: flex;flex-direction: column;">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" />
+            <label for="date">Birth date</label>
+            <input type="text" oninput="setAge()" id="date" name="date" placeholder="mm/dd/yyyy"/>
+            <label for="age">Age</label>
+            <input type="text" id="age" name="age" disabled="true"/>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"/>
+            <button onclick="send()" title="Send">Send</button>
+        </div>
+    </body>
+    <script src="doi.js"></script>
+</html>

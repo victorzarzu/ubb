@@ -1,1 +1,8 @@
-rootProject.name = "Buguri"
+rootProject.name = 'Buguri'
+include 'model'
+include 'persistance'
+include 'bugApp'
+include 'bugsApp'
+include 'service'
+include 'utils'
+

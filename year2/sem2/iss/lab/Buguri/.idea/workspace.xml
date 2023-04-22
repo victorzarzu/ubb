@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="13c33aed-30ec-440f-8a2b-7266ec459646" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/StartApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/AdminController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyBugController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/TesterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/login.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugsConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/BugPriority.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Identifiable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/tester/TesterDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/tester/TesterDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/user/UserDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/user/UserDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/admin/AdminsDbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/admin/AdminsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsDbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/comment/CommentsDbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/comment/CommentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/ExistentEntityException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/InexistentEntityException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/RepositoryException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/tester/TestersDbRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/tester/TestersRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/src/main/java/buguri/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../ai/ai-lab01-victorzarzu" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ai/lab/lab6/happiness.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ai/lab/lab6/happiness.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/buguri/HelloApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/buguri/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/buguri/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/UrmarireBuguriDiagrama.mdj" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/UrmarireBuguriDiagrama.mdj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/adaugaBugView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/add-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/adminView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/admin-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/modificaBugView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/programatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/programmer-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/verificatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/tester-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../pw/lab/home/lab3/output.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pw/lab/home/lab3/output.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState>
+        <dataType path="$PROJECT_DIR$/bugApp">
+          <ModuleState>
+            <id value="com.intellij.externalSystem.JavaModuleData" />
+            <id value="com.intellij.openapi.externalSystem.model.project.ContentRootData" />
+            <id value="com.intellij.openapi.externalSystem.model.project.ModuleData" />
+            <id value="com.intellij.openapi.externalSystem.model.project.ModuleSdkData" />
+            <id value="com.intellij.openapi.externalSystem.model.task.TaskData" />
+            <id value="org.jetbrains.idea.gradle.ext.profiler.model.JavaTaskData" />
+            <id value="org.jetbrains.kotlin.android.synthetic.idea.AndroidExtensionProperties" />
+            <id value="org.jetbrains.plugins.gradle.model.GradleExtensions" />
+            <id value="org.jetbrains.plugins.gradle.model.data.BuildScriptClasspathData" />
+            <id value="org.jetbrains.plugins.gradle.model.data.GradleProjectBuildScriptData" />
+          </ModuleState>
+        </dataType>
+      </ProjectState>
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/persistance">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/bugsApp">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/model">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="bugsApp" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="bugsApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="bugsApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="bugsApp" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="model" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="model" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="model" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="persistance" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="persistance" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Buguri" type="f1a62948:ProjectNode" />
+                <item name="persistance" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OYT4gLkfQ1hyBzMHx4ep8lbIrZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "corretto-17",
+    "last_opened_file_path": "/Users/victorzarzu/ubb/year2/sem2/iss/lab/Buguri/bugsApp/src/main/resources/view",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "d7645f5f052887aab9af13f1fad52a3c"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite",
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources/view" />
+      <recent name="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository" />
+      <recent name="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/tester" />
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources/bugs" />
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources" />
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/view.login" />
+      <recent name="$PROJECT_DIR$/bugsApp/src/main/resources/view/login" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="bugs.persistance.repository" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="bugs.controllers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Buguri [run]">
+    <configuration name="Buguri [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Buguri [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--scan" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Buguri:bugsApp [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/bugsApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Buguri:bugsApp [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/bugsApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--scan" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Buguri:persistance [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/persistance" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Buguri [run]" />
+        <item itemvalue="Gradle.Buguri [build]" />
+        <item itemvalue="Gradle.Buguri:bugsApp [run]" />
+        <item itemvalue="Gradle.Buguri:bugsApp [build]" />
+        <item itemvalue="Gradle.Buguri:persistance [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="13c33aed-30ec-440f-8a2b-7266ec459646" name="Changes" comment="" />
+      <created>1681736326482</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681736326482</updated>
+      <workItem from="1681736327596" duration="2546000" />
+      <workItem from="1681739223568" duration="4948000" />
+      <workItem from="1681745754175" duration="7610000" />
+      <workItem from="1681821320351" duration="5355000" />
+      <workItem from="1681893606180" duration="598000" />
+      <workItem from="1682066724867" duration="1353000" />
+      <workItem from="1682075533393" duration="16097000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
