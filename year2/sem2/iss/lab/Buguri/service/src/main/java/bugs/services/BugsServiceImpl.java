@@ -1,63 +1,56 @@
 package bugs.services;
 
-import bugs.model.Bug;
-import bugs.model.User;
-import bugs.persistance.repository.admin.AdminsRepository;
+import bugs.model.*;
 import bugs.persistance.repository.bug.BugsRepository;
-import bugs.persistance.repository.programmer.ProgrammersRepository;
-import bugs.persistance.repository.tester.TestersRepository;
+import bugs.persistance.repository.exceptions.NonexistentEntityException;
+import bugs.persistance.repository.user.UsersRepository;
+import bugs.utils.validators.BugValidator;
+import bugs.utils.validators.CommentValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 @Transactional
-public class BugsServiceImpl implements BugsService {
+public class BugsServiceImpl extends ConcreteBugsObservable implements BugsService {
 
-    private ProgrammersRepository programmersRepository;
-    private AdminsRepository adminsRepository;
-    private TestersRepository testersRepository;
+    private UsersRepository usersRepository;
     private BugsRepository bugsRepository;
+    private BugValidator bugValidator;
+    private CommentValidator commentValidator;
 
     public BugsServiceImpl() {}
 
-    public BugsServiceImpl(ProgrammersRepository programmersRepository, AdminsRepository adminsRepository,
-                           TestersRepository testersRepository, BugsRepository bugsRepository) {
-        this.programmersRepository = programmersRepository;
-        this.adminsRepository = adminsRepository;
-        this.testersRepository = testersRepository;
+    public BugsServiceImpl(UsersRepository usersRepository, BugsRepository bugsRepository,
+                           BugValidator bugValidator, CommentValidator commentValidator) {
+        this.usersRepository = usersRepository;
         this.bugsRepository = bugsRepository;
+        this.bugValidator = bugValidator;
+        this.commentValidator = commentValidator;
     }
 
-    public void setProgrammersRepository(ProgrammersRepository programmersRepository) {
-        this.programmersRepository = programmersRepository;
-    }
-
-    public void setAdminsRepository(AdminsRepository adminsRepository) {
-        this.adminsRepository = adminsRepository;
-    }
-
-    public void setTestersRepository(TestersRepository testersRepository) {
-        this.testersRepository = testersRepository;
+    public void setUsersRepository(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     public void setBugsRepository(BugsRepository bugsRepository) {
         this.bugsRepository = bugsRepository;
     }
 
+    public void setBugValidator(BugValidator bugValidator) {
+        this.bugValidator = bugValidator;
+    }
+
+    public void setCommentValidator(CommentValidator commentValidator) {
+        this.commentValidator = commentValidator;
+    }
+
     @Transactional
     public User login(String username, String password) {
-        User user = this.programmersRepository.findByUsernamePassword(username, password);
-        if(user == null) {
-            user = this.adminsRepository.findByUsernamePassword(username, password);
-        }
-        if(user == null) {
-            user = this.testersRepository.findByUsernamePassword(username, password);
-        }
-        if(user == null) {
-            throw new BugsException("Invalid credentials!");
+        User user;
+        try{
+            user = this.usersRepository.findByUsernamePassword(username, password);
+        }catch (NonexistentEntityException e) {
+            throw new BugsException(e.getMessage());
         }
         return user;
     }
@@ -68,7 +61,61 @@ public class BugsServiceImpl implements BugsService {
     }
 
     @Transactional
+    public Iterable<Programmer> getAllProgrammers() {
+        return this.usersRepository.getAllProgrammers();
+    }
+
+    @Transactional
+    public void addBug(Bug bug) {
+        this.bugValidator.validate(bug);
+        try {
+            this.bugsRepository.add(bug);
+        } catch (Exception e) {
+            throw new BugsException(e.getMessage());
+        }
+        notifyObserversBugAdded(bug);
+    }
+
+    @Transactional
     public void deleteBug(Bug bug) {
-        this.bugsRepository.remove(bug);
+        try {
+            this.bugsRepository.remove(bug);
+        } catch (Exception e) {
+            throw new BugsException(e.getMessage());
+        }
+        this.notifyObserversBugDeleted(bug);
+    }
+
+    @Transactional
+    public void modifyBug(Bug bug) {
+        this.bugValidator.validate(bug);
+
+        try {
+            this.bugsRepository.modify(bug);
+        } catch (Exception e) {
+            throw new BugsException("Bug name error!");
+        }
+        this.notifyObserversBugModified(bug);
+    }
+
+    @Transactional
+    public void addComment(Bug bug, Comment comment) {
+        commentValidator.validate(comment);
+        bug.addComment(comment);
+        this.bugsRepository.modify(bug);
+        bug = this.findBug(bug.getId());
+        this.notifyObserversBugModified(bug);
+    }
+
+    @Transactional
+    public void modifyBugStatus(Bug bug, BugStatus status) {
+        bug.setStatus(status);
+        this.bugsRepository.modify(bug);
+        this.notifyObserversBugModified(bug);
+    }
+
+    @Override
+    public Bug findBug(Integer id) {
+        return this.bugsRepository.findById(id);
     }
 }

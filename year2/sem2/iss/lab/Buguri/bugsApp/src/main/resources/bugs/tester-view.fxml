@@ -9,9 +9,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bugs.controllers.TesterController">
    <children>
-      <Button layoutX="34.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Adauga" />
-      <Button layoutX="201.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Modifica" />
-      <Button layoutX="388.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Sterge" />
+      <Button layoutX="34.0" layoutY="42.0" mnemonicParsing="false" onAction="#addPressed" prefHeight="26.0" prefWidth="90.0" text="Add" />
+      <Button fx:id="modifyButton" disable="true" layoutX="201.0" layoutY="42.0" mnemonicParsing="false" onAction="#modifyPressed" prefHeight="26.0" prefWidth="90.0" text="Modify" />
+      <Button fx:id="deleteButton" disable="true" layoutX="388.0" layoutY="42.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="26.0" prefWidth="90.0" text="Delete" />
       <TableView fx:id="testerBugsTableView" layoutX="440.0" layoutY="111.0" prefHeight="355.0" prefWidth="402.0">
          <columns>
             <TableColumn prefWidth="75.0" text="Name">
@@ -19,10 +19,7 @@
                   <PropertyValueFactory property="name" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="75.0" text="Status">
-               <cellValueFactory>
-                  <PropertyValueFactory property="status" />
-               </cellValueFactory>
+            <TableColumn fx:id="testerBugsStatusColumn" prefWidth="75.0" text="Status">
             </TableColumn>
             <TableColumn prefWidth="113.0" text="Date">
                <cellValueFactory>
@@ -41,19 +38,16 @@
             </TableColumn>
          </columns>
       </TableView>
-      <Button layoutX="596.0" layoutY="42.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Vizualizare bug" />
+      <Button fx:id="viewButton" disable="true" layoutX="596.0" layoutY="42.0" mnemonicParsing="false" onAction="#viewPressed" prefHeight="26.0" prefWidth="111.0" text="View bug" />
       <Label layoutX="440.0" layoutY="84.0" text="Your bugs" />
-      <TableView fx:id="bugsTableView1" layoutX="14.0" layoutY="113.0" prefHeight="355.0" prefWidth="402.0">
+      <TableView fx:id="bugsTableView" layoutX="14.0" layoutY="113.0" prefHeight="355.0" prefWidth="402.0">
          <columns>
             <TableColumn prefWidth="75.0" text="Name">
                <cellValueFactory>
                   <PropertyValueFactory property="name" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn prefWidth="75.0" text="Status">
-               <cellValueFactory>
-                  <PropertyValueFactory property="status" />
-               </cellValueFactory>
+            <TableColumn fx:id="bugsStatusColumn" prefWidth="75.0" text="Status">
             </TableColumn>
             <TableColumn prefWidth="113.0" text="Date">
                <cellValueFactory>

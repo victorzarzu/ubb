@@ -1,41 +1,71 @@
 package bugs.persistance.repository.bug;
 
 import bugs.model.Bug;
-import bugs.persistance.dao.bug.BugDAO;
+import bugs.model.Programmer;
+import bugs.persistance.repository.exceptions.ExistentEntityException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class BugsDbRepository implements BugsRepository {
-    private BugDAO bugDAO;
+    private SessionFactory sessionFactory;
 
-    public void setBugDAO(BugDAO bugDAO) {
-        this.bugDAO = bugDAO;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    @Transactional
     public void add(Bug bug) {
-        this.bugDAO.save(bug);
+        try {
+            Session session = this.sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            session.persist(bug);
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            throw new ExistentEntityException("Bug with this name already exists");
+        }
     }
 
     @Override
-    @Transactional
     public void remove(Bug bug) {
-        this.bugDAO.delete(bug);
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(bug);
+        transaction.commit();
+        session.close();
     }
 
     @Override
-    @Transactional
     public void modify(Bug bug) {
-        throw new NotYetImplementedException();
+        Session session = this.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.merge(bug);
+        transaction.commit();
+        session.close();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Bug> findAll() {
+        Session session = this.sessionFactory.openSession();
+        List<Bug> bugs = session.createQuery("from Bug", Bug.class).list();
+        session.close();
+        return bugs;
     }
 
     @Override
-    @Transactional
-    public Iterable<Bug> findAll() {
-        return this.bugDAO.getAll();
+    public Bug findById(Integer id) {
+        Session session = this.sessionFactory.openSession();
+        Bug bug = session.get(Bug.class, id);
+        session.close();
+        return bug;
     }
 }

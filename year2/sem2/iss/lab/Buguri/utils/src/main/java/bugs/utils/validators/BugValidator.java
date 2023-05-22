@@ -1,4 +1,4 @@
-package utils.validators;
+package bugs.utils.validators;
 
 import bugs.model.Bug;
 
@@ -19,6 +19,13 @@ public class BugValidator implements Validator<Bug> {
         }
         if(bug.getDate() == null || bug.getDate().isAfter(LocalDateTime.now())) {
             errorMessages += "Invalid date!\n";
+        }
+        if(bug.getPriority() == null) {
+            errorMessages += "Invalid priority!\n";
+        }
+
+        if(errorMessages.length() > 0) {
+            throw new ValidationException(errorMessages);
         }
     }
 }

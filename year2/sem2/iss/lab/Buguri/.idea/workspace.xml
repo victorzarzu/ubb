@@ -5,59 +5,126 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="13c33aed-30ec-440f-8a2b-7266ec459646" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/StartApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyBugController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/TesterController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/login.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugsConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/BugPriority.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Identifiable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/tester/TesterDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/tester/TesterDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/user/UserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/dao/user/UserDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/admin/AdminsDbRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/admin/AdminsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsDbRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/comment/CommentsDbRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/comment/CommentsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/ExistentEntityException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/InexistentEntityException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/exceptions/RepositoryException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/tester/TestersDbRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/tester/TestersRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/src/main/java/buguri/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pw/lab/home/lab8/unu/src/main/webapp/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../../ai/ai-lab01-victorzarzu" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../ai/lab/lab6/happiness.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ai/lab/lab6/happiness.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ai/lab/lab10/emotions.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ai/lab/lab10/emotions.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ai/lab/lab7/happinessGD.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ai/lab/lab7/happinessGD.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ai/lab/lab7/linnerud.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ai/lab/lab7/linnerud.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/01c001c9-3979-4a65-8ccb-8f416b1cb4de.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/01c001c9-3979-4a65-8ccb-8f416b1cb4de.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/01c001c9-3979-4a65-8ccb-8f416b1cb4de/storage_v2/_src_/database/urmarireBuguri.c6EjUw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/01c001c9-3979-4a65-8ccb-8f416b1cb4de/storage_v2/_src_/database/urmarireBuguri.c6EjUw/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/StartApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/StartApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/ModifyBugController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/ModifyBugController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/ProgrammerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/ProgrammerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/TesterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/classes/java/main/bugs/controllers/TesterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/add-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/add-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/admin-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/admin-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/login.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/modify-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/modify-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/programmer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/programmer-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/tester-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugs/tester-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/resources/main/bugsConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/resources/main/bugsConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/StartApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/StartApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/MessageAlert.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/MessageAlert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyBugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyBugController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyStatusBugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ModifyStatusBugController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ProgrammerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ProgrammerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/TesterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/TesterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ViewBugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/java/bugs/controllers/ViewBugController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/add-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/add-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/admin-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/admin-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/login-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/login-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-status-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-status-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/programmer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/programmer-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/tester-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/tester-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/view-bug-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/view-bug-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bugsApp/src/main/resources/bugsConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugsConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Bug.class" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Bug.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Comment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Identifiable.class" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Identifiable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Programmer.class" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Programmer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Tester.class" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/classes/java/main/bugs/model/Tester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/libs/model-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/libs/model-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/model/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/bugs/model/Bug.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Bug.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/bugs/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/bugs/model/Identifiable.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Identifiable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/bugs/model/Programmer.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Programmer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/java/bugs/model/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/java/bugs/model/Tester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/admin/AdminDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/admin/AdminDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/bug/BugDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/bug/BugDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/comment/CommentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/comment/CommentDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/programmer/ProgrammerDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/programmer/ProgrammerDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/tester/TesterDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/tester/TesterDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/user/UserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/dao/user/UserDAOImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/Repository.class" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/Repository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/admin/AdminsDbRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/admin/AdminsRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/bug/BugsDbRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/bug/BugsDbRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/comment/CommentsDbRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/comment/CommentsRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/exceptions/InexistentEntityException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/programmer/ProgrammersDbRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/programmer/ProgrammersRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/tester/TestersDbRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/classes/java/main/bugs/persistance/repository/tester/TestersRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/libs/persistance-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/build/libs/persistance-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsDbRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/bug/BugsDbRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/user/UsersDbRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/user/UsersDbRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/user/UsersRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/persistance/src/main/java/bugs/persistance/repository/user/UsersRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsObservable.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsObservable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsObserver.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsObserver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/BugsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/classes/java/main/bugs/services/ConcreteObservable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/libs/service-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/libs/service-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/service/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObservable.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObservable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/BugsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/bugs/services/ConcreteBugsObservable.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/bugs/services/ConcreteBugsObservable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/buguri/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/buguri/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/buguri/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/buguriConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/buguriConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/utils/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/BugValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/BugValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/CommentValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/CommentValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/ValidationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/ValidationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/utils/src/main/java/bugs/utils/validators/Validator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/Planificare iteratii.pages" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/Planificare iteratii.pages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/Urmarire bug-uri CU copy.pages" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/Urmarire bug-uri CU copy.pages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab2/Urmarire bug-uri CU.pages" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/Urmarire bug-uri CU.pages" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab2/UrmarireBuguriDiagrama.mdj" beforeDir="false" afterPath="$PROJECT_DIR$/../lab2/UrmarireBuguriDiagrama.mdj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3/adaugaBugView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/add-bug-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3/adminView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/admin-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3/modificaBugView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/modify-bug-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3/programatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/programmer-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab3/verificatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/bugsApp/src/main/resources/bugs/tester-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../pw/lab/home/lab3/output.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../pw/lab/home/lab3/output.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/adaugaUtilizatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3/adaugaUtilizatorView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/inregistrareView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3/inregistrareView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab3/modificaUtilizatorView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab3/modificaUtilizatorView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,8 +262,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -212,27 +279,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "/Users/victorzarzu/ubb/year2/sem2/iss/lab/Buguri/bugsApp/src/main/resources/view",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "d7645f5f052887aab9af13f1fad52a3c"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/victorzarzu/ubb/year2/sem2/iss/lab/Buguri/bugsApp/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/victorzarzu/ubb/year2/sem2/iss/lab/Buguri/bugsApp/src/main/resources/view&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;c85e9c6a6fcb6bb6c0deac411cff0d83&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite",
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;,
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/bugsApp/src/main/resources/view" />
@@ -253,7 +321,7 @@
       <recent name="bugs.controllers" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Buguri [run]">
+  <component name="RunManager" selected="Gradle.Buguri:bugsApp [run]">
     <configuration name="Buguri [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -361,11 +429,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Buguri [run]" />
-        <item itemvalue="Gradle.Buguri [build]" />
         <item itemvalue="Gradle.Buguri:bugsApp [run]" />
-        <item itemvalue="Gradle.Buguri:bugsApp [build]" />
+        <item itemvalue="Gradle.Buguri [run]" />
         <item itemvalue="Gradle.Buguri:persistance [build]" />
+        <item itemvalue="Gradle.Buguri [build]" />
+        <item itemvalue="Gradle.Buguri:bugsApp [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -384,6 +452,31 @@
       <workItem from="1681893606180" duration="598000" />
       <workItem from="1682066724867" duration="1353000" />
       <workItem from="1682075533393" duration="16097000" />
+      <workItem from="1682152908946" duration="8287000" />
+      <workItem from="1682169000502" duration="925000" />
+      <workItem from="1682171884961" duration="238000" />
+      <workItem from="1682256486401" duration="80000" />
+      <workItem from="1682256570215" duration="13596000" />
+      <workItem from="1682272746790" duration="381000" />
+      <workItem from="1682283814485" duration="5998000" />
+      <workItem from="1682323903901" duration="5422000" />
+      <workItem from="1682349811931" duration="2366000" />
+      <workItem from="1682715104092" duration="3516000" />
+      <workItem from="1682974231265" duration="2524000" />
+      <workItem from="1683141196141" duration="5974000" />
+      <workItem from="1683184833684" duration="1397000" />
+      <workItem from="1683214642541" duration="5599000" />
+      <workItem from="1683222118968" duration="947000" />
+      <workItem from="1683303023093" duration="5499000" />
+      <workItem from="1683364109683" duration="17044000" />
+      <workItem from="1683469572677" duration="2117000" />
+      <workItem from="1683545076660" duration="9513000" />
+      <workItem from="1683558315245" duration="1244000" />
+      <workItem from="1683898476806" duration="683000" />
+      <workItem from="1683983907231" duration="6119000" />
+      <workItem from="1684047472865" duration="1904000" />
+      <workItem from="1684661796262" duration="2476000" />
+      <workItem from="1684751839409" duration="81000" />
     </task>
     <servers />
   </component>

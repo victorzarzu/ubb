@@ -15,6 +15,7 @@ dependencies {
 
     implementation project(':model');
     implementation project(':persistance');
+    implementation project(':utils');
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     implementation group: 'org.springframework', name: 'spring-context', version: '6.0.8'

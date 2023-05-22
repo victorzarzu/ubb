@@ -7,13 +7,13 @@ import java.util.Set;
 
 @Entity
 @Table(name="bugs")
-public class Bug extends Identifiable<Integer>{
+public class Bug extends Identifiable<Integer> {
     private String name;
     private String description;
     private BugStatus status;
     private LocalDateTime date;
     private BugPriority priority;
-    @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comment> comments = new HashSet<>();
     @ManyToOne
     @JoinColumn(name="tester_id")
@@ -23,26 +23,15 @@ public class Bug extends Identifiable<Integer>{
     @JoinColumn(name = "programmer_id")
     private Programmer programmer;
 
-    public Bug() {}
+    public Bug() {};
 
-    public Bug(Integer id, String name, String description, BugStatus status, LocalDateTime date, BugPriority priority, Set<Comment> comments, Programmer programmer) {
-        super(id);
+    public Bug(String name, String description, BugStatus status, LocalDateTime date, BugPriority priority, Tester tester, Programmer programmer) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.date = date;
         this.priority = priority;
-        this.comments = comments;
-        this.programmer = programmer;
-    }
-
-    public Bug(Integer id, String name, String description, BugStatus status, LocalDateTime date, BugPriority priority, Programmer programmer) {
-        super(id);
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.date = date;
-        this.priority = priority;
+        this.tester = tester;
         this.programmer = programmer;
     }
 
@@ -96,12 +85,6 @@ public class Bug extends Identifiable<Integer>{
 
     public void addComment(Comment comment) {
         comments.add(comment);
-        comment.setBug(this);
-    }
-
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setBug(null);
     }
 
     public Tester getTester() {
@@ -112,15 +95,30 @@ public class Bug extends Identifiable<Integer>{
         this.tester = tester;
     }
 
+    public String getProgrammerUsername() {
+        return this.programmer.getUsername();
+    }
+
     public Programmer getProgrammer() {
         return programmer;
     }
 
-    public String getProgrammerUsername() {
-        return programmer.getUsername();
-    }
-
     public void setProgrammer(Programmer programmer) {
         this.programmer = programmer;
+    }
+
+    @Override
+    public String toString() {
+        return "Bug{" +
+                "id=" + getId() + " " +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", date=" + date +
+                ", priority=" + priority +
+                ", comments=" + comments +
+                ", tester=" + tester +
+                ", programmer=" + programmer +
+                '}';
     }
 }

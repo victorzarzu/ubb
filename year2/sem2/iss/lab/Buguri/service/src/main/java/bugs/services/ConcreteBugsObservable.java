@@ -5,7 +5,7 @@ import bugs.model.Bug;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class ConcreteObservable implements BugsObservable {
+public abstract class ConcreteBugsObservable implements BugsObservable {
 
     protected Set<BugsObserver> bugsObservers = new HashSet<BugsObserver>();
 

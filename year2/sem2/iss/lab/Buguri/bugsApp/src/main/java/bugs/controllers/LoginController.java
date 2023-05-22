@@ -13,25 +13,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class LoginController {
-    private BugsService bugsService;
+public class LoginController extends Controller {
 
     @FXML
     TextField usernameField;
     @FXML
-    TextField passwordField;
-
-    Set<BugsObserver> observers = new HashSet<>();
-
-    public void setBugsService(BugsService bugsService) {
-        this.bugsService = bugsService;
-    }
+    PasswordField passwordField;
 
     private void openTesterWindow(Tester tester) {
         try {
@@ -41,7 +32,9 @@ public class LoginController {
             testerController.setBugsService(bugsService);
             testerController.setTester(tester);
 
-            observers.add(testerController);
+            bugsService.addObserver(testerController);
+
+            ((Stage) this.usernameField.getScene().getWindow()).hide();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -49,9 +42,15 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void initComponents() {
+
     }
 
     private void openProgrammerWindow(Programmer programmer) {
@@ -62,7 +61,9 @@ public class LoginController {
             programmerController.setBugsService(bugsService);
             programmerController.setProgrammer(programmer);
 
-            observers.add(programmerController);
+            bugsService.addObserver(programmerController);
+
+            ((Stage) this.usernameField.getScene().getWindow()).hide();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -78,14 +79,12 @@ public class LoginController {
     public void openAdminWindow(Admin admin) {
         try {
             FXMLLoader loader = new FXMLLoader(StartApp.class.getResource("admin-view.fxml"));
-            Parent root = (Parent) loader.load();
+            Parent testerView = (Parent) loader.load();
             AdminController adminController = loader.getController();
             adminController.setBugsService(bugsService);
             adminController.setAdmin(admin);
 
-            observers.add(adminController);
-
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(testerView);
             Stage stage = new Stage();
             stage.setTitle(admin.getName());
             stage.setScene(scene);
@@ -109,11 +108,15 @@ public class LoginController {
         }
     }
 
-    public void loginPressed(ActionEvent actionEvent) {
+    public void loginPressed() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        User user = bugsService.login(username, password);
-        openUserWindow(user);
+        try {
+            User user = bugsService.login(username, password);
+            openUserWindow(user);
+        } catch (BugsException e) {
+            MessageAlert.showErrorMessage(null, e.getMessage());
+        }
     }
 }

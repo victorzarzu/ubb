@@ -1,4 +1,4 @@
-package moto.client.controllers;
+package bugs.controllers;
 
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;

@@ -1,7 +1,9 @@
 package bugs;
 
 import bugs.controllers.LoginController;
-import bugs.persistance.repository.tester.TestersRepository;
+import bugs.model.Admin;
+import bugs.persistance.repository.user.UsersDbRepository;
+import bugs.persistance.repository.user.UsersRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,16 +20,14 @@ public class StartApp extends Application {
     public void start(Stage stage) throws IOException {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bugsConfig.xml");
 
-        TestersRepository testersRepository = context.getBean(TestersRepository.class);
         BugsService bugsService = context.getBean(BugsService.class);
 
-        //Login
-        FXMLLoader loader = new FXMLLoader(StartApp.class.getResource("login.fxml"));
-        Parent root = (Parent)loader.load();
+        FXMLLoader loader = new FXMLLoader(StartApp.class.getResource("login-view.fxml"));
+        Parent loginView = (Parent)loader.load();
         LoginController loginController = loader.getController();
         loginController.setBugsService(bugsService);
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(loginView);
         stage.setTitle("Bugs");
         stage.setScene(scene);
         stage.show();

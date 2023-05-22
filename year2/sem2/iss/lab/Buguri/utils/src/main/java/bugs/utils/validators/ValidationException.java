@@ -1,4 +1,4 @@
-package utils.validators;
+package bugs.utils.validators;
 
 public class ValidationException extends RuntimeException {
     public ValidationException(String message) {

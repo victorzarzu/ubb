@@ -9,10 +9,6 @@ public class Comment extends Identifiable<Integer> {
     private String text;
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bug_id")
-    private Bug bug;
-
     @ManyToOne
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
@@ -23,6 +19,13 @@ public class Comment extends Identifiable<Integer> {
         super(id);
         this.text = text;
         this.date = date;
+    }
+
+    public Comment(String text, LocalDateTime date, Employee employee) {
+        super(0);
+        this.text = text;
+        this.date = date;
+        this.employee = employee;
     }
 
     public String getText() {
@@ -41,19 +44,21 @@ public class Comment extends Identifiable<Integer> {
         this.date = date;
     }
 
-    public Bug getBug() {
-        return bug;
-    }
-
-    public void setBug(Bug bug) {
-        this.bug = bug;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + this.getId().toString() + '\'' +
+                "text='" + text + '\'' +
+                ", date=" + date +
+                ", employee=" + employee +
+                '}';
     }
 }

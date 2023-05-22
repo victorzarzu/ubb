@@ -38,48 +38,19 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-
-    <bean id="UserDAO" class="bugs.persistance.dao.user.UserDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="AdminDAO" class="bugs.persistance.dao.admin.AdminDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="TesterDAO" class="bugs.persistance.dao.tester.TesterDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="ProgrammerDAO" class="bugs.persistance.dao.programmer.ProgrammerDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="CommentDAO" class="bugs.persistance.dao.comment.CommentDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="BugDAO" class="bugs.persistance.dao.bug.BugDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="ProgrammersRepository" class="bugs.persistance.repository.programmer.ProgrammersDbRepository">
-        <property name="programmerDAO" ref="ProgrammerDAO" />
-    </bean>
-    <bean id="TestersRepository" class="bugs.persistance.repository.tester.TestersDbRepository">
-        <property name="testerDAO" ref="TesterDAO" />
-    </bean>
-    <bean id="AdminsRepository" class="bugs.persistance.repository.admin.AdminsDbRepository">
-        <property name="adminDAO" ref="AdminDAO" />
-    </bean>
     <bean id="BugsRepository" class="bugs.persistance.repository.bug.BugsDbRepository">
-        <property name="bugDAO" ref="BugDAO" />
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="UsersRepository" class="bugs.persistance.repository.user.UsersDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="BugValidator" class="bugs.utils.validators.BugValidator"></bean>
+    <bean id="CommentValidator" class="bugs.utils.validators.CommentValidator"></bean>
 
     <bean id="BugsService" class="bugs.services.BugsServiceImpl">
-        <property name="programmersRepository" ref="ProgrammersRepository" />
-        <property name="testersRepository" ref="TestersRepository" />
-        <property name="adminsRepository" ref="AdminsRepository" />
+        <property name="usersRepository" ref="UsersRepository" />
         <property name="bugsRepository" ref="BugsRepository" />
+        <property name="bugValidator" ref="BugValidator" />
+        <property name="commentValidator" ref="CommentValidator" />
     </bean>
 </beans>

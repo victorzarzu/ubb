@@ -10,16 +10,16 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
    fx:controller="bugs.controllers.ModifyBugController">
    <children>
-      <Label layoutX="28.0" layoutY="34.0" text="Nume" />
+      <Label layoutX="28.0" layoutY="34.0" text="Name" />
       <TextField fx:id="nameField" layoutX="99.0" layoutY="29.0" prefHeight="26.0" prefWidth="407.0" />
-      <Label layoutX="28.0" layoutY="72.0" text="Descirere" />
+      <Label layoutX="28.0" layoutY="72.0" text="Description" />
       <TextArea fx:id="descriptionField" layoutX="99.0" layoutY="72.0" prefHeight="187.0" prefWidth="407.0" />
-      <Label layoutX="37.0" layoutY="334.0" text="Prioritate" />
+      <Label layoutX="37.0" layoutY="334.0" text="Priority" />
       <ComboBox fx:id="priorityCombo"  layoutX="165.0" layoutY="330.0" prefWidth="150.0" />
-      <Button layoutX="191.0" layoutY="441.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="223.0" text="Modifica bug" />
+      <Button layoutX="191.0" layoutY="441.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="223.0" text="Modify" fx:id="modifyButton" onAction="#modifyPressed" />
       <Label layoutX="37.0" layoutY="283.0" text="Status" />
       <ComboBox fx:id="statusCombo" layoutX="165.0" layoutY="279.0" prefWidth="150.0" />
-      <Label layoutX="33.0" layoutY="383.0" text="Programator asignat" />
-      <ComboBox fx:id="programmerField"  layoutX="165.0" layoutY="379.0" prefWidth="150.0" />
+      <Label layoutX="33.0" layoutY="383.0" text="Assigned programmer" />
+      <ComboBox fx:id="programmerCombo"  layoutX="165.0" layoutY="379.0" prefWidth="150.0" />
    </children>
 </Pane>

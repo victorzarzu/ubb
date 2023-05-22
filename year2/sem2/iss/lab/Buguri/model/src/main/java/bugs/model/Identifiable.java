@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Identifiable<ID> {
+public abstract class Identifiable<ID> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;

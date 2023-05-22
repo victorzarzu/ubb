@@ -4,7 +4,7 @@ import bugs.model.Admin;
 import bugs.model.Programmer;
 import bugs.model.Tester;
 import bugs.model.User;
-import bugs.persistance.repository.tester.TestersRepository;
+import bugs.persistance.repository.exceptions.NonexistentEntityException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -51,7 +51,10 @@ public class UsersDbRepository implements UsersRepository {
                 .setParameter("username", username)
                 .setParameter("password", password)
                 .getResultList();
-        return users.isEmpty() ? null : users.get(0);
+        if(users.isEmpty()) {
+            throw new NonexistentEntityException("Invalid credentials!");
+        }
+        return users.get(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -79,5 +82,10 @@ public class UsersDbRepository implements UsersRepository {
     public Iterable<Programmer> getAllProgrammers() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Programmer", Programmer.class).list();
+    }
+
+    @Override
+    public User findById(Integer integer) {
+        return null;
     }
 }

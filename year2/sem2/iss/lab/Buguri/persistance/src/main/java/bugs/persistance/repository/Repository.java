@@ -11,7 +11,7 @@ public interface Repository<ID, E extends Identifiable<ID>> {
      * @return the entity with the given id
      * @throws RepositoryException if the entity with the given id does not exist
      */
-    //E findById(ID id);
+    E findById(ID id);
 
     /**
      * Method to get all entities from the repository.

@@ -5,22 +5,20 @@ import bugs.model.Bug;
 import bugs.services.BugsObserver;
 import bugs.services.BugsService;
 
-public class AdminController implements BugsObserver {
-    private BugsService bugsService;
+public class AdminController extends Controller {
     private Admin admin;
-
-
-
-    public void setBugsService(BugsService bugsService) {
-        this.bugsService = bugsService;
-    }
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
 
     @Override
-    public void bugAdded(Bug bug) {
-        // TODO Auto-generated method stub
+    public void setBugsService(BugsService bugsService) {
+        super.setBugsService(bugsService);
+    }
+
+    @Override
+    protected void initComponents() {
+
     }
 }

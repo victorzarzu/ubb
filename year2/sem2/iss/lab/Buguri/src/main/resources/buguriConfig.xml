@@ -10,8 +10,8 @@
           destroy-method="close">
         <property name="driverClassName" value="org.postgres.Driver" />
         <property name="url" value="jdbc:postgresql://localhost:5432/urmarireBuguri" />
-        <property name="username" value="root" />
-        <property name="password" value="Novatours1" />
+        <property name="username" value="postgres" />
+        <property name="password" value="admin" />
     </bean>
 
 
