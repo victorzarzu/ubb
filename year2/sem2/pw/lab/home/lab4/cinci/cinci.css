@@ -1,0 +1,48 @@
+li {
+    display: block;
+    width: 250px;
+    height: 150px;
+    position: absolute;
+    left: 1000px;
+}
+
+img {
+    width: 250px;
+    height: 150px;
+}
+
+ul {
+    position: relative;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+
+div {
+    width: 250px;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    vertical-align: middle;
+}
+
+.navigableButton {
+    z-index: 100;
+    display: block;
+    position: absolute;
+    top: 35%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+#prevButton {
+    left: 0;
+}
+
+#nextButton {
+    right: 0;
+}

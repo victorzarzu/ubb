@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Doi</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    </head>
+    <body>
+        <div style="display: flex;flex-direction: column;">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" />
+            <label for="date">Birth date</label>
+            <input type="text" id="date" name="date" placeholder="mm/dd/yyyy"/>
+            <label for="age">Age</label>
+            <input type="text" id="age" name="age" disabled="true"/>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" pattern="[A-Za-z0-9]+@[a-z]+.[a-z]{3}"/>
+            <button id="submit" title="Send">Send</button>
+        </div>
+    </body>
+    <script src="doi.js"></script>
+</html>

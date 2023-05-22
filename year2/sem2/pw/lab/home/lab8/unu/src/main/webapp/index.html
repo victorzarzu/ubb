@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Cooking Recipe</title>
+    <link rel="stylesheet" type="text/css" href="sase.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <h1>Simple Cooking Recipe</h1>
+</header>
+<main>
+    <section>
+        <h2>Ingredients:</h2>
+        <ul>
+            <li>1 cup flour</li>
+            <li>1/2 cup sugar</li>
+            <li>1/4 cup vegetable oil</li>
+            <li>1/4 cup milk</li>
+            <li>1 tsp baking powder</li>
+            <li>1/2 tsp vanilla extract</li>
+            <li>1 egg</li>
+            <li>Pinch of salt</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Preheat the oven to 350°F (180°C).</li>
+            <li>In a mixing bowl, combine the flour, sugar, baking powder, and salt.</li>
+            <li>Add the vegetable oil, milk, vanilla extract, and egg to the bowl and mix well.</li>
+            <li>Grease a muffin tin and pour the batter into the cups, filling each one about 2/3 full.</li>
+            <li>Bake for 20-25 minutes, or until a toothpick inserted in the center of a muffin comes out clean.</li>
+            <li>Remove from the oven and let cool for 5 minutes before removing the muffins from the tin.</li>
+        </ol>
+    </section>
+    <section>
+        <form method="POST" action="/postComment" style="display: flex; flex-direction: column;max-width: 400px;">
+            <input type="text" id="name" name="name"></textarea>
+            <textarea id="comment" name="comment"></textarea>
+            <input type="submit" value="Post comment"/>
+        </form>
+    </section>
+    <section id="commentsSection">
+
+    </section>
+</main>
+</body>
+<script src="sase.js"></script>
+</html>

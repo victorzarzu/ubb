@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="unu:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>unu</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="unu-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="unu:war exploded" />
+    </root>
+  </artifact>
+</component>
