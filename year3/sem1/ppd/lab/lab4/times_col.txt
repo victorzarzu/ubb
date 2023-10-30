@@ -1,0 +1,60 @@
+mat 10 10
+
+threads 4
+secvential 61
+parallel 64
+
+mat 1000 1000
+
+threads 2
+secvential 174
+parallel 161
+
+threads 4
+secvential 165
+parallel 159
+
+threads 8
+secvential 164
+parallel 158
+
+threads 16
+secvential 161
+parallel 151
+
+mat 10 10000
+
+threads 2
+secvential 171
+parallel 183
+
+threads 4
+secvential 165
+parallel 181
+
+threads 8
+secvential 157
+parallel 179
+
+threads 16
+secvential 169
+parallel 177
+
+mat 10000 10
+
+threads 2
+secvential 166
+parallel 181
+
+threads 4
+secvential 169
+parallel 179
+
+threads 8
+secvential 168
+parallel 179
+
+threads 16
+secvential 167
+parallel 178
+

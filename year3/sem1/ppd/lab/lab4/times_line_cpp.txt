@@ -1,0 +1,73 @@
+mat 10 10
+
+secvential 35
+threads 4
+static 26
+dinamic 25
+
+mat 1000 1000
+
+secvential 113
+threads 2
+static 169
+dinamic 176
+
+secvential 111
+threads 4
+static 69
+dinamic 68
+
+secvential 110
+threads 8
+static 18
+dinamic 13
+
+secvential 110
+threads 16
+static 21
+dinamic 18
+
+mat 10 10000
+
+secvential 75
+threads 2
+static 60
+dinamic 59
+
+secvential 74
+threads 4
+static 50
+dinamic 51
+
+secvential 74
+threads 8
+static 46
+dinamic 47
+
+secvential 74
+threads 16
+static 39
+dinamic 41
+
+mat 10000 10
+
+secvential 80
+threads 2
+static 86
+dinamic 59
+
+secvential 82
+threads 4
+static 73
+dinamic 50
+
+secvential 82
+threads 8
+static 69
+dinamic 42
+
+secvential 81
+threads 16
+static 70
+dinamic 42
+

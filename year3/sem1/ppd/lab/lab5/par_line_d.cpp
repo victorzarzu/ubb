@@ -2,9 +2,11 @@
 #include <fstream>
 #include <vector>
 #include <thread>
+#include <time.h>
 
 using namespace std;
 
+// Creeaza o matrice alocata dinamicayy cu n linii si m coloane
 int** create_mat(const int& n, const int& m) {
     int** mat = new int*[n + 1];
     for(int i = 0 ;i <= n;++i) {
@@ -13,6 +15,7 @@ int** create_mat(const int& n, const int& m) {
     return mat;
 }
 
+// Dealoca o matrice alocata dinamic cu n linii si m coloane
 void delete_mat(const int& n, const int& m, int** mat) {
     for(int i = 0;i < n;++i) {
         delete[] mat[i];
@@ -20,6 +23,7 @@ void delete_mat(const int& n, const int& m, int** mat) {
     delete[] mat;
 }
 
+// Citeste o matrice cu n linii si n coloane dintr-un stream dat
 void read_mat(const int& n, const int& m, int** mat, ifstream& f) {
     for(int i = 1;i <= n;++i) {
         for(int j = 1;j <= m;++j) {
@@ -28,6 +32,7 @@ void read_mat(const int& n, const int& m, int** mat, ifstream& f) {
     }
 }
 
+// Aplica operatia de convolutie pe matricea mat in locatia data de i si j cu matricea de convolutie conv_mat
 int conv(const int& i, const int& j, const int& n_mat, const int& m_mat, const int& n_conv, const int& m_conv, int** mat, int** conv_mat) {
     int sum = 0;
     for(int row = i - (n_conv / 2);row <= i + (n_conv / 2);++row) {
@@ -39,6 +44,7 @@ int conv(const int& i, const int& j, const int& n_mat, const int& m_mat, const i
     return sum;
 }
 
+// Aplica operatia de convolutie intre liniile start_line si end_line inclusiv pe matricea mat, cu matricea de convolutie conv_mat si salveaza rezultatele in matricea result
 void apply_conv_lines(const int& start_line, const int& end_line, const int& n_mat, const int& m_mat, const int& n_conv, const int& m_conv, int** mat, int** conv_mat, int** result) {
     for(int i = start_line;i <= end_line;++i) {
         for(int j = 1;j <= m_mat;++j) {
@@ -47,6 +53,7 @@ void apply_conv_lines(const int& start_line, const int& end_line, const int& n_m
     }
 }
 
+// Aplica operatia de convolutie pe intreaga matrice mat, avang matricea de convolutie conv_mat, impartind coloanele matricei thread-urilor
 void apply_conv(const int& n_mat, const int& m_mat, const int& n_conv, const int& m_conv, const int& no_threads, int** mat, int** conv_mat, int** result) {
     vector<thread> threads;
     
@@ -71,6 +78,7 @@ void apply_conv(const int& n_mat, const int& m_mat, const int& n_conv, const int
     }
 }
 
+// Printeaza matricea mat in fisierul dat de variabila filename
 void print_mat(const int& n, const int& m, int** mat, const char* filename) {
     ofstream output(filename);
 
@@ -105,7 +113,9 @@ int main(int argc, char* argv[]) {
     input_mat.close();
     input_conv.close();
 
+    std::clock_t start = std::clock();
     apply_conv(n_mat, m_mat, n_conv, m_conv, no_threads, mat, conv_mat, result_mat);
+    cout<<(std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000);
 
     print_mat(n_mat, m_mat, result_mat, argv[3]);
 

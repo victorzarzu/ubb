@@ -1,0 +1,60 @@
+mat 10 10
+
+threads 4
+static 28
+dinamic 32
+
+mat 1000 1000
+
+threads 2
+static 168
+dinamic 172
+
+threads 4
+static 70
+dinamic 68
+
+threads 8
+static 24
+dinamic 18
+
+threads 16
+static 32
+dinamic 20
+
+mat 10 10000
+
+threads 2
+static 55
+dinamic 54
+
+threads 4
+static 44
+dinamic 47
+
+threads 8
+static 39
+dinamic 39
+
+threads 16
+static 38
+dinamic 40
+
+mat 10000 10
+
+threads 2
+static 96
+dinamic 64
+
+threads 4
+static 88
+dinamic 53
+
+threads 8
+static 105
+dinamic 50
+
+threads 16
+static 113
+dinamic 43
+

@@ -41,7 +41,6 @@ void apply_conv(const int& n_mat, const int& m_mat, const int& n_conv, const int
     for(int i = 1;i <= n_mat;++i) {
         for(int j = 1;j <= m_mat;++j) {
             result[i][j] = conv(i, j, n_mat, m_mat, n_conv, m_conv, mat, conv_mat);
-            cout<<result[i][j]<<'\n';
         }
     }
 }

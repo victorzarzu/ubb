@@ -62,7 +62,7 @@ void apply_conv(const int& n_mat, const int& m_mat, const int& n_conv, const int
             threads.push_back(thread(apply_conv_cols, start_col, end_col, n_mat, m_mat, n_conv, m_conv, mat, conv_mat, result));
         }
     } else {
-        for(int i = 0;i < m_mat;++i) {
+        for(int i = 1;i <= m_mat;++i) {
             threads.push_back(thread(apply_conv_cols, i, i, n_mat, m_mat, n_conv, m_conv, mat, conv_mat, result));
         }
     }
