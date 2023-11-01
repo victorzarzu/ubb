@@ -1,0 +1,7 @@
+{
+  "name": "games",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
