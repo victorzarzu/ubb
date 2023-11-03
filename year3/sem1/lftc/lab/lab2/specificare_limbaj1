@@ -1,0 +1,41 @@
+Program = "#include<iostream> using namespace std; int main() {" BlocDeclarare BlocInstructiuni " return 0;}".
+
+BlocDeclarare = {ListaDeclarare}.
+ListaDeclarare = Declarare {Declarare}.
+Declarare = Tip" "ListaId";".
+ListaId = ID{","ID}.
+Tip = TipBaza | TipCustom.
+TipBaza = int | float.
+TipCustom = "struct { " ListaDeclarare " }".
+
+BlocInstructiuni = {ListaInstructiuni}.
+ListaInstructiuni = {Intructiune}.
+Instructiune = Atribuire | Expresie | Intrare | Iesire | Conditionala | Ciclare.
+
+Atribuire = ID " = " Expresie";".
+Expresie = ID | CONST | Expresie Operatie Expresie.
+Operatie = "+"|"%"|"-"|"*".
+Intrare = "cin >> "ID";".
+Iesire = "cout << "Expresie";".
+Conditionala = "if(" Conditie ") {" ListaInstructiuni "}".
+Ciclare = "while(" Conditie ") {" ListaInstructiuni "}".
+
+Conditie = Expresie "==" Expresie | Expresie "!=" Expresie | Expresie "<" Expresie | Expresie ">" Expresie | Conditie {"||"Conditie} | Conditie {"&&"Conditie}.
+
+ID = CaracterInitial{Caracter}
+CaracterInitial = "a"|"b"|...|"z"|"A"|"B"|...|"Z"|"_".
+Caracter = CaracterInitial|"0"|"1"|...|"9".
+CONST = Numar|String.
+Numar = CifraNenula{Cifra}.
+CifraNenula = "1"|"2"|...|"9".
+Cifra = CifraNenula|"0".
+String = Caracter{CaracterString}.
+CaracterString = Caracter | " ".
+
+int = Numar.
+float = Numar "." Numar.
+
+Obs:
+1. Operatie "*"
+2. instructiune ciclare "for"
+3. Instructiune intrare multipla "cin >> "ID1" >> "ID2";".

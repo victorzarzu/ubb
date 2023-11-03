@@ -1,0 +1,51 @@
+<program> -> int main() { <bloc_declarare_varibile> <bloc_instructiuni> return 0; }
+
+<bloc_declarare_variabile> -> <lista_declarare_variabile>
+<bloc_declarare_variabile> -> <lista_declarare_variabile> <bloc_declarare_varibile>
+
+<lista_declarare_variabile> -> 
+<lista_declarare_variabile> -> <declarare>;
+<lista_declarare_variabile> -> <declarare>; <lista_declarare_variabile>
+<declarare> -> <tip> <list_id>;
+<lista_id> -> id;
+<lista_id> -> id, <lista_id>
+<tip> -> int, float 
+<tip> -> <tip_baza>
+<tip> -> <tip_custom>
+<tip_baza> -> int|float
+<tip_custom> -> struct { <lista_declarare_variabile> }
+
+<bloc_instructiuni> -> int main() { <lista_instructiuni> }
+
+<lista_instructiuni> -> <instructiune>;
+<lista_instructiuni> -> <instructiune>; <lista_instructiuni>
+
+<instructiune> -> <atribuire>
+<instructiune> -> <expresie>
+<instructiune> -> <intrare>
+<instructiune> -> <iesire>
+<instructiune> -> <conditionala>
+<instructiune> -> <ciclare>
+
+<atribuire> -> <id> = <expresie>;
+<expresie> -> CONST
+<expresie> -> <id>
+<expresie> -> <id> <operatie> <id> 
+<expresie> -> <id> <operatie> CONST
+<operatie> -> +|-|*|%
+<intrare> cin>><expr>
+<iesire> cout>><expr>
+<conditionala> if(<conditie>) { <lista_instructiuni> }
+<ciclare> while(<conditie> { <lista_instructiuni> }
+
+<conditie> -> <expr> == <expr>
+<conditie> -> <expr> != <expr>
+<conditie> -> <expr> > <expr>
+<conditie> -> <expr> < <expr>
+<conditie> -> <conditie> || <conditie>
+<conditie> -> <conditie> && <conditie>
+
+<id> -> <prima_litera>
+<id> -> <prima_litera><sir_caractere>
+<prima_lista> -> a|b|c|...|z|_
+<sir_caractere> -> 
