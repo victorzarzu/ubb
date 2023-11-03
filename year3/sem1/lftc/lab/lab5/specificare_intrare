@@ -1,0 +1,12 @@
+SpecificareAF = Stare"\n"ListaStari"\n"ListaTranzitii.
+
+Stare = CaracterInitial{Caracter}.
+CaracterInitial = "a"|"b"|...|"z".
+Caracter = CaracterInitial|"0"|"1"|...|"9".
+
+ListaStari = {Stare}.
+
+Tranzitie = Stare ListaRangeSimboluri Stare.
+ListaRangeSimboluri = RangeSimboluri {"," RangeSimboluri}.
+RangeSimboluri = Simbol | Simbol"-"Simbol.
+Simbol = Caracter|"."|"{"|"}"|"("|")"|"=".
