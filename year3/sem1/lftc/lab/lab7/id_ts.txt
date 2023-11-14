@@ -1,0 +1,4 @@
+raza 346038
+perimetru 617910
+arie 449375
+pi 3367
