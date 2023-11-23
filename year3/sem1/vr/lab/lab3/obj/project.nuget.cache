@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "181AixgUEltQDXSy0Gyq3ls4b7FpAKBNpVsFQ4gBZ0JBaiesb+xvA+kSNUXVNddSmd+/EELDBgg/Hf0caWKejw==",
+  "success": true,
+  "projectFilePath": "/Users/victorzarzu/ubb/year3/sem1/vr/lab/lab3/lab3.csproj",
+  "expectedPackageFiles": [
+    "/Users/victorzarzu/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "/Users/victorzarzu/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "/Users/victorzarzu/.nuget/packages/runtime.osx.10.10-x64.corecompat.system.drawing/6.0.5.128/runtime.osx.10.10-x64.corecompat.system.drawing.6.0.5.128.nupkg.sha512",
+    "/Users/victorzarzu/.nuget/packages/system.drawing.common/4.7.0/system.drawing.common.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
